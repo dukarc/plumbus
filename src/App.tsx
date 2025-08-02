@@ -7,6 +7,7 @@ import { Testimonials } from '@components/sections/Testimonials';
 import { Pricing } from '@components/sections/Pricing';
 import { FAQ } from '@components/sections/FAQ';
 import { Footer } from '@components/sections/Footer';
+import { NotificationProvider } from '@components/ui/Notifications';
 import { useReducedMotion } from '@hooks/useReducedMotion';
 import { pageTransition } from '@utils/animations';
 
@@ -14,24 +15,26 @@ function App() {
   const prefersReducedMotion = useReducedMotion();
 
   return (
-    <motion.div
-      className="min-h-screen bg-white"
-      variants={prefersReducedMotion ? {} : pageTransition}
-      initial="initial"
-      animate="animate"
-      exit="exit"
-    >
-      <Header />
-      <main>
-        <Hero />
-        <Features />
-        <Manufacturing />
-        <Testimonials />
-        <Pricing />
-        <FAQ />
-      </main>
-      <Footer />
-    </motion.div>
+    <NotificationProvider>
+      <motion.div
+        className="min-h-screen bg-white"
+        variants={prefersReducedMotion ? {} : pageTransition}
+        initial="initial"
+        animate="animate"
+        exit="exit"
+      >
+        <Header />
+        <main>
+          <Hero />
+          <Features />
+          <Manufacturing />
+          <Testimonials />
+          <Pricing />
+          <FAQ />
+        </main>
+        <Footer />
+      </motion.div>
+    </NotificationProvider>
   );
 }
 
