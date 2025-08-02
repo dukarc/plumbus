@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useReducedMotion } from '@hooks/useReducedMotion';
-import { plumbusBreathing, hotspotPulse } from '@utils/animations';
+import { plumbusEnhancedBreathing, hotspotPulse, hotspotRipple, magicalParticles, interdimensionalGlitch } from '@utils/animations';
 import { plumbusHotspots } from '@utils/data';
 import { PlumbusHotspot } from '../../types/plumbus';
 
@@ -15,6 +15,10 @@ export const InteractivePlumbus: React.FC<InteractivePlumbusProps> = ({
   selectedHotspot,
 }) => {
   const [hoveredHotspot, setHoveredHotspot] = useState<string | null>(null);
+  const [clickCount, setClickCount] = useState(0);
+  const [showEasterEgg, setShowEasterEgg] = useState(false);
+  const [jiggleId, setJiggleId] = useState<string | null>(null);
+  const [sparklePositions, setSparklePositions] = useState<{x: number, y: number, id: string}[]>([]);
   const prefersReducedMotion = useReducedMotion();
 
   const handleHotspotClick = (hotspot: PlumbusHotspot) => {
@@ -23,14 +27,40 @@ export const InteractivePlumbus: React.FC<InteractivePlumbusProps> = ({
     } else {
       onHotspotSelect(hotspot.id);
     }
+    
+    // Jiggle animation on click
+    setJiggleId(hotspot.id);
+    setTimeout(() => setJiggleId(null), 600);
+    
+    // Add sparkles at click position
+    const newSparkle = {
+      x: Math.random() * 400,
+      y: Math.random() * 400,
+      id: Math.random().toString()
+    };
+    setSparklePositions(prev => [...prev, newSparkle]);
+    setTimeout(() => {
+      setSparklePositions(prev => prev.filter(s => s.id !== newSparkle.id));
+    }, 2000);
+    
+    // Easter egg: track clicks for Rick & Morty surprise
+    setClickCount(prev => {
+      const newCount = prev + 1;
+      if (newCount >= 10 && !showEasterEgg) {
+        setShowEasterEgg(true);
+        setTimeout(() => setShowEasterEgg(false), 3000);
+        return 0;
+      }
+      return newCount;
+    });
   };
 
   return (
     <div className="relative w-96 h-96 mx-auto">
       {/* Main Plumbus SVG */}
       <motion.div
-        className="w-full h-full"
-        variants={prefersReducedMotion ? {} : plumbusBreathing}
+        className="w-full h-full relative"
+        variants={prefersReducedMotion ? {} : plumbusEnhancedBreathing}
         animate={prefersReducedMotion ? {} : 'animate'}
       >
         <svg
@@ -60,8 +90,63 @@ export const InteractivePlumbus: React.FC<InteractivePlumbusProps> = ({
             </filter>
           </defs>
 
+          {/* Gentle bristle sway */}
+          <motion.g
+            animate={prefersReducedMotion ? {} : {
+              rotate: [0, 1, -1, 0],
+              transition: {
+                duration: 8,
+                repeat: Infinity,
+                ease: 'easeInOut'
+              }
+            }}
+            style={{ transformOrigin: '200px 300px' }}
+          >
+            {/* Bristles */}
+            {[...Array(8)].map((_, i) => {
+              const angle = (i * 45) - 180;
+              const length = 25 + Math.random() * 15;
+              const x1 = 200 + Math.cos(angle * Math.PI / 180) * 70;
+              const y1 = 260 + Math.sin(angle * Math.PI / 180) * 35;
+              const x2 = x1 + Math.cos(angle * Math.PI / 180) * length;
+              const y2 = y1 + Math.sin(angle * Math.PI / 180) * length;
+              
+              return (
+                <motion.line
+                  key={i}
+                  x1={x1}
+                  y1={y1}
+                  x2={x2}
+                  y2={y2}
+                  stroke="#be185d"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  animate={prefersReducedMotion ? {} : {
+                    rotate: [0, 2, -2, 0],
+                    transition: {
+                      duration: 3 + i * 0.5,
+                      repeat: Infinity,
+                      ease: 'easeInOut',
+                      delay: i * 0.2
+                    }
+                  }}
+                  style={{ transformOrigin: `${x1}px ${y1}px` }}
+                />
+              );
+            })}
+          </motion.g>
+
           {/* Main Plumbus body */}
-          <g>
+          <motion.g
+            animate={prefersReducedMotion ? {} : {
+              scale: [1, 1.01, 1],
+              transition: {
+                duration: 4,
+                repeat: Infinity,
+                ease: 'easeInOut'
+              }
+            }}
+          >
             {/* Base body */}
             <ellipse
               cx="200"
@@ -135,7 +220,56 @@ export const InteractivePlumbus: React.FC<InteractivePlumbusProps> = ({
             <circle cx="200" cy="110" r="2" fill="#be185d" />
             <circle cx="160" cy="190" r="2" fill="#be185d" />
             <circle cx="240" cy="190" r="2" fill="#be185d" />
-          </g>
+            
+            {/* Pulsing details */}
+            <motion.circle 
+              cx="200" 
+              cy="150" 
+              r="1" 
+              fill="#f59e0b"
+              animate={prefersReducedMotion ? {} : {
+                scale: [1, 1.5, 1],
+                opacity: [0.5, 1, 0.5],
+                transition: {
+                  duration: 2,
+                  repeat: Infinity,
+                  ease: 'easeInOut'
+                }
+              }}
+            />
+            <motion.circle 
+              cx="180" 
+              cy="170" 
+              r="1" 
+              fill="#f59e0b"
+              animate={prefersReducedMotion ? {} : {
+                scale: [1, 1.5, 1],
+                opacity: [0.5, 1, 0.5],
+                transition: {
+                  duration: 2.5,
+                  repeat: Infinity,
+                  ease: 'easeInOut',
+                  delay: 0.5
+                }
+              }}
+            />
+            <motion.circle 
+              cx="220" 
+              cy="170" 
+              r="1" 
+              fill="#f59e0b"
+              animate={prefersReducedMotion ? {} : {
+                scale: [1, 1.5, 1],
+                opacity: [0.5, 1, 0.5],
+                transition: {
+                  duration: 3,
+                  repeat: Infinity,
+                  ease: 'easeInOut',
+                  delay: 1
+                }
+              }}
+            />
+          </motion.g>
 
           {/* Interactive hotspots */}
           {plumbusHotspots.map((hotspot) => {
@@ -146,6 +280,20 @@ export const InteractivePlumbus: React.FC<InteractivePlumbusProps> = ({
 
             return (
               <g key={hotspot.id}>
+                {/* Ripple effect ring */}
+                <motion.circle
+                  cx={x}
+                  cy={y}
+                  r="8"
+                  fill="none"
+                  stroke="#f59e0b"
+                  strokeWidth="2"
+                  opacity="0.3"
+                  variants={prefersReducedMotion ? {} : hotspotRipple}
+                  animate={prefersReducedMotion ? {} : 'animate'}
+                  className="pointer-events-none"
+                />
+                
                 {/* Hotspot button */}
                 <motion.circle
                   cx={x}
@@ -157,9 +305,23 @@ export const InteractivePlumbus: React.FC<InteractivePlumbusProps> = ({
                   filter="url(#glow)"
                   className="cursor-pointer"
                   variants={prefersReducedMotion ? {} : hotspotPulse}
-                  animate={prefersReducedMotion ? {} : 'animate'}
-                  whileHover={prefersReducedMotion ? {} : { scale: 1.2 }}
-                  whileTap={prefersReducedMotion ? {} : { scale: 0.9 }}
+                  animate={prefersReducedMotion ? {} : (
+                    jiggleId === hotspot.id ? {
+                      x: [0, -3, 3, -2, 2, 0],
+                      rotate: [0, -2, 2, -1, 1, 0],
+                      transition: { duration: 0.6, ease: 'easeInOut' }
+                    } : 'animate'
+                  )}
+                  whileHover={prefersReducedMotion ? {} : { 
+                    scale: 1.3,
+                    filter: 'url(#glow) brightness(1.2)',
+                    rotate: [0, -5, 5, 0],
+                    transition: { rotate: { duration: 0.3 } }
+                  }}
+                  whileTap={prefersReducedMotion ? {} : { 
+                    scale: 0.8,
+                    transition: { duration: 0.1 }
+                  }}
                   onClick={() => handleHotspotClick(hotspot)}
                   onMouseEnter={() => setHoveredHotspot(hotspot.id)}
                   onMouseLeave={() => setHoveredHotspot(null)}
@@ -247,30 +409,92 @@ export const InteractivePlumbus: React.FC<InteractivePlumbusProps> = ({
         )}
       </AnimatePresence>
 
-      {/* Floating particles effect */}
+      {/* Enhanced magical particles effect */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        {[...Array(6)].map((_, i) => (
-          <motion.div
-            key={i}
-            className="absolute w-2 h-2 bg-pink-300 rounded-full opacity-60"
-            style={{
-              left: `${20 + (i * 12)}%`,
-              top: `${30 + (i * 8)}%`,
-            }}
-            animate={prefersReducedMotion ? {} : {
-              y: [-20, -40, -20],
-              x: [-5, 5, -5],
-              opacity: [0.3, 0.8, 0.3],
-            }}
-            transition={prefersReducedMotion ? {} : {
-              duration: 4 + i,
-              repeat: Infinity,
-              ease: 'easeInOut',
-              delay: i * 0.5,
-            }}
-          />
-        ))}
+        {[...Array(15)].map((_, i) => {
+          const colors = ['bg-pink-300', 'bg-purple-300', 'bg-yellow-300', 'bg-blue-300', 'bg-green-300'];
+          const sizes = ['w-1 h-1', 'w-2 h-2', 'w-3 h-3'];
+          const shapes = ['rounded-full', 'rounded-sm', 'rotate-45'];
+          return (
+            <motion.div
+              key={i}
+              className={`absolute ${colors[i % colors.length]} ${sizes[i % sizes.length]} ${shapes[i % shapes.length]} opacity-60`}
+              style={{
+                left: `${5 + (i * 6)}%`,
+                top: `${15 + (i * 5)}%`,
+              }}
+              variants={prefersReducedMotion ? {} : magicalParticles}
+              animate={prefersReducedMotion ? {} : 'animate'}
+              custom={i}
+            />
+          );
+        })}
+        
+        {/* Click sparkles */}
+        <AnimatePresence>
+          {sparklePositions.map((sparkle) => (
+            <motion.div
+              key={sparkle.id}
+              className="absolute w-2 h-2 bg-yellow-400 rounded-full"
+              style={{
+                left: sparkle.x,
+                top: sparkle.y,
+              }}
+              initial={{ scale: 0, opacity: 1 }}
+              animate={{ 
+                scale: [0, 1.5, 0],
+                opacity: [1, 0.8, 0],
+                rotate: [0, 180, 360]
+              }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 1.5, ease: 'easeOut' }}
+            />
+          ))}
+        </AnimatePresence>
       </div>
+      
+      {/* Easter egg - Rick's portal */}
+      <AnimatePresence>
+        {showEasterEgg && (
+          <motion.div
+            className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 pointer-events-none"
+            initial={{ opacity: 0, scale: 0 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0 }}
+            transition={{ duration: 0.3 }}
+          >
+            <motion.div
+              className="w-32 h-32 rounded-full border-4 border-green-400"
+              style={{
+                background: 'radial-gradient(circle, rgba(34, 197, 94, 0.3) 0%, rgba(34, 197, 94, 0.1) 50%, transparent 70%)',
+                boxShadow: '0 0 30px rgba(34, 197, 94, 0.6), inset 0 0 30px rgba(34, 197, 94, 0.3)'
+              }}
+              variants={prefersReducedMotion ? {} : interdimensionalGlitch}
+              animate={prefersReducedMotion ? {} : 'animate'}
+            />
+            <motion.div
+              className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-xs font-bold text-green-400 text-center"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.5 }}
+            >
+              Wubba lubba<br />dub dub!
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+      
+      {/* Click counter hint for easter egg */}
+      {clickCount >= 5 && clickCount < 10 && (
+        <motion.div
+          className="absolute -bottom-8 left-1/2 transform -translate-x-1/2 text-xs text-gray-400 text-center pointer-events-none"
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: 10 }}
+        >
+          Keep clicking... {10 - clickCount} more!
+        </motion.div>
+      )}
     </div>
   );
 };

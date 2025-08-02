@@ -1,16 +1,18 @@
 import React, { useState } from 'react';
-import { motion } from 'framer-motion';
-import { Check, Zap, Crown, Star, ArrowRight } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Check, Zap, Crown, Star, ArrowRight, Sparkles } from 'lucide-react';
 import { Button } from '@components/ui/Button';
 import { Card } from '@components/ui/Card';
 import { ScrollAnimation } from '@components/ui/ScrollAnimation';
 import { useReducedMotion } from '@hooks/useReducedMotion';
+import { useToast } from '@components/ui/Notifications';
 import { plumbusModels } from '@utils/data';
-import { staggerContainer, scaleIn } from '@utils/animations';
+import { staggerContainer, scaleIn, cardTilt } from '@utils/animations';
 
 export const Pricing: React.FC = () => {
   const [selectedModel, setSelectedModel] = useState<string>('premium');
   const prefersReducedMotion = useReducedMotion();
+  const toast = useToast();
 
   const modelIcons = {
     basic: Zap,
@@ -18,10 +20,34 @@ export const Pricing: React.FC = () => {
     enterprise: Crown,
   };
 
+  const [purchaseStates, setPurchaseStates] = useState<{[key: string]: 'idle' | 'loading' | 'success'}>({});
+  const [hoveredCard, setHoveredCard] = useState<string | null>(null);
+  const [celebrationCard, setCelebrationCard] = useState<string | null>(null);
+
   const handlePurchase = (modelId: string) => {
-    // In a real app, this would integrate with a payment processor
-    console.log(`Purchasing ${modelId} Plumbus`);
-    alert(`Redirecting to checkout for ${modelId} Plumbus...`);
+    setPurchaseStates(prev => ({ ...prev, [modelId]: 'loading' }));
+    
+    // Show delightful loading toast
+    toast.plumbus('Processing your order...', 'Preparing your Plumbus for interdimensional shipping');
+    
+    // Trigger celebration animation
+    setCelebrationCard(modelId);
+    setTimeout(() => setCelebrationCard(null), 3000);
+    
+    // Simulate purchase process
+    setTimeout(() => {
+      setPurchaseStates(prev => ({ ...prev, [modelId]: 'success' }));
+      
+      // Show success notification
+      toast.plumbus('Wubba Lubba Dub Dub!', `Your ${modelId} Plumbus is ready! Redirecting to checkout...`);
+      
+      // Reset after showing success
+      setTimeout(() => {
+        setPurchaseStates(prev => ({ ...prev, [modelId]: 'idle' }));
+        // In a real app, this would integrate with a payment processor
+        console.log(`Purchasing ${modelId} Plumbus`);
+      }, 1500);
+    }, 2000);
   };
 
   return (
@@ -61,19 +87,50 @@ export const Pricing: React.FC = () => {
                 variants={prefersReducedMotion ? {} : scaleIn}
                 custom={index}
               >
-                <div 
+                <motion.div 
                   className={`relative ${isPopular ? 'transform scale-105' : ''}`}
                   onClick={() => setSelectedModel(model.id)}
+                  onHoverStart={() => setHoveredCard(model.id)}
+                  onHoverEnd={() => setHoveredCard(null)}
+                  whileHover={prefersReducedMotion ? {} : {
+                    ...cardTilt,
+                    transition: { duration: 0.3 }
+                  }}
                 >
                   {/* Popular badge */}
                   {isPopular && (
-                    <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 z-10">
-                      <div className="bg-gradient-to-r from-pink-500 to-purple-600 text-white px-6 py-2 rounded-full text-sm font-bold shadow-lg">
-                        Most Popular
+                    <motion.div 
+                      className="absolute -top-4 left-1/2 transform -translate-x-1/2 z-10"
+                      animate={prefersReducedMotion ? {} : {
+                        y: [0, -2, 0],
+                        scale: [1, 1.05, 1]
+                      }}
+                      transition={prefersReducedMotion ? {} : {
+                        duration: 2,
+                        repeat: Infinity,
+                        ease: 'easeInOut'
+                      }}
+                    >
+                      <div className="bg-gradient-to-r from-pink-500 to-purple-600 text-white px-6 py-2 rounded-full text-sm font-bold shadow-lg flex items-center space-x-1">
+                        <Sparkles size={14} />
+                        <span>Most Popular</span>
+                        <Sparkles size={14} />
                       </div>
-                    </div>
+                    </motion.div>
                   )}
 
+                  <motion.div
+                    whileHover={prefersReducedMotion ? {} : {
+                      y: isPopular ? -4 : -8,
+                      scale: 1.02,
+                      transition: { duration: 0.3, ease: 'easeOut' }
+                    }}
+                    animate={celebrationCard === model.id && !prefersReducedMotion ? {
+                      scale: [1, 1.05, 1],
+                      rotate: [0, 2, -2, 0],
+                      transition: { duration: 0.6, ease: 'easeInOut' }
+                    } : {}}
+                  >
                   <Card 
                     hover
                     className={`h-full cursor-pointer transition-all duration-300 ${
@@ -87,13 +144,24 @@ export const Pricing: React.FC = () => {
                     <div className="text-center space-y-6">
                       {/* Icon and title */}
                       <div className="space-y-4">
-                        <div className={`inline-flex items-center justify-center w-16 h-16 rounded-xl ${
-                          isPopular 
-                            ? 'bg-gradient-to-br from-pink-500 to-purple-600 text-white' 
-                            : 'bg-gradient-to-br from-gray-100 to-gray-200 text-gray-600'
-                        }`}>
+                        <motion.div 
+                          className={`inline-flex items-center justify-center w-16 h-16 rounded-xl ${
+                            isPopular 
+                              ? 'bg-gradient-to-br from-pink-500 to-purple-600 text-white' 
+                              : 'bg-gradient-to-br from-gray-100 to-gray-200 text-gray-600'
+                          }`}
+                          whileHover={prefersReducedMotion ? {} : {
+                            rotate: [0, -5, 5, 0],
+                            scale: 1.1,
+                            transition: { duration: 0.4 }
+                          }}
+                          animate={hoveredCard === model.id && !prefersReducedMotion ? {
+                            y: [0, -5, 0],
+                            transition: { duration: 1, repeat: Infinity }
+                          } : {}}
+                        >
                           <IconComponent size={32} />
-                        </div>
+                        </motion.div>
                         
                         <div>
                           <h3 className="text-2xl font-bold text-gray-900 mb-2">
@@ -119,34 +187,114 @@ export const Pricing: React.FC = () => {
                       </div>
 
                       {/* Features */}
-                      <div className="space-y-3 text-left">
+                      <motion.div 
+                        className="space-y-3 text-left"
+                        variants={prefersReducedMotion ? {} : staggerContainer}
+                        initial="hidden"
+                        whileInView="visible"
+                        viewport={{ once: true }}
+                      >
                         {model.features.map((feature, featureIndex) => (
-                          <div key={featureIndex} className="flex items-start space-x-3">
-                            <div className="flex-shrink-0 w-5 h-5 bg-green-100 rounded-full flex items-center justify-center mt-0.5">
+                          <motion.div 
+                            key={featureIndex} 
+                            className="flex items-start space-x-3"
+                            variants={prefersReducedMotion ? {} : scaleIn}
+                            whileHover={prefersReducedMotion ? {} : {
+                              x: 5,
+                              transition: { duration: 0.2 }
+                            }}
+                          >
+                            <motion.div 
+                              className="flex-shrink-0 w-5 h-5 bg-green-100 rounded-full flex items-center justify-center mt-0.5"
+                              whileHover={prefersReducedMotion ? {} : {
+                                scale: 1.2,
+                                backgroundColor: '#10b981',
+                                transition: { duration: 0.2 }
+                              }}
+                            >
                               <Check size={12} className="text-green-600" />
-                            </div>
+                            </motion.div>
                             <span className="text-gray-700 text-sm leading-relaxed">
                               {feature}
                             </span>
-                          </div>
+                          </motion.div>
                         ))}
-                      </div>
+                      </motion.div>
 
                       {/* CTA Button */}
                       <div className="pt-4">
                         <Button
                           variant={isPopular ? "primary" : "secondary"}
                           size="lg"
-                          className="w-full"
+                          className="w-full relative overflow-hidden"
+                          loading={purchaseStates[model.id] === 'loading'}
+                          success={purchaseStates[model.id] === 'success'}
+                          showConfetti={purchaseStates[model.id] === 'success'}
                           onClick={() => handlePurchase(model.id)}
                         >
-                          <span>{model.buttonText}</span>
-                          <ArrowRight size={16} className="ml-2" />
+                          <AnimatePresence mode="wait">
+                            {purchaseStates[model.id] === 'success' ? (
+                              <motion.span
+                                key="success"
+                                initial={{ opacity: 0, y: 10 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                exit={{ opacity: 0, y: -10 }}
+                                className="flex items-center"
+                              >
+                                <Check size={16} className="mr-2" />
+                                Added to Cart!
+                              </motion.span>
+                            ) : (
+                              <motion.span
+                                key="default"
+                                initial={{ opacity: 0, y: 10 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                exit={{ opacity: 0, y: -10 }}
+                                className="flex items-center"
+                              >
+                                <span>{model.buttonText}</span>
+                                <ArrowRight size={16} className="ml-2" />
+                              </motion.span>
+                            )}
+                          </AnimatePresence>
                         </Button>
                       </div>
                     </div>
                   </Card>
-                </div>
+                  
+                  {/* Celebration particles */}
+                  <AnimatePresence>
+                    {celebrationCard === model.id && !prefersReducedMotion && (
+                      <div className="absolute inset-0 pointer-events-none overflow-hidden">
+                        {[...Array(8)].map((_, i) => (
+                          <motion.div
+                            key={i}
+                            className="absolute w-2 h-2 bg-gradient-to-r from-pink-400 to-purple-400 rounded-full"
+                            style={{
+                              left: `${20 + i * 10}%`,
+                              top: `${30 + (i % 3) * 20}%`,
+                            }}
+                            initial={{ scale: 0, opacity: 0 }}
+                            animate={{
+                              scale: [0, 1.5, 0],
+                              opacity: [0, 1, 0],
+                              y: [0, -50],
+                              x: [(Math.random() - 0.5) * 100],
+                              rotate: [0, 360],
+                            }}
+                            exit={{ opacity: 0 }}
+                            transition={{
+                              duration: 2,
+                              ease: 'easeOut',
+                              delay: i * 0.1,
+                            }}
+                          />
+                        ))}
+                      </div>
+                    )}
+                  </AnimatePresence>
+                </motion.div>
+                </motion.div>
               </motion.div>
             );
           })}

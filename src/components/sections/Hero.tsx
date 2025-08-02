@@ -3,11 +3,13 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowDown, Sparkles } from 'lucide-react';
 import { Button } from '@components/ui/Button';
 import { InteractivePlumbus } from '@components/plumbus/InteractivePlumbus';
+import { FloatingElement, MouseFollower, ParticleSystem } from '@components/ui/ParallaxScroll';
 import { useReducedMotion } from '@hooks/useReducedMotion';
-import { fadeInUp, fadeInDown, staggerContainer } from '@utils/animations';
+import { fadeInUp, fadeInDown, staggerContainer, floatingBubble, sparkleTrail, bounceIn } from '@utils/animations';
 
 export const Hero: React.FC = () => {
   const [selectedHotspot, setSelectedHotspot] = useState<string | null>(null);
+  const [showFloatingElements] = useState(true);
   const prefersReducedMotion = useReducedMotion();
 
   const scrollToFeatures = () => {
@@ -19,11 +21,45 @@ export const Hero: React.FC = () => {
 
   return (
     <section id="hero" className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-pink-50 via-white to-purple-50">
-      {/* Background decoration */}
+      {/* Enhanced background decoration */}
       <div className="absolute inset-0 overflow-hidden">
         <div className="absolute -top-40 -right-40 w-80 h-80 bg-pink-200 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob" />
         <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-purple-200 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-2000" />
         <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-80 h-80 bg-yellow-200 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-4000" />
+        
+        {/* Floating elements */}
+        {showFloatingElements && (
+          <>
+            {[...Array(8)].map((_, i) => (
+              <motion.div
+                key={i}
+                className="absolute w-4 h-4 bg-gradient-to-r from-pink-300 to-purple-300 rounded-full opacity-40"
+                style={{
+                  left: `${10 + i * 12}%`,
+                  top: `${20 + (i % 3) * 25}%`,
+                }}
+                variants={prefersReducedMotion ? {} : floatingBubble}
+                animate={prefersReducedMotion ? {} : 'animate'}
+                custom={i}
+              />
+            ))}
+            
+            {/* Sparkle trail */}
+            {[...Array(5)].map((_, i) => (
+              <motion.div
+                key={`sparkle-${i}`}
+                className="absolute w-2 h-2 bg-yellow-300 rounded-full opacity-60"
+                style={{
+                  right: `${5 + i * 8}%`,
+                  top: `${30 + i * 10}%`,
+                }}
+                variants={prefersReducedMotion ? {} : sparkleTrail}
+                animate={prefersReducedMotion ? {} : 'animate'}
+                custom={i}
+              />
+            ))}
+          </>
+        )}
       </div>
 
       <div className="container mx-auto px-4 py-20 relative z-10">
@@ -48,22 +84,80 @@ export const Hero: React.FC = () => {
               </motion.div>
               
               <h1 className="text-5xl lg:text-7xl font-bold text-gray-900 leading-tight">
-                Meet the{' '}
-                <span className="text-gradient bg-gradient-to-r from-pink-500 to-purple-600 bg-clip-text text-transparent">
+                <motion.span
+                  variants={prefersReducedMotion ? {} : bounceIn}
+                  className="inline-block"
+                >
+                  Meet the{' '}
+                </motion.span>
+                <motion.span 
+                  className="text-gradient bg-gradient-to-r from-pink-500 to-purple-600 bg-clip-text text-transparent inline-block"
+                  variants={prefersReducedMotion ? {} : bounceIn}
+                  whileHover={prefersReducedMotion ? {} : {
+                    scale: 1.05,
+                    rotate: [0, 2, -2, 0],
+                    transition: { duration: 0.4 }
+                  }}
+                >
                   Plumbus
-                </span>
+                </motion.span>
               </h1>
               
-              <p className="text-xl text-gray-600 max-w-2xl">
+              <motion.p 
+                className="text-xl text-gray-600 max-w-2xl"
+                variants={prefersReducedMotion ? {} : fadeInUp}
+                whileInView={prefersReducedMotion ? {} : {
+                  opacity: [0.8, 1, 0.8],
+                  transition: { duration: 3, repeat: Infinity }
+                }}
+              >
                 The mysterious multi-purpose household device that everyone has but nobody fully understands. 
                 Now available with advanced dinglebop technology and quantum fleeb integration.
-              </p>
+              </motion.p>
             </div>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
-              <Button variant="primary" size="lg" className="text-lg px-8 py-4">
-                Get Your Plumbus - $149
-              </Button>
+              <motion.div
+                whileHover={prefersReducedMotion ? {} : { scale: 1.02 }}
+                whileTap={prefersReducedMotion ? {} : { scale: 0.98 }}
+              >
+                <Button 
+                  variant="primary" 
+                  size="lg" 
+                  className="text-lg px-8 py-4 relative overflow-hidden"
+                >
+                  <span className="relative z-10">Get Your Plumbus - $149</span>
+                  {/* Enhanced shimmer effect */}
+                  <motion.div
+                    className="absolute inset-0 bg-gradient-to-r from-transparent via-white to-transparent opacity-20 rounded-lg"
+                    animate={prefersReducedMotion ? {} : {
+                      x: ['-100%', '100%'],
+                      scale: [1, 1.02, 1]
+                    }}
+                    transition={prefersReducedMotion ? {} : {
+                      duration: 2.5,
+                      repeat: Infinity,
+                      ease: 'easeInOut',
+                      repeatDelay: 4
+                    }}
+                  />
+                  
+                  {/* Pulse effect */}
+                  <motion.div
+                    className="absolute inset-0 bg-pink-400 rounded-lg opacity-10"
+                    animate={prefersReducedMotion ? {} : {
+                      scale: [1, 1.05, 1],
+                      opacity: [0.1, 0.2, 0.1]
+                    }}
+                    transition={prefersReducedMotion ? {} : {
+                      duration: 3,
+                      repeat: Infinity,
+                      ease: 'easeInOut'
+                    }}
+                  />
+                </Button>
+              </motion.div>
+              
               <Button 
                 variant="secondary" 
                 size="lg" 
@@ -74,20 +168,46 @@ export const Hero: React.FC = () => {
               </Button>
             </div>
 
-            <div className="flex items-center justify-center lg:justify-start space-x-8 text-sm text-gray-500">
-              <div className="flex items-center space-x-2">
-                <div className="w-2 h-2 bg-green-500 rounded-full" />
-                <span>Quantum Certified</span>
-              </div>
-              <div className="flex items-center space-x-2">
-                <div className="w-2 h-2 bg-blue-500 rounded-full" />
-                <span>Interdimensional Shipping</span>
-              </div>
-              <div className="flex items-center space-x-2">
-                <div className="w-2 h-2 bg-purple-500 rounded-full" />
-                <span>Rick Approved</span>
-              </div>
-            </div>
+            <motion.div 
+              className="flex items-center justify-center lg:justify-start space-x-8 text-sm text-gray-500"
+              variants={prefersReducedMotion ? {} : staggerContainer}
+              initial="hidden"
+              animate="visible"
+            >
+              {[
+                { color: 'bg-green-500', text: 'Quantum Certified', icon: '⚛️' },
+                { color: 'bg-blue-500', text: 'Interdimensional Shipping', icon: '🌀' },
+                { color: 'bg-purple-500', text: 'Rick Approved', icon: '🧪' }
+              ].map((item, index) => (
+                <motion.div 
+                  key={index}
+                  className="flex items-center space-x-2"
+                  variants={prefersReducedMotion ? {} : fadeInUp}
+                  whileHover={prefersReducedMotion ? {} : {
+                    scale: 1.05,
+                    y: -2,
+                    transition: { duration: 0.2 }
+                  }}
+                >
+                  <motion.div 
+                    className={`w-2 h-2 ${item.color} rounded-full`}
+                    animate={prefersReducedMotion ? {} : {
+                      scale: [1, 1.2, 1],
+                      opacity: [0.7, 1, 0.7]
+                    }}
+                    transition={prefersReducedMotion ? {} : {
+                      duration: 2 + index * 0.5,
+                      repeat: Infinity,
+                      ease: 'easeInOut',
+                      delay: index * 0.3
+                    }}
+                  />
+                  <span className="hover:text-gray-700 transition-colors cursor-default">
+                    {item.icon} {item.text}
+                  </span>
+                </motion.div>
+              ))}
+            </motion.div>
           </motion.div>
 
           {/* Right side - Interactive Plumbus */}
@@ -96,10 +216,14 @@ export const Hero: React.FC = () => {
             variants={prefersReducedMotion ? {} : fadeInUp}
           >
             <div className="relative">
-              <InteractivePlumbus 
-                onHotspotSelect={setSelectedHotspot}
-                selectedHotspot={selectedHotspot}
-              />
+              <MouseFollower intensity={0.05} className="relative">
+                <FloatingElement intensity={15} duration={6} className="relative">
+                  <InteractivePlumbus 
+                    onHotspotSelect={setSelectedHotspot}
+                    selectedHotspot={selectedHotspot}
+                  />
+                </FloatingElement>
+              </MouseFollower>
               
               {/* Hotspot tooltip */}
               <AnimatePresence>
@@ -129,30 +253,79 @@ export const Hero: React.FC = () => {
                   </motion.div>
                 )}
               </AnimatePresence>
+              
+              {/* Background particle system */}
+              <ParticleSystem 
+                count={12}
+                colors={['#f9a8d4', '#c084fc', '#fbbf24', '#60a5fa', '#34d399']}
+                size={{ min: 3, max: 8 }}
+                speed={{ min: 15, max: 25 }}
+                className="absolute inset-0 -z-10"
+              />
             </div>
           </motion.div>
         </motion.div>
 
-        {/* Scroll indicator */}
+        {/* Enhanced scroll indicator */}
         <motion.div
           className="absolute bottom-8 left-1/2 transform -translate-x-1/2"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 1, duration: 0.6 }}
         >
-          <button
+          <motion.button
             onClick={scrollToFeatures}
-            className="flex flex-col items-center space-y-2 text-gray-500 hover:text-pink-600 transition-colors p-4 focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-offset-2 rounded-lg"
+            className="group flex flex-col items-center space-y-2 text-gray-500 hover:text-pink-600 transition-colors p-4 focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-offset-2 rounded-lg"
             aria-label="Scroll to features"
+            whileHover={prefersReducedMotion ? {} : { scale: 1.05 }}
+            whileTap={prefersReducedMotion ? {} : { scale: 0.95 }}
           >
-            <span className="text-sm font-medium">Discover Features</span>
+            <span className="text-sm font-medium group-hover:text-pink-600 transition-colors">Discover Features</span>
+            
+            {/* Animated arrow with trail effect */}
+            <div className="relative">
+              <motion.div
+                animate={prefersReducedMotion ? {} : { y: [0, 8, 0] }}
+                transition={prefersReducedMotion ? {} : { duration: 2, repeat: Infinity }}
+              >
+                <ArrowDown size={20} className="relative z-10" />
+              </motion.div>
+              
+              {/* Trail arrows */}
+              {!prefersReducedMotion && (
+                <>
+                  <motion.div
+                    className="absolute inset-0 opacity-50"
+                    animate={{ y: [0, 8, 0] }}
+                    transition={{ duration: 2, repeat: Infinity, delay: 0.1 }}
+                  >
+                    <ArrowDown size={20} />
+                  </motion.div>
+                  <motion.div
+                    className="absolute inset-0 opacity-25"
+                    animate={{ y: [0, 8, 0] }}
+                    transition={{ duration: 2, repeat: Infinity, delay: 0.2 }}
+                  >
+                    <ArrowDown size={20} />
+                  </motion.div>
+                </>
+              )}
+            </div>
+            
+            {/* Pulsing ring indicator */}
             <motion.div
-              animate={prefersReducedMotion ? {} : { y: [0, 8, 0] }}
-              transition={prefersReducedMotion ? {} : { duration: 2, repeat: Infinity }}
-            >
-              <ArrowDown size={20} />
-            </motion.div>
-          </button>
+              className="absolute inset-0 rounded-lg border-2 border-pink-300 opacity-0 group-hover:opacity-100 transition-opacity"
+              animate={prefersReducedMotion ? {} : {
+                scale: [1, 1.1, 1],
+                opacity: [0.3, 0.6, 0.3]
+              }}
+              transition={prefersReducedMotion ? {} : {
+                duration: 2,
+                repeat: Infinity,
+                ease: 'easeInOut'
+              }}
+            />
+          </motion.button>
         </motion.div>
       </div>
 
