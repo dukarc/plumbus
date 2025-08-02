@@ -1,0 +1,39 @@
+# Dependencies
+node_modules/
+vendor/
+venv/
+env/
+.env
+
+# Build outputs
+dist/
+build/
+out/
+*.pyc
+__pycache__/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+logs/
+
+# Testing
+coverage/
+.coverage
+.pytest_cache/
+.phpunit.result.cache
+
+# Misc
+.cache/
+tmp/
+temp/
