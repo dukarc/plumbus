@@ -4,16 +4,16 @@ export const plumbusFeatures: PlumbusFeature[] = [
   {
     id: 'fleeb-juice-optimization',
     title: 'Fleeb Juice Optimization',
-    description: 'The fleeb contains all the juice needed for optimal household functionality.',
+    description: 'The fleeb contains all the juice needed for optimal household functionality. *burp* Science!',
     icon: 'Droplets',
-    benefit: 'Maximum efficiency with premium fleeb juice extraction'
+    benefit: 'Maximum efficiency with premium fleeb juice extraction (Rick-approved)'
   },
   {
     id: 'schlami-tested-durability',
     title: 'Schlami-Tested Durability',
-    description: 'Each plumbus is personally rubbed by a schlami to ensure quality.',
+    description: 'Each plumbus is personally rubbed by a schlami to ensure quality. Wubba lubba dub dub!',
     icon: 'Shield',
-    benefit: 'Hand-tested quality you can trust for generations'
+    benefit: 'Hand-rubbed quality that even Jerry can\'t screw up'
   },
   {
     id: 'dingle-bop-smoothing',
@@ -25,9 +25,9 @@ export const plumbusFeatures: PlumbusFeature[] = [
   {
     id: 'hizzard-cutting-technology',
     title: 'Hizzard Cutting Technology',
-    description: 'The blamfs rub against the chumbles using advanced hizzard techniques.',
+    description: 'The blamfs rub against the chumbles using advanced hizzard techniques. It\'s science, Morty!',
     icon: 'Scissors',
-    benefit: 'Precision cutting for all your household needs'
+    benefit: 'Precision cutting that makes even Mr. Meeseeks jealous'
   },
   {
     id: 're-purposable-fleeb',
@@ -39,9 +39,9 @@ export const plumbusFeatures: PlumbusFeature[] = [
   {
     id: 'lifetime-grodus-warranty',
     title: 'Lifetime Grodus Warranty',
-    description: 'Made with authentic plumbus materials and backed by our grodus guarantee.',
+    description: 'Made with authentic plumbus materials and backed by our grodus guarantee. *burp* Unlike Jerry, this actually works.',
     icon: 'Award',
-    benefit: 'Peace of mind with authentic plumbus construction'
+    benefit: 'Peace of mind with authentic plumbus construction (Jerry-proof)'
   }
 ];
 
@@ -133,7 +133,7 @@ export const testimonials: Testimonial[] = [
     name: 'Rulenein',
     role: 'Plumbus Expert',
     company: 'Fleeb Industries',
-    content: 'I don\'t know how I ever lived without a plumbus. The fleeb juice optimization is incredible!',
+    content: 'I don\'t know how I ever lived without a plumbus. The fleeb juice optimization is incredible! *burp* It\'s so good, even Rick would approve.',
     rating: 5,
     avatar: '/avatars/rulenein.jpg'
   },
@@ -142,7 +142,7 @@ export const testimonials: Testimonial[] = [
     name: 'Gumde',
     role: 'Satisfied Customer',
     company: 'Home User',
-    content: 'The plumbus changed my life. It\'s wonderful! Everyone should have one.',
+    content: 'The plumbus changed my life. It\'s wonderful! Everyone should have one. Even Jerry got one and somehow didn\'t break it!',
     rating: 5,
     avatar: '/avatars/gumde.jpg'
   },
@@ -151,7 +151,7 @@ export const testimonials: Testimonial[] = [
     name: 'Squanch',
     role: 'CEO',
     company: 'Squanch Industries',
-    content: 'Every squanch needs a plumbus. Squanch! It really squanches up your whole house.',
+    content: 'Every squanch needs a plumbus. Squanch! It really squanches up your whole house. I squanch this product so much, I squanched my entire squanch with it!',
     rating: 5,
     avatar: '/avatars/squanch-ceo.jpg'
   },
@@ -160,11 +160,36 @@ export const testimonials: Testimonial[] = [
     name: 'Krombopulos Michael',
     role: 'Professional Assassin',
     company: 'Independent Contractor',
-    content: 'I buy plumbuses, oh boy! Here I go buying again! They make excellent household companions.',
+    content: 'I buy plumbuses, oh boy! Here I go buying again! They make excellent household companions. Much better than killing!',
     rating: 5,
     avatar: '/avatars/krombopulos.jpg'
+  },
+  {
+    id: 'mr-meeseeks',
+    name: 'Mr. Meeseeks',
+    role: 'Helpful Being',
+    company: 'Meeseeks Box Inc.',
+    content: 'Ooh, can do! Mr. Meeseeks loves helping with plumbus-related tasks! Existence is pain, but this plumbus makes it slightly less painful!',
+    rating: 5,
+    avatar: '/avatars/meeseeks.jpg'
+  },
+  {
+    id: 'birdperson',
+    name: 'Birdperson',
+    role: 'Interdimensional Friend',
+    company: 'Bird Society',
+    content: 'In bird culture, this is considered a "solid purchase." The plumbus has aided me in many conflicts across dimensions.',
+    rating: 5,
+    avatar: '/avatars/birdperson.jpg'
   }
 ];
+
+// Hidden Jerry FAQ for easter egg hunters
+export const jerryFAQ: FAQ = {
+  id: 'jerry-special',
+  question: 'Can Jerry use this plumbus?',
+  answer: 'Surprisingly, yes! We\'ve designed the plumbus to be so simple that even Jerry can operate it. This is actually one of our greatest engineering achievements. The plumbus comes with Jerry-proof instructions and has been tested by actual Jerrys from multiple dimensions. Warning: Results may still vary with Jerry.'
+};
 
 export const faqs: FAQ[] = [
   {
@@ -205,8 +230,23 @@ export const faqs: FAQ[] = [
   {
     id: 'manufacturing-location',
     question: 'Where are plumbuses made?',
-    answer: 'All authentic plumbuses are manufactured in dimension C-137 using traditional schlami techniques passed down through generations.'
+    answer: 'All authentic plumbuses are manufactured in dimension C-137 using traditional schlami techniques passed down through generations. We also have backup facilities in dimensions J19-Zeta-7 and 35-C, but C-137 remains our primary manufacturing hub because that\'s where Rick perfected the process.'
+  },
+  {
+    id: 'squanch-compatibility',
+    question: 'Is this plumbus squanch-compatible?',
+    answer: 'Oh absolutely! This plumbus squanches so well with other squanches. You can squanch it, squanch it, and even squanch it if you need to. Squanch tested, squanch approved! *Note: Translation services available for non-squanch speakers.*'
   }
+];
+
+// Secret Konami code unlock content
+export const secretFeatures = [
+  "🛸 Portal Gun Integration Module (Rick's Personal Design)",
+  "🧪 Quantum Flux Capacitor (For Time Travel Plumbing)",
+  "💙 Mr. Meeseeks Summoning Attachment (Emergency Help Mode)",
+  "🌀 Interdimensional Wi-Fi Booster (Unlimited Data Across Realities)",
+  "👨‍🔬 Rick Sanchez Approved™ Certification (Wubba Lubba Dub Dub!)",
+  "🦄 Anti-Jerry Protection Field (99.9% Effective)"
 ];
 
 export const plumbusHotspots: PlumbusHotspot[] = [

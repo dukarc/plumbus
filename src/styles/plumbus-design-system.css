@@ -23,6 +23,12 @@
   --warning-orange: #FF9800;   /* Warnings only */
   --error-red: #F44336;        /* Errors only */
   
+  /* ORGANIC PLUMBUS COLORS - For illustrations and organic elements */
+  --flesh-light: #E8B5A8;      /* Light organic flesh tone */
+  --flesh-medium: #C08876;     /* Medium organic flesh tone */
+  --flesh-dark: #A67360;       /* Dark organic flesh tone */
+  --fleeb-fluid: #94BAD1;      /* Organic fluid color */
+  
   /* NEUTRAL GRAYS - For subtle elements */
   --gray-50: #FAFAFA;
   --gray-100: #F5F5F5;
@@ -162,6 +168,11 @@ h6 { font-size: var(--text-lg); }
 
 .button-primary:hover {
   background: #E16B8C; /* slightly darker pink */
+}
+
+/* Header-specific button variant - smaller padding for navigation context */
+.button-primary-header {
+  padding: 0.75rem 1.5rem; /* Reduced from default --space-2 --space-4 for header */
 }
 
 .button-secondary {
@@ -307,6 +318,17 @@ h6 { font-size: var(--text-lg); }
   height: 48px;
   border-radius: 50%;
   border: 2px solid var(--plumbus-pink);
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.testimonial-avatar-mini {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 2px solid var(--plumbus-pink);
+  overflow: hidden;
+  flex-shrink: 0;
 }
 
 .testimonial-author-info h4 {
@@ -352,6 +374,7 @@ h6 { font-size: var(--text-lg); }
 
 .plumbus-nav-menu {
   display: flex;
+  align-items: center;
   gap: var(--space-2);
   list-style: none;
   margin: 0;
@@ -1407,15 +1430,143 @@ h6 { font-size: var(--text-lg); }
   transform: translateX(5px);
 }
 
+/* Rick & Morty themed whimsy classes */
+.rick-style {
+  font-style: italic;
+  position: relative;
+}
+
+.rick-style::before {
+  content: '*burp* ';
+  color: var(--fleeb-blue);
+  font-weight: bold;
+}
+
+.morty-nervous {
+  animation: mortySway 2s ease-in-out infinite;
+}
+
+@keyframes mortySway {
+  0%, 100% { transform: translateX(0px); }
+  25% { transform: translateX(-2px); }
+  75% { transform: translateX(2px); }
+}
+
+.jerry-incompetent {
+  opacity: 0.7;
+  filter: blur(0.5px);
+  transition: all 0.3s ease;
+}
+
+.jerry-incompetent:hover {
+  opacity: 1;
+  filter: blur(0px);
+}
+
+.squanch-word {
+  color: var(--plumbus-pink);
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.squanch-word:hover {
+  transform: scale(1.1);
+  text-shadow: 0 0 5px var(--plumbus-pink);
+}
+
+.dimensional-glitch {
+  animation: dimensionalShift 3s ease-in-out infinite;
+}
+
+@keyframes dimensionalShift {
+  0%, 100% { 
+    transform: translateX(0px) translateY(0px); 
+    filter: hue-rotate(0deg);
+  }
+  25% { 
+    transform: translateX(1px) translateY(-1px); 
+    filter: hue-rotate(90deg);
+  }
+  50% { 
+    transform: translateX(-1px) translateY(1px); 
+    filter: hue-rotate(180deg);
+  }
+  75% { 
+    transform: translateX(1px) translateY(1px); 
+    filter: hue-rotate(270deg);
+  }
+}
+
+.portal-gun-effect {
+  position: relative;
+  overflow: hidden;
+}
+
+.portal-gun-effect::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background: radial-gradient(circle, var(--fleeb-blue) 0%, transparent 70%);
+  transform: translate(-50%, -50%);
+  transition: all 0.3s ease;
+  border-radius: 50%;
+  opacity: 0;
+}
+
+.portal-gun-effect:hover::after {
+  width: 100px;
+  height: 100px;
+  opacity: 0.3;
+}
+
+.meeseeks-attention {
+  animation: meeseksBounce 1s ease-in-out infinite;
+}
+
+@keyframes meeseksBounce {
+  0%, 100% { transform: translateY(0px) scale(1); }
+  50% { transform: translateY(-5px) scale(1.02); }
+}
+
+.science-approved {
+  position: relative;
+}
+
+.science-approved::after {
+  content: '🧪';
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  font-size: 12px;
+  animation: scienceGlow 2s ease-in-out infinite;
+}
+
+@keyframes scienceGlow {
+  0%, 100% { opacity: 0.5; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.2); }
+}
+
 /* Reduced motion support for whimsy */
 @media (prefers-reduced-motion: reduce) {
   .whimsy-button,
   .whimsy-card,
   .plumbus-part,
   .assembly-step-wobble,
-  .arrow-nudge {
+  .arrow-nudge,
+  .morty-nervous,
+  .dimensional-glitch,
+  .meeseeks-attention,
+  .science-approved::after {
     transition: none !important;
     animation: none !important;
+  }
+  
+  .portal-gun-effect:hover::after {
+    opacity: 0 !important;
   }
   
   .floating-gentle,
@@ -1468,6 +1619,10 @@ h6 { font-size: var(--text-lg); }
 .text-blamf-brown { color: var(--blamf-brown) !important; }
 .text-white { color: var(--white) !important; }
 .text-fleeb-blue { color: var(--fleeb-blue) !important; }
+.text-flesh-light { color: var(--flesh-light) !important; }
+.text-flesh-medium { color: var(--flesh-medium) !important; }
+.text-flesh-dark { color: var(--flesh-dark) !important; }
+.text-fleeb-fluid { color: var(--fleeb-fluid) !important; }
 
 /* Fill utility classes for icons */
 .fill-current { fill: currentColor !important; }

@@ -76,8 +76,10 @@ export const Testimonials: React.FC = () => {
 
               {/* Mini author */}
               <div className="flex items-center pt-3" style={{ gap: 'var(--space-2)', borderTop: '2px solid var(--gray-200)' }}>
-                <div className="w-10 h-10 rounded-full flex items-center justify-center text-white text-sm font-bold" style={{ backgroundColor: 'var(--plumbus-pink)' }}>
-                  {testimonial.name.charAt(0)}
+                <div className="testimonial-avatar-mini">
+                  <div className="w-full h-full rounded-full flex items-center justify-center text-white font-bold" style={{ backgroundColor: 'var(--plumbus-pink)' }}>
+                    {testimonial.name.charAt(0)}
+                  </div>
                 </div>
                 <div>
                   <div style={{ fontWeight: '600', fontSize: 'var(--text-sm)', color: 'var(--blamf-brown)' }}>

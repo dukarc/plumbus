@@ -55,10 +55,7 @@ export const Header: React.FC = () => {
               className="header-logo"
               aria-label="Go to homepage"
             >
-              <div className="header-logo-icon">
-                <span>P</span>
-              </div>
-              <span>lumbus</span>
+              <span>Plumbus</span>
             </button>
           </div>
 
@@ -80,7 +77,7 @@ export const Header: React.FC = () => {
             ))}
             <li>
               <button 
-                className="button-primary whimsy-button"
+                className="button-primary button-primary-header whimsy-button"
                 onClick={() => {
                   const pricingElement = document.getElementById('pricing');
                   if (pricingElement) {
@@ -123,7 +120,7 @@ export const Header: React.FC = () => {
               ))}
               <div className="mobile-menu-divider">
                 <button 
-                  className="button-primary whimsy-button w-full"
+                  className="button-primary button-primary-header whimsy-button w-full"
                   onClick={() => {
                     const pricingElement = document.getElementById('pricing');
                     if (pricingElement) {

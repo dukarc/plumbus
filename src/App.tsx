@@ -6,21 +6,24 @@ import { Testimonials } from '@components/sections/Testimonials';
 import { Pricing } from '@components/sections/Pricing';
 import { FAQ } from '@components/sections/FAQ';
 import { Footer } from '@components/sections/Footer';
+import EasterEggManager from '@components/ui/EasterEggManager';
 
 function App() {
   return (
-    <div className="min-h-screen">
-      <Header />
-      <main>
-        <Hero />
-        <Features />
-        <Manufacturing />
-        <Testimonials />
-        <Pricing />
-        <FAQ />
-      </main>
-      <Footer />
-    </div>
+    <EasterEggManager>
+      <div className="min-h-screen">
+        <Header />
+        <main>
+          <Hero />
+          <Features />
+          <Manufacturing />
+          <Testimonials />
+          <Pricing />
+          <FAQ />
+        </main>
+        <Footer />
+      </div>
+    </EasterEggManager>
   );
 }
 

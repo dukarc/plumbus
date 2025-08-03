@@ -2,8 +2,15 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { ScrollAnimation } from '@components/ui/ScrollAnimation';
 import { useReducedMotion } from '@hooks/useReducedMotion';
-import { FormField, SubmitButton } from '@components/ui/FormField';
 import { LoadingDots } from '@components/ui/LoadingStates';
+
+// Type definitions for footer links
+interface FooterLink {
+  label: string;
+  href: string;
+  isEasterEgg?: boolean;
+}
+
 
 // Temporary icon components until we implement optimized icons
 const Mail = ({ size, className }: { size: number; className?: string }) => (
@@ -67,7 +74,7 @@ const ExternalLink = ({ size, className }: { size: number; className?: string })
   </svg>
 );
 
-const footerLinks = {
+const footerLinks: Record<string, FooterLink[]> = {
   product: [
     { label: 'Features', href: '#features' },
     { label: 'How It\'s Made', href: '#manufacturing' },
@@ -79,18 +86,21 @@ const footerLinks = {
     { label: 'User Manual', href: '/manual' },
     { label: 'Warranty', href: '/warranty' },
     { label: 'Returns', href: '/returns' },
+    { label: 'Squanch Support', href: '/squanch', isEasterEgg: true },
   ],
   company: [
     { label: 'About Us', href: '/about' },
     { label: 'Careers', href: '/careers' },
     { label: 'Press Kit', href: '/press' },
     { label: 'Blog', href: '/blog' },
+    { label: 'Rick\'s Lab Notes', href: '/lab-notes', isEasterEgg: true },
   ],
   legal: [
     { label: 'Privacy Policy', href: '/privacy' },
     { label: 'Terms of Service', href: '/terms' },
     { label: 'Cookie Policy', href: '/cookies' },
     { label: 'Interdimensional Law', href: '/interlaw' },
+    { label: 'Council of Ricks Agreement', href: '/council-ricks', isEasterEgg: true },
   ],
 };
 
@@ -99,6 +109,14 @@ const socialLinks = [
   { icon: Twitter, href: 'https://twitter.com/plumbus', label: 'Twitter' },
   { icon: Instagram, href: 'https://instagram.com/plumbus', label: 'Instagram' },
   { icon: Youtube, href: 'https://youtube.com/plumbus', label: 'YouTube' },
+];
+
+const rickQuotes = [
+  "*burp* Whatever, Morty. Just... just buy the plumbus.",
+  "Listen, I've seen a lot of plumbuses across infinite realities, and this one doesn't completely suck.",
+  "Wubba lubba dub dub! *burp* Everyone needs a plumbus, Morty!",
+  "Science, Morty! The plumbus is peak interdimensional engineering!",
+  "I don't care if you understand it, Morty. Just... *burp* ...just get the plumbus."
 ];
 
 export const Footer: React.FC = () => {
@@ -110,6 +128,11 @@ export const Footer: React.FC = () => {
   const [isSubscribing, setIsSubscribing] = useState(false);
   const [subscriptionSuccess, setSubscriptionSuccess] = useState(false);
   const [subscriptionError, setSubscriptionError] = useState('');
+  
+  // Easter egg state
+  const [logoClickCount, setLogoClickCount] = useState(0);
+  const [showRickQuote, setShowRickQuote] = useState(false);
+  const [currentQuote, setCurrentQuote] = useState('');
   
   const validateEmail = (email: string): string | null => {
     if (!email.trim()) return 'Email is required';
@@ -165,18 +188,53 @@ export const Footer: React.FC = () => {
           <div className="plumbus-grid cols-3">
             {/* Brand section */}
             <div className="lg:col-span-2">
-              <div className="footer-brand-section">
-                <div className="footer-brand-icon">
+              <motion.div 
+                className="footer-brand-section"
+                onClick={() => {
+                  setLogoClickCount(prev => prev + 1);
+                  if (logoClickCount >= 4) {
+                    const randomQuote = rickQuotes[Math.floor(Math.random() * rickQuotes.length)];
+                    setCurrentQuote(randomQuote);
+                    setShowRickQuote(true);
+                    setTimeout(() => setShowRickQuote(false), 4000);
+                    setLogoClickCount(0);
+                  }
+                }}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                style={{ cursor: 'pointer' }}
+              >
+                <motion.div 
+                  className="footer-brand-icon"
+                  animate={{ 
+                    rotate: logoClickCount > 2 ? [0, 10, -10, 0] : 0,
+                    scale: logoClickCount > 2 ? [1, 1.1, 1] : 1
+                  }}
+                  transition={{ duration: 0.3 }}
+                >
                   <span>P</span>
-                </div>
+                </motion.div>
                 <span className="footer-brand-text">lumbus</span>
-              </div>
+              </motion.div>
               
               <p className="footer-description">
                 The ultimate multi-purpose household device that everyone needs but nobody 
                 fully understands. Serving satisfied customers across infinite dimensions 
-                since the beginning of time.
+                since the beginning of time. *burp*
               </p>
+              
+              {/* Rick's Quote Easter Egg */}
+              {showRickQuote && (
+                <motion.div
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -10 }}
+                  className="rick-quote mt-4"
+                  style={{ maxWidth: '400px' }}
+                >
+                  {currentQuote}
+                </motion.div>
+              )}
 
               {/* Contact info */}
               <div className="mb-6">
@@ -188,10 +246,14 @@ export const Footer: React.FC = () => {
                   <Phone size={16} />
                   <span>1-800-PLUMBUS</span>
                 </div>
-                <div className="footer-contact-item">
+                <motion.div 
+                  className="footer-contact-item"
+                  whileHover={{ x: 5, color: 'var(--plumbus-pink)' }}
+                  transition={{ type: "spring", stiffness: 400 }}
+                >
                   <MapPin size={16} />
-                  <span>Dimension C-137, Sector 12</span>
-                </div>
+                  <span>Dimension C-137, Sector 12 (Not Jerry's Garage)</span>
+                </motion.div>
               </div>
 
               {/* Social links */}
@@ -218,12 +280,20 @@ export const Footer: React.FC = () => {
                 <ul>
                   {footerLinks.product.map((link) => (
                     <li key={link.label} className="mb-2">
-                      <button
-                        onClick={() => scrollToSection(link.href)}
-                        className="footer-link focus:outline-none"
+                      <motion.button
+                        onClick={() => {
+                          if (link.isEasterEgg) {
+                            console.log('🥚 Easter egg found! Wubba lubba dub dub!');
+                          }
+                          scrollToSection(link.href);
+                        }}
+                        className={`footer-link focus:outline-none ${link.isEasterEgg ? 'hover:text-green-400' : ''}`}
+                        whileHover={{ x: 3, scale: 1.05 }}
+                        transition={{ type: "spring", stiffness: 400 }}
                       >
                         {link.label}
-                      </button>
+                        {link.isEasterEgg && ' 🥚'}
+                      </motion.button>
                     </li>
                   ))}
                 </ul>
@@ -234,15 +304,23 @@ export const Footer: React.FC = () => {
                 <ul>
                   {footerLinks.support.map((link) => (
                     <li key={link.label} className="mb-2">
-                      <button
-                        onClick={() => scrollToSection(link.href)}
-                        className="footer-link focus:outline-none"
+                      <motion.button
+                        onClick={() => {
+                          if (link.isEasterEgg) {
+                            console.log('🚀 Found hidden Squanch support! I squanch this!');
+                          }
+                          scrollToSection(link.href);
+                        }}
+                        className={`footer-link focus:outline-none ${link.isEasterEgg ? 'hover:text-blue-400' : ''}`}
+                        whileHover={{ x: 3, scale: 1.05 }}
+                        transition={{ type: "spring", stiffness: 400 }}
                       >
                         {link.label}
-                        {!link.href.startsWith('#') && (
+                        {link.isEasterEgg && ' 🚀'}
+                        {!link.href.startsWith('#') && !link.isEasterEgg && (
                           <ExternalLink size={12} />
                         )}
-                      </button>
+                      </motion.button>
                     </li>
                   ))}
                 </ul>
@@ -255,12 +333,18 @@ export const Footer: React.FC = () => {
         <ScrollAnimation direction="up" delay={0.2}>
           <div className="footer-newsletter">
             <div className="plumbus-card footer-newsletter-card">
-              <h3 className="footer-newsletter-title">
+              <motion.h3 
+                className="footer-newsletter-title"
+                whileHover={{ 
+                  scale: 1.02,
+                  color: 'var(--plumbus-pink)'
+                }}
+              >
                 Stay Updated on Plumbus Innovations
-              </h3>
+              </motion.h3>
               <p className="footer-newsletter-description">
                 Get the latest news about Plumbus updates, new features, and exclusive 
-                offers delivered straight to your interdimensional inbox.
+                offers delivered straight to your interdimensional inbox. No Jerry spam, we promise.
               </p>
               
               {subscriptionSuccess ? (
@@ -332,9 +416,12 @@ export const Footer: React.FC = () => {
           <div className="footer-bottom">
             <div className="flex flex-col md:flex-row justify-between items-center gap-4">
               {/* Copyright */}
-              <div className="footer-copyright">
-                <span>© {currentYear} Plumbus Industries. All rights reserved across all dimensions.</span>
-              </div>
+              <motion.div 
+                className="footer-copyright"
+                whileHover={{ color: 'var(--plumbus-pink)' }}
+              >
+                <span>© {currentYear} Plumbus Industries. All rights reserved across all dimensions. (Except Jerry's dimension - he doesn't get rights.)</span>
+              </motion.div>
 
               {/* Legal links */}
               <div className="footer-legal-links">
@@ -350,11 +437,16 @@ export const Footer: React.FC = () => {
               </div>
 
               {/* Made with love */}
-              <div className="footer-made-with-love">
+              <motion.div 
+                className="footer-made-with-love"
+                whileHover={{ scale: 1.1 }}
+              >
                 <span>Made with</span>
-                <Heart size={16} />
-                <span>in the multiverse</span>
-              </div>
+                <motion.div whileHover={{ scale: 1.3, rotate: 360 }}>
+                  <Heart size={16} />
+                </motion.div>
+                <span>and science in the multiverse</span>
+              </motion.div>
             </div>
           </div>
         </ScrollAnimation>
