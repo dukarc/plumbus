@@ -22,12 +22,26 @@ import puppeteer from 'puppeteer';
     await new Promise(resolve => setTimeout(resolve, 3000));
     
     console.log('Taking screenshot...');
+    // Take full page screenshot
     await page.screenshot({
-      path: 'plumbus-site-97-percent.png',
+      path: 'perfect-plumbus-site.png',
       fullPage: true
     });
     
-    console.log('✅ Screenshot saved as plumbus-site-97-percent.png');
+    // Also take hero section close-up
+    await page.screenshot({
+      path: 'perfect-plumbus-hero.png',
+      clip: {
+        x: 0,
+        y: 100,
+        width: 1440,
+        height: 700
+      }
+    });
+    
+    console.log('✅ Screenshots saved:');
+    console.log('   - perfect-plumbus-site.png (full page)');
+    console.log('   - perfect-plumbus-hero.png (hero section)');
   } catch (error) {
     console.error('Error:', error.message);
   }
