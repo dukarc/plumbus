@@ -16,11 +16,11 @@ export const Features: React.FC = () => {
   return (
     <section id="features" className="section-white">
       <div className="container">
-        <div className="text-center mb-16">
+        <div className="text-center" style={{ marginBottom: 'var(--space-8)' }}>
           <h2 className="section-title">
             Why Every Home Needs a Plumbus
           </h2>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+          <p className="max-w-3xl mx-auto" style={{ fontSize: 'var(--text-xl)', color: 'var(--gray-600)' }}>
             From fleeb juice optimization to schlami-tested durability, the Plumbus offers 
             unmatched reliability for every household. Experience the difference today.
           </p>
@@ -32,7 +32,7 @@ export const Features: React.FC = () => {
             const IconComponent = iconMap[feature.icon] || ZapIcon;
 
             return (
-              <div key={feature.id} className="feature-card">
+              <div key={feature.id} className="feature-card whimsy-card">
                 {/* Icon */}
                 <div className="feature-icon">
                   <IconComponent 
@@ -52,8 +52,8 @@ export const Features: React.FC = () => {
                 </p>
 
                 {/* Benefit */}
-                <div className="bg-pink-50 rounded-lg p-3 mt-4">
-                  <p className="text-pink-700 text-sm font-medium">
+                <div className="rounded-lg" style={{ backgroundColor: 'var(--gromflomite-beige)', padding: 'var(--space-2)', marginTop: 'var(--space-3)', border: '2px solid var(--plumbus-pink)' }}>
+                  <p style={{ color: 'var(--blamf-brown)', fontSize: 'var(--text-sm)', fontWeight: '500' }}>
                     {feature.benefit}
                   </p>
                 </div>
@@ -63,12 +63,12 @@ export const Features: React.FC = () => {
         </div>
 
         {/* Bottom CTA */}
-        <div className="text-center mt-16">
-          <div className="plumbus-card bg-gradient-to-r from-pink-50 to-purple-50">
-            <h3 className="text-2xl md:text-3xl font-bold text-gray-900 mb-4">
+        <div className="text-center" style={{ marginTop: 'var(--space-8)' }}>
+          <div className="plumbus-card whimsy-card" style={{ backgroundColor: 'var(--gromflomite-beige)' }}>
+            <h3 className="font-bold" style={{ fontSize: 'clamp(var(--text-2xl), 4vw, var(--text-3xl))', color: 'var(--blamf-brown)', marginBottom: 'var(--space-3)', fontFamily: 'var(--font-header)' }}>
               Ready to Experience the Plumbus Difference?
             </h3>
-            <p className="text-gray-600 mb-6 max-w-2xl mx-auto">
+            <p className="max-w-2xl mx-auto" style={{ color: 'var(--gray-700)', marginBottom: 'var(--space-4)', fontSize: 'var(--text-base)' }}>
               Join millions of satisfied customers across infinite dimensions who have 
               discovered the life-changing power of the Plumbus.
             </p>
@@ -80,12 +80,13 @@ export const Features: React.FC = () => {
               </div>
               
               <div className="stat-item">
-                <div className="flex items-center justify-center space-x-1 mb-2">
+                <div className="flex items-center justify-center" style={{ gap: 'var(--space-1)', marginBottom: 'var(--space-2)' }}>
                   {[...Array(5)].map((_, i) => (
                     <StarIcon
                       key={i}
                       size={16}
-                      className="text-yellow-400 fill-current"
+                      className="star-interactive text-step-yellow fill-current"
+                      filled
                       aria-hidden="true"
                     />
                   ))}

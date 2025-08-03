@@ -36,10 +36,10 @@ export const FAQ: React.FC = () => {
           </p>
           
           <div className="flex justify-center space-x-4">
-            <button className="button-outline" onClick={expandAll}>
+            <button className="button-outline whimsy-button" onClick={expandAll}>
               Expand All
             </button>
-            <button className="button-outline" onClick={collapseAll}>
+            <button className="button-outline whimsy-button" onClick={collapseAll}>
               Collapse All
             </button>
           </div>
@@ -83,7 +83,7 @@ export const FAQ: React.FC = () => {
 
         {/* Still need help section */}
         <div className="mt-16 text-center">
-          <div className="plumbus-card bg-gradient-to-r from-pink-50 to-purple-50 max-w-3xl mx-auto">
+          <div className="plumbus-card whimsy-card bg-gradient-to-r from-pink-50 to-purple-50 max-w-3xl mx-auto">
             <div className="space-y-6">
               <div className="flex justify-center">
                 <div className="w-16 h-16 bg-gradient-to-br from-pink-500 to-purple-600 rounded-full flex items-center justify-center">
@@ -108,7 +108,7 @@ export const FAQ: React.FC = () => {
                   <p className="text-sm text-gray-600 mb-4">
                     Get instant help from our support team
                   </p>
-                  <button className="button-secondary w-full">
+                  <button className="button-secondary whimsy-button w-full">
                     Start Chat
                   </button>
                 </div>
@@ -119,7 +119,7 @@ export const FAQ: React.FC = () => {
                   <p className="text-sm text-gray-600 mb-4">
                     Send us a message and we'll get back to you
                   </p>
-                  <button className="button-secondary w-full">
+                  <button className="button-secondary whimsy-button w-full">
                     Send Email
                   </button>
                 </div>
@@ -135,7 +135,7 @@ export const FAQ: React.FC = () => {
 
         {/* Knowledge base */}
         <div className="mt-12">
-          <div className="plumbus-card">
+          <div className="plumbus-card whimsy-card">
             <div className="text-center mb-8">
               <h3 className="text-xl font-bold text-gray-900 mb-2">
                 Plumbus Knowledge Base
@@ -165,9 +165,9 @@ export const FAQ: React.FC = () => {
               ].map((item, index) => (
                 <div
                   key={index}
-                  className="text-center p-4 rounded-xl hover:bg-gray-50 transition-colors cursor-pointer"
+                  className="text-center p-4 rounded-xl hover:bg-gray-50 transition-colors cursor-pointer whimsy-card"
                 >
-                  <div className="text-3xl mb-3">{item.icon}</div>
+                  <div className="text-3xl mb-3 emoji-bounce">{item.icon}</div>
                   <h4 className="font-semibold text-gray-900 mb-2">{item.title}</h4>
                   <p className="text-sm text-gray-600">{item.description}</p>
                 </div>

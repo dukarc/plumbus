@@ -1,11 +1,11 @@
 import React, { Suspense, lazy } from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
-import { ArrowRightIcon } from '../icons/OptimizedIcons';
+// ArrowRightIcon removed - arrows now handled by CSS in design system
 
 // Lazy load complex components
 const AnimatedBlobs = lazy(() => import('../ui/AnimatedBlobs').then(module => ({ default: module.AnimatedBlobs })));
 
-// Enhanced Plumbus SVG Component with interactive elements and tooltips
+// Enhanced Plumbus SVG Component with authentic, organic design and interactive elements
 const PlumbusSVG: React.FC = () => {
   const [hoveredPart, setHoveredPart] = React.useState<string | null>(null);
   const shouldReduceMotion = useReducedMotion();
@@ -32,131 +32,199 @@ const PlumbusSVG: React.FC = () => {
         whileHover={shouldReduceMotion ? {} : { scale: 1.02 }}
         transition={shouldReduceMotion ? { duration: 0 } : { type: "spring", stiffness: 300, damping: 20 }}
       >
-        {/* Grumbo (Main Body) - Large pink rounded shape */}
-        <motion.ellipse 
-          cx="200" 
-          cy="200" 
-          rx="120" 
-          ry="80" 
-          fill="#ED829E" 
+        {/* Gradient Definitions for Organic Feel */}
+        <defs>
+          {/* Grumbo gradient with organic depth */}
+          <radialGradient id="grumboGradient" cx="0.3" cy="0.3" r="0.8">
+            <stop offset="0%" stopColor="#F5A3BD" />
+            <stop offset="50%" stopColor="#ED829E" />
+            <stop offset="100%" stopColor="#D1477A" />
+          </radialGradient>
+          
+          {/* Fleeb juice gradient with translucent effect */}
+          <radialGradient id="fleebGradient" cx="0.4" cy="0.2" r="0.9">
+            <stop offset="0%" stopColor="#E8F4FD" stopOpacity="0.9" />
+            <stop offset="40%" stopColor="#B3D9F2" stopOpacity="0.8" />
+            <stop offset="100%" stopColor="#7FB8D3" stopOpacity="0.7" />
+          </radialGradient>
+          
+          {/* Dingle-bop grip texture gradient */}
+          <linearGradient id="dingleBopGradient" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0%" stopColor="#D1477A" />
+            <stop offset="50%" stopColor="#B85C7A" />
+            <stop offset="100%" stopColor="#9F4A6B" />
+          </linearGradient>
+          
+          {/* Floob organic gradient */}
+          <radialGradient id="floobGradient" cx="0.4" cy="0.3" r="0.8">
+            <stop offset="0%" stopColor="#E1578A" />
+            <stop offset="70%" stopColor="#D1477A" />
+            <stop offset="100%" stopColor="#B85C7A" />
+          </radialGradient>
+          
+          {/* Chumble organic gradient */}
+          <linearGradient id="chumbleGradient" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stopColor="#F08FB0" />
+            <stop offset="50%" stopColor="#ED829E" />
+            <stop offset="100%" stopColor="#D1477A" />
+          </linearGradient>
+          
+          {/* Grodus natural gradient */}
+          <radialGradient id="grodusGradient" cx="0.2" cy="0.3" r="0.9">
+            <stop offset="0%" stopColor="#C96D8A" />
+            <stop offset="60%" stopColor="#B85C7A" />
+            <stop offset="100%" stopColor="#9F4A6B" />
+          </radialGradient>
+          
+          {/* Texture patterns for organic feel */}
+          <pattern id="grumboTexture" patternUnits="userSpaceOnUse" width="8" height="8">
+            <circle cx="4" cy="4" r="1" fill="#D1477A" opacity="0.1" />
+            <circle cx="2" cy="2" r="0.5" fill="#B85C7A" opacity="0.08" />
+            <circle cx="6" cy="6" r="0.8" fill="#9F4A6B" opacity="0.06" />
+          </pattern>
+          
+          <pattern id="dingleBopTexture" patternUnits="userSpaceOnUse" width="4" height="6">
+            <rect x="0" y="0" width="4" height="2" fill="#9F4A6B" opacity="0.1" />
+            <rect x="0" y="4" width="4" height="2" fill="#9F4A6B" opacity="0.1" />
+          </pattern>
+        </defs>
+
+        {/* Grumbo (Main Body) - Organic blob shape with natural asymmetry */}
+        <motion.path 
+          d="M 85 200 Q 75 150 120 140 Q 160 135 200 145 Q 240 140 280 150 Q 315 165 320 200 Q 318 235 285 250 Q 240 260 200 255 Q 160 258 120 245 Q 88 230 85 200 Z"
+          fill="url(#grumboGradient)"
           onMouseEnter={() => setHoveredPart('grumbo')}
           onMouseLeave={() => setHoveredPart(null)}
-          whileHover={{ scale: 1.05, fill: "#F08FB0" }}
+          whileHover={{ scale: 1.05 }}
           transition={{ duration: 0.2 }}
           style={{ cursor: 'pointer' }}
         />
         
-        {/* Fleeb (Internal) - Visible internal component */}
+        {/* Grumbo texture overlay for organic bumpy surface */}
+        <motion.path 
+          d="M 85 200 Q 75 150 120 140 Q 160 135 200 145 Q 240 140 280 150 Q 315 165 320 200 Q 318 235 285 250 Q 240 260 200 255 Q 160 258 120 245 Q 88 230 85 200 Z"
+          fill="url(#grumboTexture)"
+          onMouseEnter={() => setHoveredPart('grumbo')}
+          onMouseLeave={() => setHoveredPart(null)}
+          style={{ cursor: 'pointer', pointerEvents: 'none' }}
+        />
+        
+        {/* Fleeb (Internal) - Translucent juice chamber with organic shape */}
         <motion.ellipse 
-          cx="180" 
-          cy="190" 
-          rx="30" 
-          ry="20" 
-          fill="#D1477A" 
-          opacity="0.8"
+          cx="175" 
+          cy="185" 
+          rx="35" 
+          ry="22" 
+          fill="url(#fleebGradient)"
           onMouseEnter={() => setHoveredPart('fleeb')}
           onMouseLeave={() => setHoveredPart(null)}
-          whileHover={{ scale: 1.1, opacity: 1 }}
+          whileHover={{ scale: 1.1 }}
           transition={{ duration: 0.2 }}
           style={{ cursor: 'pointer' }}
         />
         
-        {/* Chumbles (Tentacles) - 4 finger-like extensions at bottom with slight variations */}
+        {/* Fleeb juice bubbles for authenticity */}
+        <circle cx="168" cy="180" r="3" fill="#B3D9F2" opacity="0.6" />
+        <circle cx="182" cy="190" r="2" fill="#7FB8D3" opacity="0.5" />
+        <circle cx="175" cy="185" r="1.5" fill="#E8F4FD" opacity="0.8" />
+        
+        {/* Chumbles (Tentacles) - Natural finger-like extensions with organic curves */}
         <motion.path 
-          d="M140 260 Q135 290 130 320" 
-          stroke="#ED829E" 
-          strokeWidth="22" 
-          strokeLinecap="round" 
-          fill="none"
+          d="M 130 255 Q 125 275 118 295 Q 115 315 120 335 Q 122 340 125 340 Q 128 340 130 335 Q 135 315 132 295 Q 135 275 140 255"
+          fill="url(#chumbleGradient)"
           onMouseEnter={() => setHoveredPart('chumble1')}
           onMouseLeave={() => setHoveredPart(null)}
-          whileHover={{ strokeWidth: 26, stroke: "#F08FB0" }}
+          whileHover={{ scale: 1.05 }}
           transition={{ duration: 0.2 }}
           style={{ cursor: 'pointer' }}
         />
+        
         <motion.path 
-          d="M170 270 Q165 300 160 330" 
-          stroke="#ED829E" 
-          strokeWidth="19" 
-          strokeLinecap="round" 
-          fill="none"
+          d="M 165 260 Q 160 280 155 300 Q 152 320 157 340 Q 159 345 162 345 Q 165 345 167 340 Q 172 320 169 300 Q 172 280 177 260"
+          fill="url(#chumbleGradient)"
           onMouseEnter={() => setHoveredPart('chumble2')}
           onMouseLeave={() => setHoveredPart(null)}
-          whileHover={{ strokeWidth: 23, stroke: "#F08FB0" }}
+          whileHover={{ scale: 1.05 }}
           transition={{ duration: 0.2 }}
           style={{ cursor: 'pointer' }}
         />
+        
         <motion.path 
-          d="M230 270 Q235 300 240 330" 
-          stroke="#ED829E" 
-          strokeWidth="17" 
-          strokeLinecap="round" 
-          fill="none"
+          d="M 235 260 Q 240 280 245 300 Q 248 320 243 340 Q 241 345 238 345 Q 235 345 233 340 Q 228 320 231 300 Q 228 280 223 260"
+          fill="url(#chumbleGradient)"
           onMouseEnter={() => setHoveredPart('chumble3')}
           onMouseLeave={() => setHoveredPart(null)}
-          whileHover={{ strokeWidth: 21, stroke: "#F08FB0" }}
+          whileHover={{ scale: 1.05 }}
           transition={{ duration: 0.2 }}
           style={{ cursor: 'pointer' }}
         />
+        
         <motion.path 
-          d="M260 260 Q265 290 270 320" 
-          stroke="#ED829E" 
-          strokeWidth="21" 
-          strokeLinecap="round" 
-          fill="none"
+          d="M 270 255 Q 275 275 282 295 Q 285 315 280 335 Q 278 340 275 340 Q 272 340 270 335 Q 265 315 268 295 Q 265 275 260 255"
+          fill="url(#chumbleGradient)"
           onMouseEnter={() => setHoveredPart('chumble4')}
           onMouseLeave={() => setHoveredPart(null)}
-          whileHover={{ strokeWidth: 25, stroke: "#F08FB0" }}
+          whileHover={{ scale: 1.05 }}
           transition={{ duration: 0.2 }}
           style={{ cursor: 'pointer' }}
         />
         
-        {/* Dingle-Bop (Handle) - Cylindrical handle extending upward */}
+        {/* Dingle-Bop (Handle) - Ergonomic grip with texture */}
         <motion.rect 
-          x="185" 
-          y="80" 
-          width="30" 
-          height="120" 
-          rx="15" 
-          fill="#B85C7A"
+          x="180" 
+          y="75" 
+          width="40" 
+          height="130" 
+          rx="20" 
+          fill="url(#dingleBopGradient)"
           onMouseEnter={() => setHoveredPart('dingleBop')}
           onMouseLeave={() => setHoveredPart(null)}
-          whileHover={{ scale: 1.05, fill: "#C96D8A" }}
+          whileHover={{ scale: 1.05 }}
           transition={{ duration: 0.2 }}
           style={{ cursor: 'pointer' }}
         />
         
-        {/* Floob (Top Element) - Rounded top connected to Dingle-Bop */}
-        <motion.circle 
-          cx="200" 
-          cy="80" 
-          r="25" 
-          fill="#D1477A"
+        {/* Dingle-Bop grip texture */}
+        <motion.rect 
+          x="180" 
+          y="75" 
+          width="40" 
+          height="130" 
+          rx="20" 
+          fill="url(#dingleBopTexture)"
+          style={{ pointerEvents: 'none' }}
+        />
+        
+        {/* Floob (Top Element) - Organic bulbous top with natural imperfections */}
+        <motion.path 
+          d="M 200 80 Q 185 65 200 50 Q 215 65 225 75 Q 220 85 215 90 Q 200 95 185 90 Q 180 85 185 75 Q 190 70 200 80 Z"
+          fill="url(#floobGradient)"
           onMouseEnter={() => setHoveredPart('floob')}
           onMouseLeave={() => setHoveredPart(null)}
-          whileHover={{ scale: 1.1, fill: "#E1578A" }}
+          whileHover={{ scale: 1.1 }}
           transition={{ duration: 0.2 }}
           style={{ cursor: 'pointer' }}
         />
         
-        {/* Grodus (Protrusion) - Secondary extension from main body */}
-        <motion.ellipse 
-          cx="320" 
-          cy="180" 
-          rx="25" 
-          ry="40" 
-          fill="#B85C7A"
+        {/* Grodus (Protrusion) - Natural protrusion with realistic proportions */}
+        <motion.path 
+          d="M 320 165 Q 340 160 350 175 Q 355 190 348 205 Q 340 220 325 215 Q 315 210 320 195 Q 318 180 320 165 Z"
+          fill="url(#grodusGradient)"
           onMouseEnter={() => setHoveredPart('grodus')}
           onMouseLeave={() => setHoveredPart(null)}
-          whileHover={{ scale: 1.08, fill: "#C96D8A" }}
+          whileHover={{ scale: 1.08 }}
           transition={{ duration: 0.2 }}
           style={{ cursor: 'pointer' }}
         />
         
-        {/* Additional details for visual depth */}
-        <ellipse cx="200" cy="200" rx="100" ry="65" fill="none" stroke="#B85C7A" strokeWidth="2" opacity="0.3" />
-        <circle cx="170" cy="170" r="8" fill="#D1477A" opacity="0.6" />
-        <circle cx="230" cy="210" r="6" fill="#D1477A" opacity="0.6" />
+        {/* Subtle organic details and surface imperfections */}
+        <circle cx="195" cy="170" r="4" fill="#B85C7A" opacity="0.3" />
+        <circle cx="215" cy="195" r="3" fill="#9F4A6B" opacity="0.25" />
+        <circle cx="185" cy="210" r="2" fill="#D1477A" opacity="0.2" />
+        
+        {/* Connection seams for authenticity */}
+        <path d="M 180 140 Q 200 135 220 140" stroke="#9F4A6B" strokeWidth="1" opacity="0.4" fill="none" />
+        <path d="M 320 200 Q 300 205 285 200" stroke="#9F4A6B" strokeWidth="1" opacity="0.3" fill="none" />
       </motion.svg>
       
       {/* Floating tooltip */}
@@ -175,101 +243,9 @@ const PlumbusSVG: React.FC = () => {
   );
 };
 
-// Enhanced Assembly Process Step Component with whimsical interactions
-const AssemblyStep: React.FC<{ 
-  step: number; 
-  title: string; 
-  description: string; 
-  color: string;
-  isLast?: boolean;
-}> = ({ step, title, description, color, isLast }) => (
-  <div className="flex items-center">
-    <motion.div 
-      className={`${color} p-6 text-center min-w-[200px] cursor-pointer`}
-      style={{
-        borderRadius: '20px 15px 25px 18px', // Organic asymmetric corners
-        boxShadow: '0 4px 20px rgba(0,0,0,0.1)'
-      }}
-      whileHover={{ 
-        scale: 1.05,
-        rotate: [0, -1, 1, 0],
-        boxShadow: '0 8px 30px rgba(0,0,0,0.15)'
-      }}
-      transition={{ 
-        type: "spring", 
-        stiffness: 300, 
-        damping: 15,
-        rotate: { duration: 0.3 }
-      }}
-    >
-      <motion.div 
-        className="text-2xl font-bold text-white mb-2"
-        whileHover={{ scale: 1.1 }}
-        transition={{ duration: 0.2 }}
-      >
-        {step}
-      </motion.div>
-      <h3 className="text-lg font-semibold text-white mb-2">{title}</h3>
-      <p className="text-sm text-white/90">{description}</p>
-    </motion.div>
-    {!isLast && (
-      <motion.div
-        whileHover={{ x: 5 }}
-        transition={{ type: "spring", stiffness: 400 }}
-      >
-        <ArrowRightIcon className="mx-4 text-amber-700" size={24} />
-      </motion.div>
-    )}
-  </div>
-);
+// Assembly steps now use design system classes directly in JSX
 
-// Enhanced Testimonial Speech Bubble Component with floating animation
-const TestimonialBubble: React.FC<{
-  quote: string;
-  author: string;
-  role: string;
-  position: 'left' | 'right';
-}> = ({ quote, author, role, position }) => (
-  <div className={`flex ${position === 'left' ? 'justify-start' : 'justify-end'} mb-8`}>
-    <div className="max-w-sm">
-      <motion.div 
-        className="bg-white p-6 shadow-lg relative cursor-pointer"
-        style={{
-          borderRadius: position === 'left' ? '25px 20px 20px 8px' : '20px 25px 8px 20px', // Organic bubble shape
-        }}
-        whileHover={{ 
-          scale: 1.02,
-          y: -2,
-          boxShadow: '0 12px 25px rgba(0,0,0,0.15)'
-        }}
-        animate={{
-          y: [0, -3, 0],
-        }}
-        transition={{
-          y: { duration: 3, repeat: Infinity, ease: "easeInOut" },
-          hover: { duration: 0.2 }
-        }}
-      >
-        <p className="text-gray-700 mb-4 italic">"{quote}"</p>
-        <div className="flex items-center">
-          <motion.div 
-            className={`w-10 h-10 rounded-full ${position === 'left' ? 'bg-blue-200' : 'bg-green-200'} flex items-center justify-center mr-3`}
-            whileHover={{ scale: 1.1, rotate: [0, -5, 5, 0] }}
-            transition={{ duration: 0.3 }}
-          >
-            <span className="text-sm font-bold">{author[0]}</span>
-          </motion.div>
-          <div>
-            <div className="font-semibold text-gray-900">{author}</div>
-            <div className="text-sm text-gray-600">{role}</div>
-          </div>
-        </div>
-        {/* Speech bubble tail */}
-        <div className={`absolute top-6 ${position === 'left' ? '-left-2' : '-right-2'} w-4 h-4 bg-white transform rotate-45`} />
-      </motion.div>
-    </div>
-  </div>
-);
+// Testimonials now use design system classes directly in JSX
 
 export const Hero: React.FC = () => {
   const shouldReduceMotion = useReducedMotion();
@@ -277,7 +253,7 @@ export const Hero: React.FC = () => {
   return (
     <div>
       {/* Main Hero Section */}
-      <section id="hero" className="relative min-h-screen flex items-center justify-center overflow-hidden" style={{ backgroundColor: '#F6E8CB' }}>
+      <section id="hero" className="plumbus-hero">
         {/* Enhanced floating organic blob decorations - Only render if motion is not reduced */}
         {!shouldReduceMotion && (
           <Suspense fallback={null}>
@@ -286,11 +262,10 @@ export const Hero: React.FC = () => {
         )}
 
         {/* Main Content */}
-        <div className="container mx-auto px-4 py-20 relative z-10 text-center">
+        <div className="plumbus-hero-content">
           {/* Header */}
           <motion.h1 
-            className="text-6xl lg:text-8xl font-bold mb-4"
-            style={{ color: '#8B5A3C' }}
+            className="hero-title"
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
@@ -301,7 +276,7 @@ export const Hero: React.FC = () => {
           {/* Tagline */}
           <motion.p 
             className="text-2xl mb-6"
-            style={{ color: '#8B5A3C' }}
+            style={{ color: 'var(--blamf-brown)' }}
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
@@ -312,7 +287,7 @@ export const Hero: React.FC = () => {
           {/* Sub-copy */}
           <motion.p 
             className="text-lg mb-12 max-w-2xl mx-auto"
-            style={{ color: '#8B5A3C' }}
+            style={{ color: 'var(--blamf-brown)' }}
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.3 }}
@@ -352,7 +327,7 @@ export const Hero: React.FC = () => {
                 rotate: { duration: 0.3 }
               }}
             >
-              <button className="button-primary px-8 py-4 text-lg font-semibold">
+              <button className="button-primary whimsy-button px-8 py-4 text-lg font-semibold">
                 <span className="inline-flex items-center gap-2">
                   Get Your Plumbus
                   <motion.span
@@ -369,10 +344,10 @@ export const Hero: React.FC = () => {
       </section>
       
       {/* Assembly Process Section */}
-      <section className="py-16 bg-white">
-        <div className="container mx-auto px-4">
+      <section className="section-white">
+        <div className="container">
           <motion.h2 
-            className="text-4xl font-bold text-center mb-12 text-gray-800"
+            className="section-title"
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
@@ -381,19 +356,18 @@ export const Hero: React.FC = () => {
             How a Plumbus is Made
           </motion.h2>
           
-          <div className="flex flex-wrap justify-center items-center gap-8 lg:gap-4 overflow-x-auto pb-4">
+          <div className="process-container">
             <motion.div
               initial={{ opacity: 0, x: -30 }}
               whileInView={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.6, delay: 0.1 }}
               viewport={{ once: true }}
             >
-              <AssemblyStep 
-                step={1}
-                title="Fleeb Preparation"
-                description="First, they take the dingle-bop"
-                color="bg-blue-500"
-              />
+              <div className="plumbus-card step-1 process-step assembly-step-wobble">
+                <div className="process-step-number">1</div>
+                <h3 className="card-title text-center mb-3">Fleeb Preparation</h3>
+                <p className="text-sm text-center leading-relaxed">First, they take the dingle-bop</p>
+              </div>
             </motion.div>
             
             <motion.div
@@ -402,12 +376,11 @@ export const Hero: React.FC = () => {
               transition={{ duration: 0.6, delay: 0.3 }}
               viewport={{ once: true }}
             >
-              <AssemblyStep 
-                step={2}
-                title="Grumbo Assembly"
-                description="Then smooth it out with schleem"
-                color="bg-yellow-500"
-              />
+              <div className="plumbus-card step-2 process-step assembly-step-wobble">
+                <div className="process-step-number">2</div>
+                <h3 className="card-title text-center mb-3">Grumbo Assembly</h3>
+                <p className="text-sm text-center leading-relaxed">Then smooth it out with schleem</p>
+              </div>
             </motion.div>
             
             <motion.div
@@ -416,12 +389,11 @@ export const Hero: React.FC = () => {
               transition={{ duration: 0.6, delay: 0.5 }}
               viewport={{ once: true }}
             >
-              <AssemblyStep 
-                step={3}
-                title="Schlami Processing"
-                description="The schlami shows up and rubs it"
-                color="bg-green-500"
-              />
+              <div className="plumbus-card step-3 process-step assembly-step-wobble">
+                <div className="process-step-number">3</div>
+                <h3 className="card-title text-center mb-3">Schlami Processing</h3>
+                <p className="text-sm text-center leading-relaxed">The schlami shows up and rubs it</p>
+              </div>
             </motion.div>
             
             <motion.div
@@ -430,24 +402,21 @@ export const Hero: React.FC = () => {
               transition={{ duration: 0.6, delay: 0.7 }}
               viewport={{ once: true }}
             >
-              <AssemblyStep 
-                step={4}
-                title="Final Touches"
-                description="Cut the fleeb and you have a plumbus"
-                color="bg-red-500"
-                isLast
-              />
+              <div className="plumbus-card step-4 process-step assembly-step-wobble">
+                <div className="process-step-number">4</div>
+                <h3 className="card-title text-center mb-3">Final Touches</h3>
+                <p className="text-sm text-center leading-relaxed">Cut the fleeb and you have a plumbus</p>
+              </div>
             </motion.div>
           </div>
         </div>
       </section>
       
       {/* Testimonials Section */}
-      <section className="py-16" style={{ backgroundColor: '#F6E8CB' }}>
-        <div className="container mx-auto px-4">
+      <section className="section-beige">
+        <div className="container">
           <motion.h2 
-            className="text-4xl font-bold text-center mb-12"
-            style={{ color: '#8B5A3C' }}
+            className="section-title"
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
@@ -462,13 +431,26 @@ export const Hero: React.FC = () => {
               whileInView={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8 }}
               viewport={{ once: true }}
+              className="flex justify-start mb-8"
             >
-              <TestimonialBubble 
-                quote="I don't know how I ever lived without a plumbus"
-                author="Rulenein"
-                role="Plumbus Expert"
-                position="left"
-              />
+              <div className="max-w-sm">
+                <div className="plumbus-testimonial floating-gentle">
+                  <div className="testimonial-content">
+                    "I don't know how I ever lived without a plumbus"
+                  </div>
+                  <div className="testimonial-author">
+                    <div className="testimonial-avatar">
+                      <div className="w-full h-full rounded-full flex items-center justify-center text-white font-bold" style={{ backgroundColor: 'var(--step-blue)' }}>
+                        R
+                      </div>
+                    </div>
+                    <div className="testimonial-author-info">
+                      <h4>Rulenein</h4>
+                      <p>Plumbus Expert</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </motion.div>
             
             <motion.div
@@ -476,13 +458,26 @@ export const Hero: React.FC = () => {
               whileInView={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8, delay: 0.2 }}
               viewport={{ once: true }}
+              className="flex justify-end mb-8"
             >
-              <TestimonialBubble 
-                quote="The plumbus changed my life. It's wonderful!"
-                author="Gumde"
-                role="Satisfied Customer"
-                position="right"
-              />
+              <div className="max-w-sm">
+                <div className="plumbus-testimonial floating-gentle">
+                  <div className="testimonial-content">
+                    "The plumbus changed my life. It's wonderful!"
+                  </div>
+                  <div className="testimonial-author">
+                    <div className="testimonial-avatar">
+                      <div className="w-full h-full rounded-full flex items-center justify-center text-white font-bold" style={{ backgroundColor: 'var(--step-green)' }}>
+                        G
+                      </div>
+                    </div>
+                    <div className="testimonial-author-info">
+                      <h4>Gumde</h4>
+                      <p>Satisfied Customer</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </motion.div>
           </div>
         </div>

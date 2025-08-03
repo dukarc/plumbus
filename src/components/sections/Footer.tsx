@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { ScrollAnimation } from '@components/ui/ScrollAnimation';
 import { useReducedMotion } from '@hooks/useReducedMotion';
+import { FormField, SubmitButton } from '@components/ui/FormField';
+import { LoadingDots } from '@components/ui/LoadingStates';
 
 // Temporary icon components until we implement optimized icons
 const Mail = ({ size, className }: { size: number; className?: string }) => (
@@ -102,6 +104,46 @@ const socialLinks = [
 export const Footer: React.FC = () => {
   const prefersReducedMotion = useReducedMotion();
   const currentYear = new Date().getFullYear();
+  
+  // Newsletter form state
+  const [email, setEmail] = useState('');
+  const [isSubscribing, setIsSubscribing] = useState(false);
+  const [subscriptionSuccess, setSubscriptionSuccess] = useState(false);
+  const [subscriptionError, setSubscriptionError] = useState('');
+  
+  const validateEmail = (email: string): string | null => {
+    if (!email.trim()) return 'Email is required';
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) return 'Please enter a valid email address';
+    return null;
+  };
+  
+  const handleSubscribe = async () => {
+    const validationError = validateEmail(email);
+    if (validationError) {
+      setSubscriptionError(validationError);
+      return;
+    }
+    
+    setIsSubscribing(true);
+    setSubscriptionError('');
+    
+    try {
+      // Simulate API call
+      await new Promise(resolve => setTimeout(resolve, 2000));
+      setSubscriptionSuccess(true);
+      setEmail('');
+      
+      // Reset success state after 3 seconds
+      setTimeout(() => {
+        setSubscriptionSuccess(false);
+      }, 3000);
+    } catch (error) {
+      setSubscriptionError('Failed to subscribe. Please try again.');
+    } finally {
+      setIsSubscribing(false);
+    }
+  };
 
   const scrollToSection = (href: string) => {
     if (href.startsWith('#')) {
@@ -116,50 +158,50 @@ export const Footer: React.FC = () => {
   };
 
   return (
-    <footer className="bg-gray-900 text-gray-300">
+    <footer className="section-white" style={{ backgroundColor: 'var(--blamf-brown)', color: 'var(--white)' }}>
       {/* Main footer content */}
-      <div className="container mx-auto px-4 py-16">
+      <div className="container">
         <ScrollAnimation direction="up">
-          <div className="grid lg:grid-cols-5 gap-8 mb-12">
+          <div className="plumbus-grid cols-3">
             {/* Brand section */}
-            <div className="lg:col-span-2 space-y-6">
-              <div className="flex items-center space-x-3">
-                <div className="w-10 h-10 bg-gradient-to-br from-pink-500 to-purple-600 rounded-full flex items-center justify-center">
-                  <span className="text-white font-bold text-lg">P</span>
+            <div className="lg:col-span-2">
+              <div className="footer-brand-section">
+                <div className="footer-brand-icon">
+                  <span>P</span>
                 </div>
-                <span className="text-2xl font-bold text-white">Plumbus</span>
+                <span className="footer-brand-text">lumbus</span>
               </div>
               
-              <p className="text-gray-400 leading-relaxed max-w-md">
+              <p className="footer-description">
                 The ultimate multi-purpose household device that everyone needs but nobody 
                 fully understands. Serving satisfied customers across infinite dimensions 
                 since the beginning of time.
               </p>
 
               {/* Contact info */}
-              <div className="space-y-3">
-                <div className="flex items-center space-x-3">
-                  <Mail size={16} className="text-pink-400" />
-                  <span className="text-sm">support@plumbus.com</span>
+              <div className="mb-6">
+                <div className="footer-contact-item">
+                  <Mail size={16} />
+                  <span>support@plumbus.com</span>
                 </div>
-                <div className="flex items-center space-x-3">
-                  <Phone size={16} className="text-pink-400" />
-                  <span className="text-sm">1-800-PLUMBUS</span>
+                <div className="footer-contact-item">
+                  <Phone size={16} />
+                  <span>1-800-PLUMBUS</span>
                 </div>
-                <div className="flex items-center space-x-3">
-                  <MapPin size={16} className="text-pink-400" />
-                  <span className="text-sm">Dimension C-137, Sector 12</span>
+                <div className="footer-contact-item">
+                  <MapPin size={16} />
+                  <span>Dimension C-137, Sector 12</span>
                 </div>
               </div>
 
               {/* Social links */}
-              <div className="flex space-x-4">
+              <div className="flex gap-4">
                 {socialLinks.map((social) => (
                   <motion.button
                     key={social.label}
                     onClick={() => scrollToSection(social.href)}
-                    className="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center text-gray-400 hover:bg-pink-600 hover:text-white transition-colors focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-offset-2 focus:ring-offset-gray-900"
-                    whileHover={prefersReducedMotion ? {} : { scale: 1.1 }}
+                    className="footer-social-link focus:outline-none"
+                    whileHover={prefersReducedMotion ? {} : { scale: 1.05 }}
                     whileTap={prefersReducedMotion ? {} : { scale: 0.95 }}
                     aria-label={`Follow us on ${social.label}`}
                   >
@@ -170,15 +212,15 @@ export const Footer: React.FC = () => {
             </div>
 
             {/* Navigation links */}
-            <div className="grid grid-cols-2 lg:grid-cols-3 gap-8 lg:col-span-3">
+            <div className="plumbus-grid cols-2">
               <div>
-                <h3 className="text-white font-semibold mb-4">Product</h3>
-                <ul className="space-y-3">
+                <h3 className="footer-section-title">Product</h3>
+                <ul>
                   {footerLinks.product.map((link) => (
-                    <li key={link.label}>
+                    <li key={link.label} className="mb-2">
                       <button
                         onClick={() => scrollToSection(link.href)}
-                        className="text-gray-400 hover:text-pink-400 transition-colors text-sm focus:outline-none focus:text-pink-400"
+                        className="footer-link focus:outline-none"
                       >
                         {link.label}
                       </button>
@@ -188,35 +230,18 @@ export const Footer: React.FC = () => {
               </div>
 
               <div>
-                <h3 className="text-white font-semibold mb-4">Support</h3>
-                <ul className="space-y-3">
+                <h3 className="footer-section-title">Support</h3>
+                <ul>
                   {footerLinks.support.map((link) => (
-                    <li key={link.label}>
+                    <li key={link.label} className="mb-2">
                       <button
                         onClick={() => scrollToSection(link.href)}
-                        className="text-gray-400 hover:text-pink-400 transition-colors text-sm focus:outline-none focus:text-pink-400 flex items-center"
+                        className="footer-link focus:outline-none"
                       >
                         {link.label}
                         {!link.href.startsWith('#') && (
-                          <ExternalLink size={12} className="ml-1" />
+                          <ExternalLink size={12} />
                         )}
-                      </button>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-
-              <div>
-                <h3 className="text-white font-semibold mb-4">Company</h3>
-                <ul className="space-y-3">
-                  {footerLinks.company.map((link) => (
-                    <li key={link.label}>
-                      <button
-                        onClick={() => scrollToSection(link.href)}
-                        className="text-gray-400 hover:text-pink-400 transition-colors text-sm focus:outline-none focus:text-pink-400 flex items-center"
-                      >
-                        {link.label}
-                        <ExternalLink size={12} className="ml-1" />
                       </button>
                     </li>
                   ))}
@@ -228,50 +253,96 @@ export const Footer: React.FC = () => {
 
         {/* Newsletter subscription */}
         <ScrollAnimation direction="up" delay={0.2}>
-          <div className="border-t border-gray-800 pt-8 mb-8">
-            <div className="bg-gradient-to-r from-pink-900/20 to-purple-900/20 rounded-2xl p-8 text-center">
-              <h3 className="text-white text-xl font-bold mb-4">
+          <div className="footer-newsletter">
+            <div className="plumbus-card footer-newsletter-card">
+              <h3 className="footer-newsletter-title">
                 Stay Updated on Plumbus Innovations
               </h3>
-              <p className="text-gray-400 mb-6 max-w-2xl mx-auto">
+              <p className="footer-newsletter-description">
                 Get the latest news about Plumbus updates, new features, and exclusive 
                 offers delivered straight to your interdimensional inbox.
               </p>
               
-              <div className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
-                <input
-                  type="email"
-                  placeholder="Enter your email"
-                  className="flex-1 px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-pink-500 focus:border-transparent"
-                />
-                <button className="px-6 py-3 bg-gradient-to-r from-pink-500 to-purple-600 text-white rounded-lg font-semibold hover:from-pink-600 hover:to-purple-700 transition-colors focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-offset-2 focus:ring-offset-gray-900">
-                  Subscribe
-                </button>
-              </div>
+              {subscriptionSuccess ? (
+                <div className="max-w-md mx-auto">
+                  <div className="flex items-center justify-center space-x-2 text-green-600 mb-4">
+                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    </svg>
+                    <span className="font-semibold">Successfully subscribed!</span>
+                  </div>
+                  <p className="text-sm text-gray-600">Thank you for joining our interdimensional newsletter!</p>
+                </div>
+              ) : (
+                <div className="max-w-md mx-auto">
+                  <div className="flex flex-col sm:flex-row gap-4">
+                    <div className="flex-1">
+                      <input
+                        type="email"
+                        placeholder="Enter your email"
+                        value={email}
+                        onChange={(e) => {
+                          setEmail(e.target.value);
+                          if (subscriptionError) setSubscriptionError('');
+                        }}
+                        className={`plumbus-input w-full ${
+                          subscriptionError ? 'border-red-500 focus:border-red-500' : ''
+                        }`}
+                        disabled={isSubscribing}
+                      />
+                    </div>
+                    <button 
+                      className="button-primary flex items-center justify-center space-x-2 disabled:opacity-50 disabled:cursor-not-allowed"
+                      onClick={handleSubscribe}
+                      disabled={isSubscribing || !email.trim()}
+                    >
+                      {isSubscribing ? (
+                        <>
+                          <LoadingDots size="sm" color="bg-white" />
+                          <span>Subscribing...</span>
+                        </>
+                      ) : (
+                        <span>Subscribe</span>
+                      )}
+                    </button>
+                  </div>
+                  
+                  {subscriptionError && (
+                    <div className="flex items-center space-x-2 text-red-600 mt-3">
+                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                      </svg>
+                      <span className="text-sm">{subscriptionError}</span>
+                    </div>
+                  )}
+                </div>
+              )}
               
-              <p className="text-xs text-gray-500 mt-4">
-                No spam, ever. Unsubscribe across all dimensions with one click.
-              </p>
+              {!subscriptionSuccess && (
+                <p className="footer-newsletter-disclaimer">
+                  No spam, ever. Unsubscribe across all dimensions with one click.
+                </p>
+              )}
             </div>
           </div>
         </ScrollAnimation>
 
         {/* Bottom section */}
         <ScrollAnimation direction="up" delay={0.4}>
-          <div className="border-t border-gray-800 pt-8">
-            <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
+          <div className="footer-bottom">
+            <div className="flex flex-col md:flex-row justify-between items-center gap-4">
               {/* Copyright */}
-              <div className="flex items-center space-x-2 text-sm text-gray-500">
+              <div className="footer-copyright">
                 <span>© {currentYear} Plumbus Industries. All rights reserved across all dimensions.</span>
               </div>
 
               {/* Legal links */}
-              <div className="flex flex-wrap justify-center gap-6">
+              <div className="footer-legal-links">
                 {footerLinks.legal.map((link) => (
                   <button
                     key={link.label}
                     onClick={() => scrollToSection(link.href)}
-                    className="text-gray-500 hover:text-pink-400 transition-colors text-sm focus:outline-none focus:text-pink-400"
+                    className="footer-legal-link focus:outline-none"
                   >
                     {link.label}
                   </button>
@@ -279,9 +350,9 @@ export const Footer: React.FC = () => {
               </div>
 
               {/* Made with love */}
-              <div className="flex items-center space-x-2 text-sm text-gray-500">
+              <div className="footer-made-with-love">
                 <span>Made with</span>
-                <Heart size={16} className="text-pink-500 fill-current" />
+                <Heart size={16} />
                 <span>in the multiverse</span>
               </div>
             </div>
@@ -292,8 +363,8 @@ export const Footer: React.FC = () => {
       {/* Back to top button */}
       <motion.button
         onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-        className="fixed bottom-8 right-8 w-12 h-12 bg-gradient-to-r from-pink-500 to-purple-600 text-white rounded-full shadow-lg flex items-center justify-center hover:shadow-xl transition-shadow focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-offset-2 z-50"
-        whileHover={prefersReducedMotion ? {} : { scale: 1.1 }}
+        className="back-to-top focus:outline-none"
+        whileHover={prefersReducedMotion ? {} : { scale: 1.05 }}
         whileTap={prefersReducedMotion ? {} : { scale: 0.95 }}
         initial={{ opacity: 0, y: 100 }}
         animate={{ opacity: 1, y: 0 }}

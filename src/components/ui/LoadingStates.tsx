@@ -83,7 +83,7 @@ export const CardSkeleton: React.FC<CardSkeletonProps> = ({
   className = ''
 }) => {
   return (
-    <div className={`bg-white rounded-xl p-6 shadow-md ${className}`}>
+    <div className={`plumbus-card ${className}`}>
       <div className="animate-pulse">
         {showAvatar && (
           <div className="flex items-center space-x-4 mb-4">

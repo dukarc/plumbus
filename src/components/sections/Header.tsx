@@ -52,13 +52,13 @@ export const Header: React.FC = () => {
           <div className="flex items-center space-x-2">
             <button
               onClick={() => scrollToSection('#hero')}
-              className="plumbus-nav-logo"
+              className="header-logo"
               aria-label="Go to homepage"
             >
-              <div className="w-8 h-8 bg-gradient-to-br from-pink-400 to-pink-600 rounded-full flex items-center justify-center">
-                <span className="text-white font-bold text-sm">P</span>
+              <div className="header-logo-icon">
+                <span>P</span>
               </div>
-              <span>Plumbus</span>
+              <span>lumbus</span>
             </button>
           </div>
 
@@ -79,7 +79,15 @@ export const Header: React.FC = () => {
               </li>
             ))}
             <li>
-              <button className="button-primary">
+              <button 
+                className="button-primary whimsy-button"
+                onClick={() => {
+                  const pricingElement = document.getElementById('pricing');
+                  if (pricingElement) {
+                    pricingElement.scrollIntoView({ behavior: 'smooth' });
+                  }
+                }}
+              >
                 Get Your Plumbus
               </button>
             </li>
@@ -98,8 +106,8 @@ export const Header: React.FC = () => {
 
         {/* Mobile Navigation */}
         {isMenuOpen && (
-          <div className="md:hidden mt-4 py-4 px-4 bg-white rounded-xl shadow-lg border border-gray-100">
-            <div className="space-y-2">
+          <div className="md:hidden plumbus-card mobile-menu">
+            <div className="plumbus-nav-mobile">
               {navigationItems.map((item) => (
                 <a
                   key={item.id}
@@ -108,17 +116,22 @@ export const Header: React.FC = () => {
                     e.preventDefault();
                     scrollToSection(item.href);
                   }}
-                  className={`block w-full text-left px-4 py-3 rounded-lg text-sm font-medium transition-colors ${
-                    activeSection === item.id
-                      ? 'text-pink-600 bg-pink-50'
-                      : 'text-gray-700 hover:text-pink-600 hover:bg-gray-50'
-                  }`}
+                  className={`plumbus-nav-mobile ${activeSection === item.id ? 'active' : ''}`}
                 >
                   {item.label}
                 </a>
               ))}
-              <div className="pt-4 border-t border-gray-100">
-                <button className="button-primary w-full">
+              <div className="mobile-menu-divider">
+                <button 
+                  className="button-primary whimsy-button w-full"
+                  onClick={() => {
+                    const pricingElement = document.getElementById('pricing');
+                    if (pricingElement) {
+                      pricingElement.scrollIntoView({ behavior: 'smooth' });
+                      setIsMenuOpen(false);
+                    }
+                  }}
+                >
                   Get Your Plumbus
                 </button>
               </div>
