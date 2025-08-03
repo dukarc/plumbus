@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { RefreshCw, Home, Search, Zap, AlertTriangle } from 'lucide-react';
+import { RefreshCwIcon as RefreshCw, HomeIcon as Home, SearchIcon as Search, ZapIcon as Zap, AlertTriangleIcon as AlertTriangle } from '@components/icons/OptimizedIcons';
 import { Button } from './Button';
 import { useReducedMotion } from '@hooks/useReducedMotion';
 import { floatingAnimation, interdimensionalGlitch, parallaxFloat } from '@utils/animations';

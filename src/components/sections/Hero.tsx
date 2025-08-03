@@ -1,360 +1,493 @@
-import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowDown, Sparkles } from 'lucide-react';
-import { Button } from '@components/ui/Button';
-import { InteractivePlumbus } from '@components/plumbus/InteractivePlumbus';
-import { FloatingElement, MouseFollower, ParticleSystem } from '@components/ui/ParallaxScroll';
-import { useReducedMotion } from '@hooks/useReducedMotion';
-import { fadeInUp, fadeInDown, staggerContainer, floatingBubble, sparkleTrail, bounceIn } from '@utils/animations';
+import React, { Suspense, lazy } from 'react';
+import { motion, useReducedMotion } from 'framer-motion';
+import { ArrowRightIcon } from '../icons/OptimizedIcons';
 
-export const Hero: React.FC = () => {
-  const [selectedHotspot, setSelectedHotspot] = useState<string | null>(null);
-  const [showFloatingElements] = useState(true);
-  const prefersReducedMotion = useReducedMotion();
+// Lazy load complex components
+const AnimatedBlobs = lazy(() => import('../ui/AnimatedBlobs').then(module => ({ default: module.AnimatedBlobs })));
 
-  const scrollToFeatures = () => {
-    const element = document.getElementById('features');
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
-    }
+// Enhanced Plumbus SVG Component with interactive elements and tooltips
+const PlumbusSVG: React.FC = () => {
+  const [hoveredPart, setHoveredPart] = React.useState<string | null>(null);
+  const shouldReduceMotion = useReducedMotion();
+
+  const partTooltips = {
+    grumbo: "Grumbo - The main body that houses all essential components",
+    fleeb: "Fleeb - Contains the vital plumbus juice for optimal function",
+    chumble1: "Chumble - Precision-engineered for maximum dexterity",
+    chumble2: "Chumble - Each one is hand-crafted by experts",
+    chumble3: "Chumble - The secret to plumbus flexibility",
+    chumble4: "Chumble - Never needs recalibration",
+    dingleBop: "Dingle-Bop - Ergonomic handle with anti-slip coating",
+    floob: "Floob - Premium quality, extracted from the spline",
+    grodus: "Grodus - Secondary extension for advanced operations"
   };
 
   return (
-    <section id="hero" className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-pink-50 via-white to-purple-50">
-      {/* Enhanced background decoration */}
-      <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute -top-40 -right-40 w-80 h-80 bg-pink-200 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob" />
-        <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-purple-200 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-2000" />
-        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-80 h-80 bg-yellow-200 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-4000" />
+    <div className="relative">
+      <motion.svg 
+        width="400" 
+        height="380" 
+        viewBox="0 0 400 380" 
+        className="w-full max-w-md mx-auto cursor-pointer"
+        whileHover={shouldReduceMotion ? {} : { scale: 1.02 }}
+        transition={shouldReduceMotion ? { duration: 0 } : { type: "spring", stiffness: 300, damping: 20 }}
+      >
+        {/* Grumbo (Main Body) - Large pink rounded shape */}
+        <motion.ellipse 
+          cx="200" 
+          cy="200" 
+          rx="120" 
+          ry="80" 
+          fill="#ED829E" 
+          onMouseEnter={() => setHoveredPart('grumbo')}
+          onMouseLeave={() => setHoveredPart(null)}
+          whileHover={{ scale: 1.05, fill: "#F08FB0" }}
+          transition={{ duration: 0.2 }}
+          style={{ cursor: 'pointer' }}
+        />
         
-        {/* Floating elements */}
-        {showFloatingElements && (
-          <>
-            {[...Array(8)].map((_, i) => (
-              <motion.div
-                key={i}
-                className="absolute w-4 h-4 bg-gradient-to-r from-pink-300 to-purple-300 rounded-full opacity-40"
-                style={{
-                  left: `${10 + i * 12}%`,
-                  top: `${20 + (i % 3) * 25}%`,
-                }}
-                variants={prefersReducedMotion ? {} : floatingBubble}
-                animate={prefersReducedMotion ? {} : 'animate'}
-                custom={i}
-              />
-            ))}
-            
-            {/* Sparkle trail */}
-            {[...Array(5)].map((_, i) => (
-              <motion.div
-                key={`sparkle-${i}`}
-                className="absolute w-2 h-2 bg-yellow-300 rounded-full opacity-60"
-                style={{
-                  right: `${5 + i * 8}%`,
-                  top: `${30 + i * 10}%`,
-                }}
-                variants={prefersReducedMotion ? {} : sparkleTrail}
-                animate={prefersReducedMotion ? {} : 'animate'}
-                custom={i}
-              />
-            ))}
-          </>
-        )}
-      </div>
-
-      <div className="container mx-auto px-4 py-20 relative z-10">
+        {/* Fleeb (Internal) - Visible internal component */}
+        <motion.ellipse 
+          cx="180" 
+          cy="190" 
+          rx="30" 
+          ry="20" 
+          fill="#D1477A" 
+          opacity="0.8"
+          onMouseEnter={() => setHoveredPart('fleeb')}
+          onMouseLeave={() => setHoveredPart(null)}
+          whileHover={{ scale: 1.1, opacity: 1 }}
+          transition={{ duration: 0.2 }}
+          style={{ cursor: 'pointer' }}
+        />
+        
+        {/* Chumbles (Tentacles) - 4 finger-like extensions at bottom with slight variations */}
+        <motion.path 
+          d="M140 260 Q135 290 130 320" 
+          stroke="#ED829E" 
+          strokeWidth="22" 
+          strokeLinecap="round" 
+          fill="none"
+          onMouseEnter={() => setHoveredPart('chumble1')}
+          onMouseLeave={() => setHoveredPart(null)}
+          whileHover={{ strokeWidth: 26, stroke: "#F08FB0" }}
+          transition={{ duration: 0.2 }}
+          style={{ cursor: 'pointer' }}
+        />
+        <motion.path 
+          d="M170 270 Q165 300 160 330" 
+          stroke="#ED829E" 
+          strokeWidth="19" 
+          strokeLinecap="round" 
+          fill="none"
+          onMouseEnter={() => setHoveredPart('chumble2')}
+          onMouseLeave={() => setHoveredPart(null)}
+          whileHover={{ strokeWidth: 23, stroke: "#F08FB0" }}
+          transition={{ duration: 0.2 }}
+          style={{ cursor: 'pointer' }}
+        />
+        <motion.path 
+          d="M230 270 Q235 300 240 330" 
+          stroke="#ED829E" 
+          strokeWidth="17" 
+          strokeLinecap="round" 
+          fill="none"
+          onMouseEnter={() => setHoveredPart('chumble3')}
+          onMouseLeave={() => setHoveredPart(null)}
+          whileHover={{ strokeWidth: 21, stroke: "#F08FB0" }}
+          transition={{ duration: 0.2 }}
+          style={{ cursor: 'pointer' }}
+        />
+        <motion.path 
+          d="M260 260 Q265 290 270 320" 
+          stroke="#ED829E" 
+          strokeWidth="21" 
+          strokeLinecap="round" 
+          fill="none"
+          onMouseEnter={() => setHoveredPart('chumble4')}
+          onMouseLeave={() => setHoveredPart(null)}
+          whileHover={{ strokeWidth: 25, stroke: "#F08FB0" }}
+          transition={{ duration: 0.2 }}
+          style={{ cursor: 'pointer' }}
+        />
+        
+        {/* Dingle-Bop (Handle) - Cylindrical handle extending upward */}
+        <motion.rect 
+          x="185" 
+          y="80" 
+          width="30" 
+          height="120" 
+          rx="15" 
+          fill="#B85C7A"
+          onMouseEnter={() => setHoveredPart('dingleBop')}
+          onMouseLeave={() => setHoveredPart(null)}
+          whileHover={{ scale: 1.05, fill: "#C96D8A" }}
+          transition={{ duration: 0.2 }}
+          style={{ cursor: 'pointer' }}
+        />
+        
+        {/* Floob (Top Element) - Rounded top connected to Dingle-Bop */}
+        <motion.circle 
+          cx="200" 
+          cy="80" 
+          r="25" 
+          fill="#D1477A"
+          onMouseEnter={() => setHoveredPart('floob')}
+          onMouseLeave={() => setHoveredPart(null)}
+          whileHover={{ scale: 1.1, fill: "#E1578A" }}
+          transition={{ duration: 0.2 }}
+          style={{ cursor: 'pointer' }}
+        />
+        
+        {/* Grodus (Protrusion) - Secondary extension from main body */}
+        <motion.ellipse 
+          cx="320" 
+          cy="180" 
+          rx="25" 
+          ry="40" 
+          fill="#B85C7A"
+          onMouseEnter={() => setHoveredPart('grodus')}
+          onMouseLeave={() => setHoveredPart(null)}
+          whileHover={{ scale: 1.08, fill: "#C96D8A" }}
+          transition={{ duration: 0.2 }}
+          style={{ cursor: 'pointer' }}
+        />
+        
+        {/* Additional details for visual depth */}
+        <ellipse cx="200" cy="200" rx="100" ry="65" fill="none" stroke="#B85C7A" strokeWidth="2" opacity="0.3" />
+        <circle cx="170" cy="170" r="8" fill="#D1477A" opacity="0.6" />
+        <circle cx="230" cy="210" r="6" fill="#D1477A" opacity="0.6" />
+      </motion.svg>
+      
+      {/* Floating tooltip */}
+      {hoveredPart && (
         <motion.div
-          className="grid lg:grid-cols-2 gap-12 items-center"
-          variants={prefersReducedMotion ? {} : staggerContainer}
-          initial="hidden"
-          animate="visible"
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: 10 }}
+          className="absolute -bottom-16 left-1/2 transform -translate-x-1/2 bg-gray-800 text-white px-4 py-2 rounded-lg text-sm whitespace-nowrap z-10 shadow-lg"
         >
-          {/* Left side - Content */}
-          <motion.div
-            className="text-center lg:text-left space-y-8"
-            variants={prefersReducedMotion ? {} : fadeInUp}
+          {partTooltips[hoveredPart as keyof typeof partTooltips]}
+          <div className="absolute -top-1 left-1/2 transform -translate-x-1/2 w-2 h-2 bg-gray-800 rotate-45" />
+        </motion.div>
+      )}
+    </div>
+  );
+};
+
+// Enhanced Assembly Process Step Component with whimsical interactions
+const AssemblyStep: React.FC<{ 
+  step: number; 
+  title: string; 
+  description: string; 
+  color: string;
+  isLast?: boolean;
+}> = ({ step, title, description, color, isLast }) => (
+  <div className="flex items-center">
+    <motion.div 
+      className={`${color} p-6 text-center min-w-[200px] cursor-pointer`}
+      style={{
+        borderRadius: '20px 15px 25px 18px', // Organic asymmetric corners
+        boxShadow: '0 4px 20px rgba(0,0,0,0.1)'
+      }}
+      whileHover={{ 
+        scale: 1.05,
+        rotate: [0, -1, 1, 0],
+        boxShadow: '0 8px 30px rgba(0,0,0,0.15)'
+      }}
+      transition={{ 
+        type: "spring", 
+        stiffness: 300, 
+        damping: 15,
+        rotate: { duration: 0.3 }
+      }}
+    >
+      <motion.div 
+        className="text-2xl font-bold text-white mb-2"
+        whileHover={{ scale: 1.1 }}
+        transition={{ duration: 0.2 }}
+      >
+        {step}
+      </motion.div>
+      <h3 className="text-lg font-semibold text-white mb-2">{title}</h3>
+      <p className="text-sm text-white/90">{description}</p>
+    </motion.div>
+    {!isLast && (
+      <motion.div
+        whileHover={{ x: 5 }}
+        transition={{ type: "spring", stiffness: 400 }}
+      >
+        <ArrowRightIcon className="mx-4 text-amber-700" size={24} />
+      </motion.div>
+    )}
+  </div>
+);
+
+// Enhanced Testimonial Speech Bubble Component with floating animation
+const TestimonialBubble: React.FC<{
+  quote: string;
+  author: string;
+  role: string;
+  position: 'left' | 'right';
+}> = ({ quote, author, role, position }) => (
+  <div className={`flex ${position === 'left' ? 'justify-start' : 'justify-end'} mb-8`}>
+    <div className="max-w-sm">
+      <motion.div 
+        className="bg-white p-6 shadow-lg relative cursor-pointer"
+        style={{
+          borderRadius: position === 'left' ? '25px 20px 20px 8px' : '20px 25px 8px 20px', // Organic bubble shape
+        }}
+        whileHover={{ 
+          scale: 1.02,
+          y: -2,
+          boxShadow: '0 12px 25px rgba(0,0,0,0.15)'
+        }}
+        animate={{
+          y: [0, -3, 0],
+        }}
+        transition={{
+          y: { duration: 3, repeat: Infinity, ease: "easeInOut" },
+          hover: { duration: 0.2 }
+        }}
+      >
+        <p className="text-gray-700 mb-4 italic">"{quote}"</p>
+        <div className="flex items-center">
+          <motion.div 
+            className={`w-10 h-10 rounded-full ${position === 'left' ? 'bg-blue-200' : 'bg-green-200'} flex items-center justify-center mr-3`}
+            whileHover={{ scale: 1.1, rotate: [0, -5, 5, 0] }}
+            transition={{ duration: 0.3 }}
           >
-            <div className="space-y-4">
-              <motion.div
-                className="inline-flex items-center space-x-2 bg-pink-100 text-pink-800 px-4 py-2 rounded-full text-sm font-medium"
-                variants={prefersReducedMotion ? {} : fadeInDown}
-              >
-                <Sparkles size={16} />
-                <span>The Ultimate Household Device</span>
-              </motion.div>
-              
-              <h1 className="text-5xl lg:text-7xl font-bold text-gray-900 leading-tight">
-                <motion.span
-                  variants={prefersReducedMotion ? {} : bounceIn}
-                  className="inline-block"
-                >
-                  Meet the{' '}
-                </motion.span>
-                <motion.span 
-                  className="text-gradient bg-gradient-to-r from-pink-500 to-purple-600 bg-clip-text text-transparent inline-block"
-                  variants={prefersReducedMotion ? {} : bounceIn}
-                  whileHover={prefersReducedMotion ? {} : {
-                    scale: 1.05,
-                    rotate: [0, 2, -2, 0],
-                    transition: { duration: 0.4 }
-                  }}
-                >
-                  Plumbus
-                </motion.span>
-              </h1>
-              
-              <motion.p 
-                className="text-xl text-gray-600 max-w-2xl"
-                variants={prefersReducedMotion ? {} : fadeInUp}
-                whileInView={prefersReducedMotion ? {} : {
-                  opacity: [0.8, 1, 0.8],
-                  transition: { duration: 3, repeat: Infinity }
-                }}
-              >
-                The mysterious multi-purpose household device that everyone has but nobody fully understands. 
-                Now available with advanced dinglebop technology and quantum fleeb integration.
-              </motion.p>
-            </div>
+            <span className="text-sm font-bold">{author[0]}</span>
+          </motion.div>
+          <div>
+            <div className="font-semibold text-gray-900">{author}</div>
+            <div className="text-sm text-gray-600">{role}</div>
+          </div>
+        </div>
+        {/* Speech bubble tail */}
+        <div className={`absolute top-6 ${position === 'left' ? '-left-2' : '-right-2'} w-4 h-4 bg-white transform rotate-45`} />
+      </motion.div>
+    </div>
+  </div>
+);
 
-            <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
-              <motion.div
-                whileHover={prefersReducedMotion ? {} : { scale: 1.02 }}
-                whileTap={prefersReducedMotion ? {} : { scale: 0.98 }}
-              >
-                <Button 
-                  variant="primary" 
-                  size="lg" 
-                  className="text-lg px-8 py-4 relative overflow-hidden"
-                >
-                  <span className="relative z-10">Get Your Plumbus - $149</span>
-                  {/* Enhanced shimmer effect */}
-                  <motion.div
-                    className="absolute inset-0 bg-gradient-to-r from-transparent via-white to-transparent opacity-20 rounded-lg"
-                    animate={prefersReducedMotion ? {} : {
-                      x: ['-100%', '100%'],
-                      scale: [1, 1.02, 1]
-                    }}
-                    transition={prefersReducedMotion ? {} : {
-                      duration: 2.5,
-                      repeat: Infinity,
-                      ease: 'easeInOut',
-                      repeatDelay: 4
-                    }}
-                  />
-                  
-                  {/* Pulse effect */}
-                  <motion.div
-                    className="absolute inset-0 bg-pink-400 rounded-lg opacity-10"
-                    animate={prefersReducedMotion ? {} : {
-                      scale: [1, 1.05, 1],
-                      opacity: [0.1, 0.2, 0.1]
-                    }}
-                    transition={prefersReducedMotion ? {} : {
-                      duration: 3,
-                      repeat: Infinity,
-                      ease: 'easeInOut'
-                    }}
-                  />
-                </Button>
-              </motion.div>
-              
-              <Button 
-                variant="secondary" 
-                size="lg" 
-                className="text-lg px-8 py-4"
-                onClick={scrollToFeatures}
-              >
-                Learn More
-              </Button>
-            </div>
+export const Hero: React.FC = () => {
+  const shouldReduceMotion = useReducedMotion();
 
-            <motion.div 
-              className="flex items-center justify-center lg:justify-start space-x-8 text-sm text-gray-500"
-              variants={prefersReducedMotion ? {} : staggerContainer}
-              initial="hidden"
-              animate="visible"
+  return (
+    <div>
+      {/* Main Hero Section */}
+      <section id="hero" className="relative min-h-screen flex items-center justify-center overflow-hidden" style={{ backgroundColor: '#F6E8CB' }}>
+        {/* Enhanced floating organic blob decorations - Only render if motion is not reduced */}
+        {!shouldReduceMotion && (
+          <Suspense fallback={null}>
+            <AnimatedBlobs />
+          </Suspense>
+        )}
+
+        {/* Main Content */}
+        <div className="container mx-auto px-4 py-20 relative z-10 text-center">
+          {/* Header */}
+          <motion.h1 
+            className="text-6xl lg:text-8xl font-bold mb-4"
+            style={{ color: '#8B5A3C' }}
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+          >
+            PLUMBUS
+          </motion.h1>
+          
+          {/* Tagline */}
+          <motion.p 
+            className="text-2xl mb-6"
+            style={{ color: '#8B5A3C' }}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+          >
+            Everyone needs a plumbus
+          </motion.p>
+          
+          {/* Sub-copy */}
+          <motion.p 
+            className="text-lg mb-12 max-w-2xl mx-auto"
+            style={{ color: '#8B5A3C' }}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.3 }}
+          >
+            A plumbus is an all-purpose home device. Get your first plumbus today!
+          </motion.p>
+          
+          {/* Large Plumbus Illustration */}
+          <motion.div 
+            className="mb-12"
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 1, delay: 0.4 }}
+          >
+            <PlumbusSVG />
+          </motion.div>
+          
+          {/* Enhanced CTA Button with personality */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.6 }}
+          >
+            <motion.div
+              whileHover={{ 
+                scale: 1.05,
+                rotate: [0, -1, 1, 0],
+              }}
+              whileTap={{ 
+                scale: 0.98,
+                rotate: -2
+              }}
+              transition={{ 
+                type: "spring", 
+                stiffness: 400, 
+                damping: 17,
+                rotate: { duration: 0.3 }
+              }}
             >
-              {[
-                { color: 'bg-green-500', text: 'Quantum Certified', icon: '⚛️' },
-                { color: 'bg-blue-500', text: 'Interdimensional Shipping', icon: '🌀' },
-                { color: 'bg-purple-500', text: 'Rick Approved', icon: '🧪' }
-              ].map((item, index) => (
-                <motion.div 
-                  key={index}
-                  className="flex items-center space-x-2"
-                  variants={prefersReducedMotion ? {} : fadeInUp}
-                  whileHover={prefersReducedMotion ? {} : {
-                    scale: 1.05,
-                    y: -2,
-                    transition: { duration: 0.2 }
-                  }}
-                >
-                  <motion.div 
-                    className={`w-2 h-2 ${item.color} rounded-full`}
-                    animate={prefersReducedMotion ? {} : {
-                      scale: [1, 1.2, 1],
-                      opacity: [0.7, 1, 0.7]
-                    }}
-                    transition={prefersReducedMotion ? {} : {
-                      duration: 2 + index * 0.5,
-                      repeat: Infinity,
-                      ease: 'easeInOut',
-                      delay: index * 0.3
-                    }}
-                  />
-                  <span className="hover:text-gray-700 transition-colors cursor-default">
-                    {item.icon} {item.text}
-                  </span>
-                </motion.div>
-              ))}
+              <button className="button-primary px-8 py-4 text-lg font-semibold">
+                <span className="inline-flex items-center gap-2">
+                  Get Your Plumbus
+                  <motion.span
+                    animate={{ x: [0, 3, 0] }}
+                    transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
+                  >
+                    🚀
+                  </motion.span>
+                </span>
+              </button>
             </motion.div>
           </motion.div>
-
-          {/* Right side - Interactive Plumbus */}
-          <motion.div
-            className="relative flex justify-center lg:justify-end"
-            variants={prefersReducedMotion ? {} : fadeInUp}
+        </div>
+      </section>
+      
+      {/* Assembly Process Section */}
+      <section className="py-16 bg-white">
+        <div className="container mx-auto px-4">
+          <motion.h2 
+            className="text-4xl font-bold text-center mb-12 text-gray-800"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            viewport={{ once: true }}
           >
-            <div className="relative">
-              <MouseFollower intensity={0.05} className="relative">
-                <FloatingElement intensity={15} duration={6} className="relative">
-                  <InteractivePlumbus 
-                    onHotspotSelect={setSelectedHotspot}
-                    selectedHotspot={selectedHotspot}
-                  />
-                </FloatingElement>
-              </MouseFollower>
-              
-              {/* Hotspot tooltip */}
-              <AnimatePresence>
-                {selectedHotspot && (
-                  <motion.div
-                    className="absolute top-4 left-4 bg-white rounded-lg shadow-lg p-4 max-w-xs z-20"
-                    initial={{ opacity: 0, scale: 0.8, y: 10 }}
-                    animate={{ opacity: 1, scale: 1, y: 0 }}
-                    exit={{ opacity: 0, scale: 0.8, y: 10 }}
-                    transition={{ duration: 0.2 }}
-                  >
-                    <div className="text-sm">
-                      <h4 className="font-semibold text-gray-900 mb-1">
-                        Selected: {selectedHotspot}
-                      </h4>
-                      <p className="text-gray-600">
-                        Click on the glowing areas to learn about different Plumbus components!
-                      </p>
-                    </div>
-                    <button
-                      onClick={() => setSelectedHotspot(null)}
-                      className="absolute top-1 right-1 w-6 h-6 flex items-center justify-center text-gray-400 hover:text-gray-600 rounded-full hover:bg-gray-100"
-                      aria-label="Close tooltip"
-                    >
-                      ×
-                    </button>
-                  </motion.div>
-                )}
-              </AnimatePresence>
-              
-              {/* Background particle system */}
-              <ParticleSystem 
-                count={12}
-                colors={['#f9a8d4', '#c084fc', '#fbbf24', '#60a5fa', '#34d399']}
-                size={{ min: 3, max: 8 }}
-                speed={{ min: 15, max: 25 }}
-                className="absolute inset-0 -z-10"
-              />
-            </div>
-          </motion.div>
-        </motion.div>
-
-        {/* Enhanced scroll indicator */}
-        <motion.div
-          className="absolute bottom-8 left-1/2 transform -translate-x-1/2"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 1, duration: 0.6 }}
-        >
-          <motion.button
-            onClick={scrollToFeatures}
-            className="group flex flex-col items-center space-y-2 text-gray-500 hover:text-pink-600 transition-colors p-4 focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-offset-2 rounded-lg"
-            aria-label="Scroll to features"
-            whileHover={prefersReducedMotion ? {} : { scale: 1.05 }}
-            whileTap={prefersReducedMotion ? {} : { scale: 0.95 }}
-          >
-            <span className="text-sm font-medium group-hover:text-pink-600 transition-colors">Discover Features</span>
-            
-            {/* Animated arrow with trail effect */}
-            <div className="relative">
-              <motion.div
-                animate={prefersReducedMotion ? {} : { y: [0, 8, 0] }}
-                transition={prefersReducedMotion ? {} : { duration: 2, repeat: Infinity }}
-              >
-                <ArrowDown size={20} className="relative z-10" />
-              </motion.div>
-              
-              {/* Trail arrows */}
-              {!prefersReducedMotion && (
-                <>
-                  <motion.div
-                    className="absolute inset-0 opacity-50"
-                    animate={{ y: [0, 8, 0] }}
-                    transition={{ duration: 2, repeat: Infinity, delay: 0.1 }}
-                  >
-                    <ArrowDown size={20} />
-                  </motion.div>
-                  <motion.div
-                    className="absolute inset-0 opacity-25"
-                    animate={{ y: [0, 8, 0] }}
-                    transition={{ duration: 2, repeat: Infinity, delay: 0.2 }}
-                  >
-                    <ArrowDown size={20} />
-                  </motion.div>
-                </>
-              )}
-            </div>
-            
-            {/* Pulsing ring indicator */}
+            How a Plumbus is Made
+          </motion.h2>
+          
+          <div className="flex flex-wrap justify-center items-center gap-8 lg:gap-4 overflow-x-auto pb-4">
             <motion.div
-              className="absolute inset-0 rounded-lg border-2 border-pink-300 opacity-0 group-hover:opacity-100 transition-opacity"
-              animate={prefersReducedMotion ? {} : {
-                scale: [1, 1.1, 1],
-                opacity: [0.3, 0.6, 0.3]
-              }}
-              transition={prefersReducedMotion ? {} : {
-                duration: 2,
-                repeat: Infinity,
-                ease: 'easeInOut'
-              }}
-            />
-          </motion.button>
-        </motion.div>
-      </div>
+              initial={{ opacity: 0, x: -30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.6, delay: 0.1 }}
+              viewport={{ once: true }}
+            >
+              <AssemblyStep 
+                step={1}
+                title="Fleeb Preparation"
+                description="First, they take the dingle-bop"
+                color="bg-blue-500"
+              />
+            </motion.div>
+            
+            <motion.div
+              initial={{ opacity: 0, x: -30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.6, delay: 0.3 }}
+              viewport={{ once: true }}
+            >
+              <AssemblyStep 
+                step={2}
+                title="Grumbo Assembly"
+                description="Then smooth it out with schleem"
+                color="bg-yellow-500"
+              />
+            </motion.div>
+            
+            <motion.div
+              initial={{ opacity: 0, x: -30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.6, delay: 0.5 }}
+              viewport={{ once: true }}
+            >
+              <AssemblyStep 
+                step={3}
+                title="Schlami Processing"
+                description="The schlami shows up and rubs it"
+                color="bg-green-500"
+              />
+            </motion.div>
+            
+            <motion.div
+              initial={{ opacity: 0, x: -30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.6, delay: 0.7 }}
+              viewport={{ once: true }}
+            >
+              <AssemblyStep 
+                step={4}
+                title="Final Touches"
+                description="Cut the fleeb and you have a plumbus"
+                color="bg-red-500"
+                isLast
+              />
+            </motion.div>
+          </div>
+        </div>
+      </section>
+      
+      {/* Testimonials Section */}
+      <section className="py-16" style={{ backgroundColor: '#F6E8CB' }}>
+        <div className="container mx-auto px-4">
+          <motion.h2 
+            className="text-4xl font-bold text-center mb-12"
+            style={{ color: '#8B5A3C' }}
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            viewport={{ once: true }}
+          >
+            What Our Customers Say
+          </motion.h2>
+          
+          <div className="max-w-4xl mx-auto">
+            <motion.div
+              initial={{ opacity: 0, x: -50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8 }}
+              viewport={{ once: true }}
+            >
+              <TestimonialBubble 
+                quote="I don't know how I ever lived without a plumbus"
+                author="Rulenein"
+                role="Plumbus Expert"
+                position="left"
+              />
+            </motion.div>
+            
+            <motion.div
+              initial={{ opacity: 0, x: 50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+              viewport={{ once: true }}
+            >
+              <TestimonialBubble 
+                quote="The plumbus changed my life. It's wonderful!"
+                author="Gumde"
+                role="Satisfied Customer"
+                position="right"
+              />
+            </motion.div>
+          </div>
+        </div>
 
-      {/* Custom styles for blob animation */}
-      <style>{`
-        @keyframes blob {
-          0% {
-            transform: translate(0px, 0px) scale(1);
-          }
-          33% {
-            transform: translate(30px, -50px) scale(1.1);
-          }
-          66% {
-            transform: translate(-20px, 20px) scale(0.9);
-          }
-          100% {
-            transform: translate(0px, 0px) scale(1);
-          }
-        }
-        .animate-blob {
-          animation: blob 7s infinite;
-        }
-        .animation-delay-2000 {
-          animation-delay: 2s;
-        }
-        .animation-delay-4000 {
-          animation-delay: 4s;
-        }
-      `}</style>
-    </section>
+      </section>
+    </div>
   );
 };

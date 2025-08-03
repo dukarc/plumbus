@@ -1,17 +1,17 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
-  Sparkles, 
-  Heart, 
-  Star, 
-  Zap, 
-  Coffee, 
-  Gift,
-  Music,
-  Gamepad2,
-  Palette,
-  Wand2
-} from 'lucide-react';
+  SparklesIcon as Sparkles, 
+  HeartIcon as Heart, 
+  StarIcon as Star, 
+  ZapIcon as Zap, 
+  CoffeeIcon as Coffee, 
+  GiftIcon as Gift,
+  MusicIcon as Music,
+  Gamepad2Icon as Gamepad2,
+  PaletteIcon as Palette,
+  Wand2Icon as Wand2
+} from '@components/icons/OptimizedIcons';
 import { Button } from '@components/ui/Button';
 import { FormField, SubmitButton } from '@components/ui/FormField';
 import { LoadingDots, PlumbusLoading, CardSkeleton } from '@components/ui/LoadingStates';

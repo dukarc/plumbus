@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useState, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { CheckCircle, AlertCircle, Info, X, Zap } from 'lucide-react';
+import { CheckCircleIcon as CheckCircle, AlertCircleIcon as AlertCircle, InfoIcon as Info, XIcon as X, ZapIcon as Zap } from '@components/icons/OptimizedIcons';
 import { useReducedMotion } from '@hooks/useReducedMotion';
 
 interface Notification {

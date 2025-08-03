@@ -1,0 +1,119 @@
+/* Critical CSS - Above the fold styles only */
+/* This should be inlined in production for fastest FCP */
+
+:root {
+  --plumbus-pink: #ED829E;
+  --gromflomite-beige: #F6E8CB;
+  --blamf-brown: #A36E4F;
+  --white: #FFFFFF;
+  --font-header: 'Baloo 2', system-ui, sans-serif;
+  --font-body: 'Montserrat', system-ui, sans-serif;
+  --text-5xl: 3rem;
+  --text-2xl: 1.5rem;
+  --text-lg: 1.125rem;
+  --space-4: 2rem;
+  --space-6: 3rem;
+  --space-8: 4rem;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-body);
+  color: var(--blamf-brown);
+  background-color: var(--gromflomite-beige);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Critical hero section styles */
+#hero {
+  background-color: var(--gromflomite-beige);
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: var(--space-8) var(--space-4);
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-title {
+  font-family: var(--font-header);
+  font-size: var(--text-5xl);
+  font-weight: 800;
+  color: var(--blamf-brown);
+  margin-bottom: var(--space-4);
+}
+
+.hero-subtitle {
+  font-size: var(--text-2xl);
+  color: var(--blamf-brown);
+  margin-bottom: var(--space-6);
+}
+
+.hero-description {
+  font-size: var(--text-lg);
+  color: var(--blamf-brown);
+  margin-bottom: var(--space-6);
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.button-primary {
+  background: var(--plumbus-pink);
+  color: var(--white);
+  border: none;
+  border-radius: 1rem;
+  padding: var(--space-4);
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: var(--text-lg);
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: background-color 200ms ease;
+}
+
+.button-primary:hover {
+  background: #E16B8C;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 var(--space-4);
+}
+
+/* Mobile optimizations */
+@media (max-width: 768px) {
+  .hero-title {
+    font-size: 2.25rem;
+  }
+  
+  .hero-subtitle {
+    font-size: 1.25rem;
+  }
+  
+  .container {
+    padding: 0 1rem;
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

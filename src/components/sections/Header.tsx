@@ -1,9 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X } from 'lucide-react';
-import { Button } from '@components/ui/Button';
-import { useScrollSpy } from '@hooks/useScrollSpy';
-import { useReducedMotion } from '@hooks/useReducedMotion';
+import { MenuIcon, XIcon } from '../icons/OptimizedIcons';
 
 const navigationItems = [
   { id: 'hero', label: 'Home', href: '#hero' },
@@ -16,13 +12,23 @@ const navigationItems = [
 
 export const Header: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isScrolled, setIsScrolled] = useState(false);
-  const activeSection = useScrollSpy(navigationItems.map(item => item.id));
-  const prefersReducedMotion = useReducedMotion();
+  const [activeSection, setActiveSection] = useState('hero');
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20);
+      const sections = navigationItems.map(item => item.id);
+      const scrollPosition = window.scrollY + 100;
+
+      for (const sectionId of sections) {
+        const element = document.getElementById(sectionId);
+        if (element) {
+          const { offsetTop, offsetHeight } = element;
+          if (scrollPosition >= offsetTop && scrollPosition < offsetTop + offsetHeight) {
+            setActiveSection(sectionId);
+            break;
+          }
+        }
+      }
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
@@ -37,63 +43,16 @@ export const Header: React.FC = () => {
     }
   };
 
-  const headerVariants = {
-    scrolled: {
-      backgroundColor: 'rgba(255, 255, 255, 0.95)',
-      backdropFilter: 'blur(10px)',
-      boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)',
-    },
-    top: {
-      backgroundColor: 'rgba(255, 255, 255, 0)',
-      backdropFilter: 'blur(0px)',
-      boxShadow: '0 0 0 0 rgb(0 0 0 / 0)',
-    },
-  };
-
-  const mobileMenuVariants = {
-    hidden: {
-      opacity: 0,
-      y: -20,
-      scale: 0.95,
-    },
-    visible: {
-      opacity: 1,
-      y: 0,
-      scale: 1,
-      transition: {
-        duration: 0.2,
-        ease: 'easeOut',
-      },
-    },
-    exit: {
-      opacity: 0,
-      y: -20,
-      scale: 0.95,
-      transition: {
-        duration: 0.15,
-        ease: 'easeIn',
-      },
-    },
-  };
 
   return (
-    <motion.header
-      className="fixed top-0 left-0 right-0 z-50 transition-all duration-300"
-      animate={isScrolled ? 'scrolled' : 'top'}
-      variants={prefersReducedMotion ? {} : headerVariants}
-      initial="top"
-    >
-      <nav className="container mx-auto px-4 py-4">
+    <header className="plumbus-nav">
+      <nav className="container">
         <div className="flex items-center justify-between">
           {/* Logo */}
-          <motion.div
-            className="flex items-center space-x-2"
-            whileHover={prefersReducedMotion ? {} : { scale: 1.05 }}
-            whileTap={prefersReducedMotion ? {} : { scale: 0.95 }}
-          >
+          <div className="flex items-center space-x-2">
             <button
               onClick={() => scrollToSection('#hero')}
-              className="flex items-center space-x-2 font-bold text-2xl text-pink-600 hover:text-pink-700 transition-colors focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-offset-2 rounded-lg p-2"
+              className="plumbus-nav-logo"
               aria-label="Go to homepage"
             >
               <div className="w-8 h-8 bg-gradient-to-br from-pink-400 to-pink-600 rounded-full flex items-center justify-center">
@@ -101,83 +60,72 @@ export const Header: React.FC = () => {
               </div>
               <span>Plumbus</span>
             </button>
-          </motion.div>
+          </div>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-8">
+          <ul className="plumbus-nav-menu">
             {navigationItems.map((item) => (
-              <button
-                key={item.id}
-                onClick={() => scrollToSection(item.href)}
-                className={`
-                  text-sm font-medium transition-colors duration-200 px-3 py-2 rounded-lg
-                  focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-offset-2
-                  ${
-                    activeSection === item.id
-                      ? 'text-pink-600 bg-pink-50'
-                      : 'text-gray-700 hover:text-pink-600 hover:bg-gray-50'
-                  }
-                `}
-              >
-                {item.label}
-              </button>
+              <li key={item.id}>
+                <a
+                  href={item.href}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    scrollToSection(item.href);
+                  }}
+                  className={activeSection === item.id ? 'active' : ''}
+                >
+                  {item.label}
+                </a>
+              </li>
             ))}
-            <Button variant="primary" size="sm">
-              Get Your Plumbus
-            </Button>
-          </div>
+            <li>
+              <button className="button-primary">
+                Get Your Plumbus
+              </button>
+            </li>
+          </ul>
 
           {/* Mobile Menu Button */}
-          <div className="md:hidden">
-            <button
-              onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="p-2 text-gray-700 hover:text-pink-600 focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-offset-2 rounded-lg"
-              aria-label={isMenuOpen ? 'Close menu' : 'Open menu'}
-              aria-expanded={isMenuOpen}
-            >
-              {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
-            </button>
-          </div>
+          <button
+            className="plumbus-nav-hamburger"
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
+            aria-label={isMenuOpen ? 'Close menu' : 'Open menu'}
+            aria-expanded={isMenuOpen}
+          >
+            {isMenuOpen ? <XIcon size={24} /> : <MenuIcon size={24} />}
+          </button>
         </div>
 
         {/* Mobile Navigation */}
-        <AnimatePresence>
-          {isMenuOpen && (
-            <motion.div
-              className="md:hidden mt-4 py-4 px-4 bg-white rounded-xl shadow-lg border border-gray-100"
-              variants={prefersReducedMotion ? {} : mobileMenuVariants}
-              initial="hidden"
-              animate="visible"
-              exit="exit"
-            >
-              <div className="space-y-2">
-                {navigationItems.map((item) => (
-                  <button
-                    key={item.id}
-                    onClick={() => scrollToSection(item.href)}
-                    className={`
-                      block w-full text-left px-4 py-3 rounded-lg text-sm font-medium transition-colors
-                      focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-offset-2
-                      ${
-                        activeSection === item.id
-                          ? 'text-pink-600 bg-pink-50'
-                          : 'text-gray-700 hover:text-pink-600 hover:bg-gray-50'
-                      }
-                    `}
-                  >
-                    {item.label}
-                  </button>
-                ))}
-                <div className="pt-4 border-t border-gray-100">
-                  <Button variant="primary" size="sm" className="w-full">
-                    Get Your Plumbus
-                  </Button>
-                </div>
+        {isMenuOpen && (
+          <div className="md:hidden mt-4 py-4 px-4 bg-white rounded-xl shadow-lg border border-gray-100">
+            <div className="space-y-2">
+              {navigationItems.map((item) => (
+                <a
+                  key={item.id}
+                  href={item.href}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    scrollToSection(item.href);
+                  }}
+                  className={`block w-full text-left px-4 py-3 rounded-lg text-sm font-medium transition-colors ${
+                    activeSection === item.id
+                      ? 'text-pink-600 bg-pink-50'
+                      : 'text-gray-700 hover:text-pink-600 hover:bg-gray-50'
+                  }`}
+                >
+                  {item.label}
+                </a>
+              ))}
+              <div className="pt-4 border-t border-gray-100">
+                <button className="button-primary w-full">
+                  Get Your Plumbus
+                </button>
               </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
+            </div>
+          </div>
+        )}
       </nav>
-    </motion.header>
+    </header>
   );
 };

@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { CheckCircle, AlertCircle, Eye, EyeOff } from 'lucide-react';
+import { CheckCircleIcon as CheckCircle, AlertCircleIcon as AlertCircle, EyeIcon as Eye, EyeOffIcon as EyeOff } from '@components/icons/OptimizedIcons';
 import { useReducedMotion } from '@hooks/useReducedMotion';
 import { focusGlow, checkmarkDraw } from '@utils/animations';
 
