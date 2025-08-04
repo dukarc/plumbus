@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { ZapIcon, ShieldIcon, CpuIcon, SparklesIcon, WrenchIcon, GlobeIcon, StarIcon } from '../icons/OptimizedIcons';
+import { ZapIcon, ShieldIcon, CpuIcon, SparklesIcon, WrenchIcon, GlobeIcon } from '../icons/OptimizedIcons';
 import { plumbusFeatures } from '@utils/data';
 
 // Icon mapping for features
@@ -195,19 +195,11 @@ export const Features: React.FC = () => {
                 whileHover={{ scale: 1.1, y: -5 }}
                 transition={{ type: "spring", stiffness: 400, delay: 0.1 }}
               >
-                <div className="flex items-center justify-center" style={{ gap: 'var(--space-1)', marginBottom: 'var(--space-2)' }}>
-                  {[...Array(5)].map((_, i) => (
-                    <motion.div key={i} whileHover={{ scale: 1.3, rotate: 360 }}>
-                      <StarIcon
-                        size={16}
-                        className="star-interactive text-step-yellow fill-current"
-                        filled
-                        aria-hidden="true"
-                      />
-                    </motion.div>
-                  ))}
-                </div>
-                <span className="stat-label">Rick-Approved Rating</span>
+                <motion.span 
+                  className="stat-number"
+                  whileHover={{ color: 'var(--plumbus-pink)' }}
+                >5★</motion.span>
+                <span className="stat-label">Customer Rating</span>
               </motion.div>
             </div>
           </motion.div>

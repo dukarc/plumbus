@@ -18,45 +18,47 @@ describe('Hero Component', () => {
 
     it('renders the descriptive text', () => {
       expect(screen.getByText(/A plumbus is an all-purpose home device/)).toBeInTheDocument()
-      expect(screen.getByText(/Even Jerry can use it/)).toBeInTheDocument()
+      expect(screen.getByText(/The perfect addition to any household/)).toBeInTheDocument()
     })
 
     it('renders the call-to-action button', () => {
       expect(screen.getByRole('button', { name: /Get Your Plumbus/i })).toBeInTheDocument()
     })
 
-    it('renders the plumbus SVG illustration', () => {
-      expect(screen.getByTitle('Authentic Plumbus - Rick & Morty All-Purpose Home Device')).toBeInTheDocument()
+    it('renders the plumbus illustration', () => {
+      expect(screen.getByAltText('Plumbus - Rick & Morty All-Purpose Home Device')).toBeInTheDocument()
     })
   })
 
   describe('Interactive Behavior', () => {
-    it('triggers console logs when CTA button is clicked', () => {
-      const consoleSpy = vi.spyOn(console, 'log')
-      const ctaButton = screen.getByRole('button', { name: /Get Your Plumbus/i })
+    it('scrolls to pricing section when CTA button is clicked', () => {
+      const scrollIntoViewMock = vi.fn()
+      const mockElement = { scrollIntoView: scrollIntoViewMock }
+      vi.spyOn(document, 'getElementById').mockReturnValue(mockElement as any)
       
+      const ctaButton = screen.getByRole('button', { name: /Get Your Plumbus/i })
       fireEvent.click(ctaButton)
       
-      expect(consoleSpy).toHaveBeenCalledWith(expect.stringContaining('Wubba lubba dub dub'))
-      expect(consoleSpy).toHaveBeenCalledWith(expect.stringContaining('plumbus acquisition protocol'))
+      expect(document.getElementById).toHaveBeenCalledWith('pricing')
+      expect(scrollIntoViewMock).toHaveBeenCalledWith({ behavior: 'smooth' })
     })
 
-    it('has interactive plumbus SVG with click functionality', () => {
+    it('has interactive plumbus image with click functionality', () => {
       const consoleSpy = vi.spyOn(console, 'log')
-      const plumbusSvg = screen.getByTitle('Authentic Plumbus - Rick & Morty All-Purpose Home Device')
+      const plumbusImg = screen.getByAltText('Plumbus - Rick & Morty All-Purpose Home Device')
       
-      // Click the SVG multiple times to trigger Jerry warning
-      for (let i = 0; i < 7; i++) {
-        fireEvent.click(plumbusSvg)
+      // Click the image multiple times to trigger easter egg
+      for (let i = 0; i < 4; i++) {
+        fireEvent.click(plumbusImg)
       }
       
-      expect(consoleSpy).toHaveBeenCalledWith(expect.stringContaining('Jerry Warning'))
+      expect(consoleSpy).toHaveBeenCalledWith(expect.stringContaining('Rick:'))
     })
 
     it('has proper styling classes on the CTA button', () => {
       const ctaButton = screen.getByRole('button', { name: /Get Your Plumbus/i })
       expect(ctaButton).toHaveClass('button-primary')
-      expect(ctaButton).toHaveClass('whimsy-button')
+      expect(ctaButton).toHaveClass('px-8', 'py-4', 'text-lg', 'font-semibold')
     })
   })
 
@@ -70,9 +72,12 @@ describe('Hero Component', () => {
       expect(ctaButton).toHaveAccessibleName()
       
       // Test activation with Enter
-      const consoleSpy = vi.spyOn(console, 'log')
+      const scrollIntoViewMock = vi.fn()
+      const mockElement = { scrollIntoView: scrollIntoViewMock }
+      vi.spyOn(document, 'getElementById').mockReturnValue(mockElement as any)
+      
       await user.keyboard('{Enter}')
-      expect(consoleSpy).toHaveBeenCalled()
+      expect(scrollIntoViewMock).toHaveBeenCalled()
     })
 
     it('has proper aria-label or accessible names', () => {
@@ -86,28 +91,27 @@ describe('Hero Component', () => {
       expect(mainHeading.textContent).toContain('PLUMBUS')
     })
 
-    it('has descriptive SVG with proper title and description', () => {
-      const plumbusSvg = screen.getByTitle('Authentic Plumbus - Rick & Morty All-Purpose Home Device')
-      expect(plumbusSvg).toBeInTheDocument()
-      // Check for description element
-      expect(document.querySelector('desc')).toBeInTheDocument()
+    it('has descriptive image with proper alt text', () => {
+      const plumbusImg = screen.getByAltText('Plumbus - Rick & Morty All-Purpose Home Device')
+      expect(plumbusImg).toBeInTheDocument()
+      expect(plumbusImg).toHaveAttribute('loading', 'lazy')
     })
   })
 
   describe('Content Validation', () => {
     it('contains Rick and Morty references', () => {
       expect(screen.getByText(/Everyone needs a plumbus/)).toBeInTheDocument()
-      expect(screen.getByText(/Even Jerry can use it/)).toBeInTheDocument()
+      expect(screen.getByText(/The perfect addition to any household/)).toBeInTheDocument()
     })
 
-    it('includes interactive plumbus parts with tooltips', () => {
-      // Check for SVG with complex structure
-      const plumbusSvg = screen.getByTitle('Authentic Plumbus - Rick & Morty All-Purpose Home Device')
-      expect(plumbusSvg).toBeInTheDocument()
+    it('includes interactive plumbus image', () => {
+      // Check for image
+      const plumbusImg = screen.getByAltText('Plumbus - Rick & Morty All-Purpose Home Device')
+      expect(plumbusImg).toBeInTheDocument()
       
-      // Check for gradient definitions (which prove the SVG is complex)
-      const gradients = document.querySelectorAll('defs radialGradient, defs linearGradient')
-      expect(gradients.length).toBeGreaterThan(0)
+      // Check it's an img element
+      expect(plumbusImg.tagName).toBe('IMG')
+      expect(plumbusImg).toHaveAttribute('src', '/plumbus-hero.png')
     })
   })
 
@@ -122,10 +126,11 @@ describe('Hero Component', () => {
       expect(title).toHaveClass('hero-title')
     })
 
-    it('contains complex plumbus SVG with gradients', () => {
-      // Check for gradient definitions in SVG
-      const gradients = document.querySelectorAll('defs radialGradient, defs linearGradient')
-      expect(gradients.length).toBeGreaterThan(0)
+    it('contains plumbus image with proper styling', () => {
+      // Check for image element
+      const plumbusImg = screen.getByAltText('Plumbus - Rick & Morty All-Purpose Home Device')
+      expect(plumbusImg).toBeInTheDocument()
+      expect(plumbusImg).toHaveClass('w-full', 'h-auto', 'mx-auto')
     })
   })
 

@@ -52,25 +52,15 @@ export const Hero: React.FC = () => {
             Everyone needs a plumbus *burp*
           </motion.p>
           
-          {/* Sub-copy with Jerry reference */}
+          {/* Sub-copy - professional description */}
           <motion.p 
             className="text-lg mb-12 max-w-2xl mx-auto"
             style={{ color: 'var(--blamf-brown)' }}
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.3 }}
-            onMouseEnter={() => {
-              // Subtle Jerry easter egg on hover
-              const jerryQuotes = [
-                "Wait, how does this thing work again?",
-                "I'm not sure I understand the purpose of this...",
-                "Beth, is this another one of Rick's weird inventions?"
-              ];
-              const randomQuote = jerryQuotes[Math.floor(Math.random() * jerryQuotes.length)];
-              console.log(`😕 Jerry: ${randomQuote}`);
-            }}
           >
-            A plumbus is an all-purpose home device. Get your first plumbus today! Even Jerry can use it.
+            A plumbus is an all-purpose home device. The perfect addition to any household.
           </motion.p>
           
           {/* Large Plumbus Illustration */}
@@ -80,104 +70,26 @@ export const Hero: React.FC = () => {
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 1, delay: 0.4 }}
           >
-            <SimplePlumbusHero className="w-full max-w-[150px] sm:max-w-[180px] lg:max-w-[200px] mx-auto" />
+            <SimplePlumbusHero className="w-full max-w-[300px] sm:max-w-[400px] lg:max-w-[500px] mx-auto" />
           </motion.div>
           
-          {/* Enhanced CTA Button with personality */}
+          {/* Clean CTA Button */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.6 }}
           >
-            <motion.div
-              whileHover={{ 
-                scale: 1.05,
-                rotate: [0, -1, 1, 0],
-              }}
-              whileTap={{ 
-                scale: 0.98,
-                rotate: -2
-              }}
-              transition={{ 
-                type: "spring", 
-                stiffness: 400, 
-                damping: 17,
-                rotate: { duration: 0.3 }
-              }}
-            >
               <button 
-                className="button-primary whimsy-button px-8 py-4 text-lg font-semibold portal-gun-effect science-approved"
-                onClick={(e) => {
-                  // Enhanced click handler with multiple easter eggs
-                  const clickX = e.clientX;
-                  const clickY = e.clientY;
-                  
-                  // Create portal effect at click location
-                  const portal = document.createElement('div');
-                  portal.style.cssText = `
-                    position: fixed;
-                    left: ${clickX - 25}px;
-                    top: ${clickY - 25}px;
-                    width: 50px;
-                    height: 50px;
-                    background: radial-gradient(circle, rgba(0, 255, 0, 0.8) 0%, transparent 70%);
-                    border-radius: 50%;
-                    pointer-events: none;
-                    z-index: 9999;
-                    animation: portalBurst 0.6s ease-out forwards;
-                  `;
-                  document.body.appendChild(portal);
-                  setTimeout(() => portal.remove(), 600);
-                  
-                  // Add portal burst animation dynamically
-                  if (!document.getElementById('portal-burst-style')) {
-                    const style = document.createElement('style');
-                    style.id = 'portal-burst-style';
-                    style.textContent = `
-                      @keyframes portalBurst {
-                        0% { transform: scale(0) rotate(0deg); opacity: 1; }
-                        50% { transform: scale(1.5) rotate(180deg); opacity: 0.8; }
-                        100% { transform: scale(3) rotate(360deg); opacity: 0; }
-                      }
-                    `;
-                    document.head.appendChild(style);
-                  }
-                  
-                  console.log('Wubba lubba dub dub! *burp* Initiating plumbus acquisition protocol...');
-                  
-                  // Trigger enhanced easter egg with portal effect
-                  if ((window as any).triggerEasterEgg) {
-                    (window as any).triggerEasterEgg('*burp* Excellent choice, Morty! Portal gun engaged - plumbus acquisition in progress!', 'rick');
+                className="button-primary px-8 py-4 text-lg font-semibold"
+                onClick={() => {
+                  const pricingElement = document.getElementById('pricing');
+                  if (pricingElement) {
+                    pricingElement.scrollIntoView({ behavior: 'smooth' });
                   }
                 }}
               >
-                <span className="inline-flex items-center gap-2">
-                  Get Your Plumbus
-                  <motion.span
-                    animate={{ 
-                      x: [0, 3, 0],
-                      rotate: [0, 10, -10, 0],
-                      scale: [1, 1.1, 1]
-                    }}
-                    transition={{ 
-                      duration: 1.5, 
-                      repeat: Infinity, 
-                      ease: "easeInOut",
-                      rotate: { duration: 2, repeat: Infinity },
-                      scale: { duration: 1, repeat: Infinity }
-                    }}
-                    whileHover={{
-                      scale: 1.3,
-                      rotate: [0, 360],
-                      transition: { duration: 0.5 }
-                    }}
-                    style={{ display: 'inline-block' }}
-                  >
-                    🛸
-                  </motion.span>
-                </span>
+                Get Your Plumbus
               </button>
-            </motion.div>
           </motion.div>
         </div>
       </section>

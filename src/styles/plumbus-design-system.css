@@ -61,6 +61,7 @@
   --space-2: 1rem;    /* 16px */
   --space-3: 1.5rem;  /* 24px - MINIMUM card spacing */
   --space-4: 2rem;    /* 32px */
+  --space-5: 2.5rem;  /* 40px - For pricing card gaps */
   --space-6: 3rem;    /* 48px */
   --space-8: 4rem;    /* 64px */
   
@@ -362,7 +363,7 @@ h6 { font-size: var(--text-lg); }
   align-items: center;
   justify-content: space-between;
   width: 100%;
-  gap: var(--space-4); /* Proper gap between logo and nav items */
+  gap: var(--space-6); /* Increased gap between logo and nav items - fixes header spacing */
 }
 
 .plumbus-nav-logo {
@@ -431,12 +432,12 @@ h6 { font-size: var(--text-lg); }
 /* HERO SECTION - Clean flat style with organic shapes */
 .plumbus-hero {
   background: var(--gromflomite-beige);
-  min-height: 100vh;
+  min-height: 65vh; /* Reduced from 80vh to center content better */
   display: flex;
   align-items: center;
   justify-content: center;
   text-align: center;
-  padding: var(--space-8) var(--space-4);
+  padding: var(--space-4) var(--space-4); /* Reduced top/bottom padding */
   position: relative;
   overflow: hidden;
 }
@@ -469,6 +470,8 @@ h6 { font-size: var(--text-lg); }
 .plumbus-hero-content {
   position: relative;
   z-index: 1;
+  max-width: 100%;
+  margin: 0 auto;
 }
 
 .plumbus-hero h1 {
@@ -667,9 +670,9 @@ h6 { font-size: var(--text-lg); }
     padding: var(--space-1); /* Add touch-friendly padding */
   }
   
-  /* Reduce gap on mobile for tighter spacing */
+  /* Consistent gap on mobile - keep proper spacing */
   .plumbus-nav .container {
-    gap: var(--space-2);
+    gap: var(--space-3);
   }
 }
 
@@ -836,6 +839,7 @@ h6 { font-size: var(--text-lg); }
   
   .pricing-container {
     grid-template-columns: 1fr;
+    gap: var(--space-4); /* Reduced gap on mobile */
   }
   
   /* Adjust popular badge spacing on mobile */
@@ -866,6 +870,7 @@ h6 { font-size: var(--text-lg); }
   
   .pricing-container {
     grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-5); /* Medium gap on tablet */
   }
   
   /* Adjust popular badge for tablet */
@@ -1144,9 +1149,14 @@ h6 { font-size: var(--text-lg); }
 .pricing-container {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: var(--space-4);
+  gap: var(--space-6); /* Increased gap between cards */
   margin: var(--space-6) 0;
   padding-top: var(--space-3); /* Add padding to accommodate popular badge */
+  align-items: stretch; /* Changed from start to stretch for equal height */
+  justify-items: center;
+  max-width: 1200px; /* Add max-width for better alignment */
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .pricing-card {
@@ -1157,6 +1167,11 @@ h6 { font-size: var(--text-lg); }
   text-align: center;
   position: relative;
   transition: all var(--transition-normal);
+  width: 100%; /* Ensure full width within grid */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* Distribute content evenly */
+  min-height: 600px; /* Minimum height for consistency */
 }
 
 .pricing-card.featured {

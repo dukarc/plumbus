@@ -41,13 +41,12 @@ export const Manufacturing: React.FC = () => {
         <div style={{ marginTop: 'var(--space-8)' }}>
           <div className="stats-container">
             {[
-              { label: 'Plumbuses Made Daily', value: '50,000+', icon: '🏭' },
-              { label: 'Quality Control Tests', value: '847', icon: '🔬' },
-              { label: 'Dimensions Served', value: 'Infinite', icon: '🌌' },
-              { label: 'Customer Satisfaction', value: '99.8%', icon: '⭐' },
+              { label: 'Plumbuses Made Daily', value: '50,000+' },
+              { label: 'Quality Control Tests', value: '847' },
+              { label: 'Dimensions Served', value: 'Infinite' },
+              { label: 'Customer Satisfaction', value: '99.8%' },
             ].map((stat) => (
               <div key={stat.label} className="stat-item">
-                <div className="text-3xl mb-2 emoji-bounce">{stat.icon}</div>
                 <div className="stat-number">
                   {stat.value}
                 </div>
