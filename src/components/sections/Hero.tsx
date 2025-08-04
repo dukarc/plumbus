@@ -1,118 +1,49 @@
 import React, { Suspense, lazy } from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
+import EnhancedPlumbusImage from '../EnhancedPlumbusImage';
 // ArrowRightIcon removed - arrows now handled by CSS in design system
 
 // Lazy load complex components
 const AnimatedBlobs = lazy(() => import('../ui/AnimatedBlobs').then(module => ({ default: module.AnimatedBlobs })));
 
-// Simple Plumbus SVG - More accurate to the show
-const PlumbusSVG: React.FC = () => {
+// Enhanced Plumbus Image with Animation Wrapper
+const AnimatedPlumbus: React.FC = () => {
   const shouldReduceMotion = useReducedMotion();
 
   return (
     <div className="relative">
-      <motion.svg 
-        width="300" 
-        height="300" 
-        viewBox="0 0 300 300" 
+      <motion.div 
         className="w-full max-w-sm mx-auto"
         whileHover={shouldReduceMotion ? {} : { scale: 1.05 }}
         transition={shouldReduceMotion ? { duration: 0 } : { type: "spring", stiffness: 300, damping: 20 }}
       >
-        <title>Plumbus - Rick & Morty All-Purpose Home Device</title>
-        <desc>
-          Simple plumbus illustration showing the basic anatomy
-        </desc>
-        
-        {/* Simple gradients - more accurate flesh tones */}
-        <defs>
-          <radialGradient id="plumbusGradient" cx="0.5" cy="0.4" r="0.8">
-            <stop offset="0%" stopColor="#E6B885" />
-            <stop offset="50%" stopColor="#D4A574" />
-            <stop offset="100%" stopColor="#C49668" />
-          </radialGradient>
-          <filter id="softShadow">
-            <feDropShadow dx="2" dy="4" stdDeviation="3" floodOpacity="0.3"/>
-          </filter>
-        </defs>
-        
-        {/* Main Plumbus Body - Organic blob shape */}
-        <path 
-          d="M 150 130 C 120 130 90 145 90 180 C 90 200 95 210 110 220 C 125 230 150 235 150 235 C 150 235 175 230 190 220 C 205 210 210 200 210 180 C 210 145 180 130 150 130 Z" 
-          fill="url(#plumbusGradient)" 
-          filter="url(#softShadow)"
+        <EnhancedPlumbusImage
+          preset="heroSection"
+          alt="Plumbus - Rick & Morty All-Purpose Home Device"
+          className="w-full"
+          onGenerationSuccess={(result) => {
+            console.log('🎉 New organic plumbus generated!', result);
+            // Trigger celebration easter egg
+            if ((window as any).triggerEasterEgg) {
+              (window as any).triggerEasterEgg('*burp* Finally! A plumbus that doesn\'t look like garbage!', 'rick');
+            }
+          }}
+          onGenerationError={(error) => {
+            console.warn('Plumbus generation failed, using fallback:', error);
+          }}
+          loadingComponent={
+            <div className="flex flex-col items-center justify-center" style={{ width: 300, height: 300 }}>
+              <div className="plumbus-spinner mb-4"></div>
+              <p className="text-sm" style={{ color: 'var(--blamf-brown)' }}>
+                Generating organic plumbus...
+              </p>
+              <p className="text-xs opacity-60" style={{ color: 'var(--blamf-brown)' }}>
+                *burp* Science in progress!
+              </p>
+            </div>
+          }
         />
-        
-        {/* Handle/Dingle-Bop - Simple vertical stem */}
-        <rect 
-          x="140" 
-          y="70" 
-          width="20" 
-          height="110" 
-          rx="10" 
-          fill="url(#plumbusGradient)" 
-          filter="url(#softShadow)"
-        />
-        
-        {/* Top knob */}
-        <ellipse 
-          cx="150" 
-          cy="70" 
-          rx="12" 
-          ry="8" 
-          fill="#E6B885" 
-        />
-        
-        {/* Chumbles (tentacles) with tips */}
-        <path 
-          d="M 110 220 Q 105 250 110 270" 
-          stroke="#C49668" 
-          strokeWidth="8" 
-          fill="none" 
-          strokeLinecap="round"
-        />
-        <ellipse cx="110" cy="272" rx="6" ry="4" fill="#D4A574" />
-        
-        <path 
-          d="M 130 225 Q 128 255 135 275" 
-          stroke="#C49668" 
-          strokeWidth="8" 
-          fill="none" 
-          strokeLinecap="round"
-        />
-        <ellipse cx="135" cy="277" rx="6" ry="4" fill="#D4A574" />
-        
-        <path 
-          d="M 170 225 Q 172 255 165 275" 
-          stroke="#C49668" 
-          strokeWidth="8" 
-          fill="none" 
-          strokeLinecap="round"
-        />
-        <ellipse cx="165" cy="277" rx="6" ry="4" fill="#D4A574" />
-        
-        <path 
-          d="M 190 220 Q 195 250 190 270" 
-          stroke="#C49668" 
-          strokeWidth="8" 
-          fill="none" 
-          strokeLinecap="round"
-        />
-        <ellipse cx="190" cy="272" rx="6" ry="4" fill="#D4A574" />
-        
-        {/* Organic surface details */}
-        <ellipse cx="130" cy="170" rx="12" ry="8" fill="#E6B885" opacity="0.4" />
-        <ellipse cx="170" cy="185" rx="10" ry="6" fill="#E6B885" opacity="0.4" />
-        <ellipse cx="150" cy="160" rx="8" ry="5" fill="#B8956A" opacity="0.3" />
-        
-        {/* Fleeb (blue spot) */}
-        <ellipse cx="150" cy="180" rx="15" ry="10" fill="#94BAD1" opacity="0.6" />
-        
-        {/* Additional organic details */}
-        <circle cx="125" cy="155" r="3" fill="#B8956A" opacity="0.4" />
-        <circle cx="175" cy="165" r="2" fill="#B8956A" opacity="0.4" />
-        <ellipse cx="140" cy="195" rx="5" ry="3" fill="#C49668" opacity="0.3" />
-      </motion.svg>
+      </motion.div>
     </div>
   );
 };
@@ -176,7 +107,7 @@ export const Hero: React.FC = () => {
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 1, delay: 0.4 }}
           >
-            <PlumbusSVG />
+            <AnimatedPlumbus />
           </motion.div>
           
           {/* Enhanced CTA Button with personality */}
