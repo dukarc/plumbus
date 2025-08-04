@@ -39,3 +39,10 @@ tmp/
 temp/
 # Local Netlify folder
 .netlify
+
+# Claude Code
+CLAUDE.local.md
+# Uncomment to ignore session artifacts (recommended if many are generated)
+# .claude/archive/session_artifacts/
+# .claude/archive/experiments/
+# Consider keeping reports and design docs in version control

@@ -2239,3 +2239,197 @@ h6 { font-size: var(--text-lg); }
   border-top: 2px solid var(--gray-200);
   margin-top: var(--space-3);
 }
+
+/* =====================================
+   ENHANCED PLUMBUS WHIMSY EFFECTS
+   ===================================== */
+
+/* Interactive plumbus enhancements */
+.plumbus-interactive {
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.plumbus-interactive:hover {
+  transform: translateY(-2px);
+}
+
+/* Enhanced portal glow effect for easter eggs */
+@keyframes plumbusPortalGlow {
+  0%, 100% { 
+    filter: drop-shadow(0 10px 20px rgba(237, 130, 158, 0.3));
+  }
+  50% { 
+    filter: drop-shadow(0 10px 20px rgba(237, 130, 158, 0.3)) 
+            drop-shadow(0 0 30px rgba(0, 255, 0, 0.6)) 
+            drop-shadow(0 0 60px rgba(0, 255, 0, 0.4));
+  }
+}
+
+/* Subtle dimension-hopping effect */
+@keyframes dimensionShift {
+  0%, 100% { transform: translateX(0) translateY(0); }
+  25% { transform: translateX(1px) translateY(-1px); }
+  50% { transform: translateX(-1px) translateY(1px); }
+  75% { transform: translateX(1px) translateY(1px); }
+}
+
+/* Rick's portal particles effect */
+@keyframes portalParticles {
+  0% { 
+    box-shadow: 
+      2px 2px 4px rgba(0, 255, 0, 0.3),
+      -2px -2px 4px rgba(0, 255, 0, 0.2);
+  }
+  50% { 
+    box-shadow: 
+      4px 4px 8px rgba(0, 255, 0, 0.4),
+      -4px -4px 8px rgba(0, 255, 0, 0.3),
+      0 0 12px rgba(0, 255, 0, 0.2);
+  }
+  100% { 
+    box-shadow: 
+      2px 2px 4px rgba(0, 255, 0, 0.3),
+      -2px -2px 4px rgba(0, 255, 0, 0.2);
+  }
+}
+
+/* Schwifty shake for special interactions */
+@keyframes schwiftyShake {
+  0%, 100% { transform: translateX(0); }
+  10% { transform: translateX(-2px) rotate(-1deg); }
+  20% { transform: translateX(2px) rotate(1deg); }
+  30% { transform: translateX(-2px) rotate(-1deg); }
+  40% { transform: translateX(2px) rotate(1deg); }
+  50% { transform: translateX(-1px) rotate(-0.5deg); }
+  60% { transform: translateX(1px) rotate(0.5deg); }
+  70% { transform: translateX(-1px) rotate(-0.5deg); }
+  80% { transform: translateX(1px) rotate(0.5deg); }
+  90% { transform: translateX(-0.5px) rotate(0); }
+}
+
+/* Enhanced portal gun effect with particles */
+.portal-gun-effect:hover {
+  animation: portalParticles 1s ease-in-out;
+}
+
+/* Jerry-proof interactions (extra forgiving focus states) */
+.plumbus-interactive:focus {
+  outline: 2px solid var(--fleeb-blue);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* Plumbus size-specific enhancements for better visibility */
+.plumbus-hero img[width="160"] {
+  filter: drop-shadow(0 8px 16px rgba(237, 130, 158, 0.4)) contrast(1.1) saturate(1.1);
+}
+
+.plumbus-hero img[width="200"] {
+  filter: drop-shadow(0 10px 20px rgba(237, 130, 158, 0.35)) contrast(1.05) saturate(1.05);
+}
+
+.plumbus-hero img[width="240"] {
+  filter: drop-shadow(0 12px 24px rgba(237, 130, 158, 0.3)) saturate(1.02);
+}
+
+/* Enhanced button interactions for mobile */
+@media (max-width: 768px) {
+  .whimsy-button {
+    font-size: 1rem;
+    padding: 12px 24px;
+    min-height: 44px; /* Ensure touch-friendly size */
+  }
+  
+  .whimsy-button:active {
+    animation: schwiftyShake 0.5s ease-in-out;
+  }
+  
+  /* More pronounced hover effects on smaller screens */
+  .plumbus-interactive:hover {
+    transform: translateY(-3px) scale(1.02);
+  }
+}
+
+/* Micro-interactions for different screen sizes */
+@media (max-width: 480px) {
+  /* Enhanced plumbus visibility on small screens */
+  .plumbus-hero img {
+    filter: drop-shadow(0 6px 12px rgba(237, 130, 158, 0.5)) contrast(1.15) saturate(1.15);
+  }
+  
+  /* More dramatic touch feedback */
+  .plumbus-interactive:active {
+    transform: scale(0.95) translateY(1px);
+  }
+}
+
+/* High contrast mode support (accessibility) */
+@media (prefers-contrast: high) {
+  .plumbus-hero img {
+    filter: contrast(1.3) saturate(1.2) drop-shadow(0 4px 8px rgba(0, 0, 0, 0.5)) !important;
+  }
+  
+  .portal-gun-effect:hover::after {
+    background: radial-gradient(circle, #0066cc 0%, transparent 70%);
+  }
+}
+
+/* Reduced motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  .plumbus-interactive,
+  .whimsy-button,
+  .portal-gun-effect {
+    animation: none !important;
+    transition: none !important;
+  }
+  
+  .plumbus-interactive:hover {
+    transform: none;
+  }
+  
+  .plumbus-interactive:focus {
+    outline: 3px solid var(--fleeb-blue);
+    outline-offset: 2px;
+  }
+}
+
+/* Easter egg classes for special interactions */
+.plumbus-activated {
+  animation: plumbusPortalGlow 2s ease-in-out;
+}
+
+.dimension-shift {
+  animation: dimensionShift 0.3s ease-in-out;
+}
+
+.schwifty-mode {
+  animation: schwiftyShake 0.8s ease-in-out;
+}
+
+/* Tooltip-style rick quotes (for future enhancement) */
+.rick-quote {
+  position: relative;
+}
+
+.rick-quote::after {
+  content: attr(data-quote);
+  position: absolute;
+  bottom: 120%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--blamf-brown);
+  color: var(--white);
+  padding: 8px 12px;
+  border-radius: 6px;
+  font-size: 12px;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+  z-index: 1000;
+}
+
+.rick-quote:hover::after {
+  opacity: 1;
+}

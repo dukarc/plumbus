@@ -1,52 +1,10 @@
 import React, { Suspense, lazy } from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
-import EnhancedPlumbusImage from '../EnhancedPlumbusImage';
+import SimplePlumbusHero from '../SimplePlumbusHero';
 // ArrowRightIcon removed - arrows now handled by CSS in design system
 
 // Lazy load complex components
 const AnimatedBlobs = lazy(() => import('../ui/AnimatedBlobs').then(module => ({ default: module.AnimatedBlobs })));
-
-// Enhanced Plumbus Image with Animation Wrapper
-const AnimatedPlumbus: React.FC = () => {
-  const shouldReduceMotion = useReducedMotion();
-
-  return (
-    <div className="relative">
-      <motion.div 
-        className="w-full max-w-sm mx-auto"
-        whileHover={shouldReduceMotion ? {} : { scale: 1.05 }}
-        transition={shouldReduceMotion ? { duration: 0 } : { type: "spring", stiffness: 300, damping: 20 }}
-      >
-        <EnhancedPlumbusImage
-          preset="heroSection"
-          alt="Plumbus - Rick & Morty All-Purpose Home Device"
-          className="w-full"
-          onGenerationSuccess={(result) => {
-            console.log('🎉 New organic plumbus generated!', result);
-            // Trigger celebration easter egg
-            if ((window as any).triggerEasterEgg) {
-              (window as any).triggerEasterEgg('*burp* Finally! A plumbus that doesn\'t look like garbage!', 'rick');
-            }
-          }}
-          onGenerationError={(error) => {
-            console.warn('Plumbus generation failed, using fallback:', error);
-          }}
-          loadingComponent={
-            <div className="flex flex-col items-center justify-center" style={{ width: 300, height: 300 }}>
-              <div className="plumbus-spinner mb-4"></div>
-              <p className="text-sm" style={{ color: 'var(--blamf-brown)' }}>
-                Generating organic plumbus...
-              </p>
-              <p className="text-xs opacity-60" style={{ color: 'var(--blamf-brown)' }}>
-                *burp* Science in progress!
-              </p>
-            </div>
-          }
-        />
-      </motion.div>
-    </div>
-  );
-};
 
 // Assembly steps now use design system classes directly in JSX
 
@@ -78,24 +36,39 @@ export const Hero: React.FC = () => {
             PLUMBUS
           </motion.h1>
           
-          {/* Tagline */}
+          {/* Tagline with Rick's personality */}
           <motion.p 
             className="text-2xl mb-6"
             style={{ color: 'var(--blamf-brown)' }}
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
+            onDoubleClick={() => {
+              if ((window as any).triggerEasterEgg) {
+                (window as any).triggerEasterEgg('*burp* Double-click detected! You\'re getting schwifty with it, Morty!', 'rick');
+              }
+            }}
           >
             Everyone needs a plumbus *burp*
           </motion.p>
           
-          {/* Sub-copy */}
+          {/* Sub-copy with Jerry reference */}
           <motion.p 
             className="text-lg mb-12 max-w-2xl mx-auto"
             style={{ color: 'var(--blamf-brown)' }}
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.3 }}
+            onMouseEnter={() => {
+              // Subtle Jerry easter egg on hover
+              const jerryQuotes = [
+                "Wait, how does this thing work again?",
+                "I'm not sure I understand the purpose of this...",
+                "Beth, is this another one of Rick's weird inventions?"
+              ];
+              const randomQuote = jerryQuotes[Math.floor(Math.random() * jerryQuotes.length)];
+              console.log(`😕 Jerry: ${randomQuote}`);
+            }}
           >
             A plumbus is an all-purpose home device. Get your first plumbus today! Even Jerry can use it.
           </motion.p>
@@ -107,7 +80,7 @@ export const Hero: React.FC = () => {
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 1, delay: 0.4 }}
           >
-            <AnimatedPlumbus />
+            <SimplePlumbusHero className="w-full max-w-[150px] sm:max-w-[180px] lg:max-w-[200px] mx-auto" />
           </motion.div>
           
           {/* Enhanced CTA Button with personality */}
@@ -134,11 +107,47 @@ export const Hero: React.FC = () => {
             >
               <button 
                 className="button-primary whimsy-button px-8 py-4 text-lg font-semibold portal-gun-effect science-approved"
-                onClick={() => {
+                onClick={(e) => {
+                  // Enhanced click handler with multiple easter eggs
+                  const clickX = e.clientX;
+                  const clickY = e.clientY;
+                  
+                  // Create portal effect at click location
+                  const portal = document.createElement('div');
+                  portal.style.cssText = `
+                    position: fixed;
+                    left: ${clickX - 25}px;
+                    top: ${clickY - 25}px;
+                    width: 50px;
+                    height: 50px;
+                    background: radial-gradient(circle, rgba(0, 255, 0, 0.8) 0%, transparent 70%);
+                    border-radius: 50%;
+                    pointer-events: none;
+                    z-index: 9999;
+                    animation: portalBurst 0.6s ease-out forwards;
+                  `;
+                  document.body.appendChild(portal);
+                  setTimeout(() => portal.remove(), 600);
+                  
+                  // Add portal burst animation dynamically
+                  if (!document.getElementById('portal-burst-style')) {
+                    const style = document.createElement('style');
+                    style.id = 'portal-burst-style';
+                    style.textContent = `
+                      @keyframes portalBurst {
+                        0% { transform: scale(0) rotate(0deg); opacity: 1; }
+                        50% { transform: scale(1.5) rotate(180deg); opacity: 0.8; }
+                        100% { transform: scale(3) rotate(360deg); opacity: 0; }
+                      }
+                    `;
+                    document.head.appendChild(style);
+                  }
+                  
                   console.log('Wubba lubba dub dub! *burp* Initiating plumbus acquisition protocol...');
-                  // Trigger global easter egg
+                  
+                  // Trigger enhanced easter egg with portal effect
                   if ((window as any).triggerEasterEgg) {
-                    (window as any).triggerEasterEgg('*burp* Excellent choice, Morty! Plumbus acquisition in progress!', 'rick');
+                    (window as any).triggerEasterEgg('*burp* Excellent choice, Morty! Portal gun engaged - plumbus acquisition in progress!', 'rick');
                   }
                 }}
               >
@@ -157,6 +166,12 @@ export const Hero: React.FC = () => {
                       rotate: { duration: 2, repeat: Infinity },
                       scale: { duration: 1, repeat: Infinity }
                     }}
+                    whileHover={{
+                      scale: 1.3,
+                      rotate: [0, 360],
+                      transition: { duration: 0.5 }
+                    }}
+                    style={{ display: 'inline-block' }}
                   >
                     🛸
                   </motion.span>
@@ -198,6 +213,7 @@ export const Hero: React.FC = () => {
                 >1</motion.div>
                 <h3 className="card-title text-center mb-3">Fleeb Preparation</h3>
                 <p className="text-sm text-center leading-relaxed">First, they take the dingle-bop (Rick-approved process)</p>
+                <div className="text-xs text-center mt-2 opacity-75" style={{ color: 'var(--fleeb-blue)' }}>*burp* Science!</div>
               </div>
             </motion.div>
             
@@ -218,6 +234,7 @@ export const Hero: React.FC = () => {
                 >2</motion.div>
                 <h3 className="card-title text-center mb-3">Grumbo Assembly</h3>
                 <p className="text-sm text-center leading-relaxed">Then smooth it out with schleem (*burp* quality schleem)</p>
+                <div className="text-xs text-center mt-2 opacity-75" style={{ color: 'var(--step-blue)' }}>🧪 Premium grade</div>
               </div>
             </motion.div>
             
@@ -238,6 +255,7 @@ export const Hero: React.FC = () => {
                 >3</motion.div>
                 <h3 className="card-title text-center mb-3">Schlami Processing</h3>
                 <p className="text-sm text-center leading-relaxed">The schlami shows up and rubs it (not like Jerry would)</p>
+                <div className="text-xs text-center mt-2 opacity-75" style={{ color: 'var(--step-green)' }}>🙄 Jerry-proof</div>
               </div>
             </motion.div>
             
@@ -258,6 +276,7 @@ export const Hero: React.FC = () => {
                 >4</motion.div>
                 <h3 className="card-title text-center mb-3">Final Touches</h3>
                 <p className="text-sm text-center leading-relaxed">Cut the fleeb and you have a plumbus (Science!)</p>
+                <div className="text-xs text-center mt-2 opacity-75" style={{ color: 'var(--step-coral)' }}>✨ Dimension C-137 certified</div>
               </div>
             </motion.div>
           </div>
