@@ -377,35 +377,51 @@ export const secretFeatures = [
 
 export const plumbusHotspots: PlumbusHotspot[] = [
   {
-    id: 'dinglebop',
-    x: 25,
-    y: 30,
-    title: 'Dinglebop Core',
-    description: 'The heart of every Plumbus, responsible for quantum processing',
-    feature: 'Processes up to 1.21 gigaquantums per second'
+    id: 'grumbo',
+    x: 50,
+    y: 55,
+    title: 'Grumbo Body',
+    description: 'Main fleshy processing unit and central mass of the Plumbus',
+    feature: 'Processes all household tasks through organic computing'
   },
   {
-    id: 'schleem',
-    x: 70,
-    y: 45,
-    title: 'Schleem Coating',
-    description: 'Provides the signature smooth texture and universal compatibility',
-    feature: 'Self-cleaning and dimension-resistant'
+    id: 'dinglebop',
+    x: 50,
+    y: 35,
+    title: 'Dingle-Bop Handle',
+    description: 'Primary manipulation interface with segmented ridges',
+    feature: 'Ergonomic grip optimized for multidimensional use'
+  },
+  {
+    id: 'floob',
+    x: 50,
+    y: 16,
+    title: 'Floob Cluster',
+    description: 'Sensory bubble formation for environmental awareness',
+    feature: 'Detects quantum fluctuations and interdimensional threats'
   },
   {
     id: 'fleeb',
-    x: 45,
-    y: 70,
-    title: 'Fleeb Matrix',
-    description: 'Enables multidimensional functionality and heat generation',
-    feature: 'Connects to the quantum foam of reality'
+    x: 32,
+    y: 46,
+    title: 'Fleeb Reservoir',
+    description: 'Contains vital fleeb juice for optimal operation',
+    feature: 'Self-replenishing organic fluid system'
   },
   {
-    id: 'grumbo',
-    x: 60,
-    y: 25,
-    title: 'Grumbo Port',
-    description: 'Allows for easy grumbo replacement and system updates',
-    feature: 'Hot-swappable grumbo cartridges'
+    id: 'chumbles',
+    x: 50,
+    y: 85,
+    title: 'Chumble Tentacles',
+    description: 'Four adaptive appendages for precision tasks',
+    feature: 'Independently articulated for complex manipulations'
+  },
+  {
+    id: 'grodus',
+    x: 84,
+    y: 49,
+    title: 'Grodus Protrusion',
+    description: 'Interdimensional interface port for portal compatibility',
+    feature: 'Rick-certified portal gun integration ready'
   }
 ];

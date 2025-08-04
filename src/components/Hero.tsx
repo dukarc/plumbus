@@ -113,7 +113,30 @@ const Hero = () => {
 
       {/* Floating Plumbus visualization */}
       <div className="absolute bottom-10 right-10 hidden lg:block animate-bounce">
-        <div className="w-20 h-20 bg-gradient-to-br from-green-400 to-blue-400 rounded-full opacity-30 blur-xl"></div>
+        <div className="relative">
+          {/* Simple Plumbus SVG */}
+          <svg width="80" height="100" viewBox="0 0 80 100" className="drop-shadow-lg">
+            {/* Main blob body */}
+            <ellipse cx="40" cy="60" rx="25" ry="18" fill="#E91E63" opacity="0.8" />
+            
+            {/* Handle/stem at top */}
+            <rect x="36" y="35" width="8" height="30" fill="#D81B60" opacity="0.9" rx="4" />
+            <ellipse cx="40" cy="37" rx="6" ry="4" fill="#C2185B" opacity="0.9" />
+            
+            {/* Bottom tentacle appendages (4 simple curved lines) */}
+            <path d="M25 72 Q20 78 22 85" stroke="#AD1457" strokeWidth="3" fill="none" opacity="0.8" strokeLinecap="round" />
+            <path d="M35 75 Q30 82 32 88" stroke="#AD1457" strokeWidth="3" fill="none" opacity="0.8" strokeLinecap="round" />
+            <path d="M45 75 Q50 82 48 88" stroke="#AD1457" strokeWidth="3" fill="none" opacity="0.8" strokeLinecap="round" />
+            <path d="M55 72 Q60 78 58 85" stroke="#AD1457" strokeWidth="3" fill="none" opacity="0.8" strokeLinecap="round" />
+            
+            {/* Small surface details on main body */}
+            <ellipse cx="32" cy="58" rx="3" ry="2" fill="#C2185B" opacity="0.6" />
+            <ellipse cx="48" cy="62" rx="2" ry="3" fill="#C2185B" opacity="0.6" />
+          </svg>
+          
+          {/* Subtle glow effect */}
+          <div className="absolute inset-0 w-20 h-25 bg-pink-400 rounded-full opacity-20 blur-xl"></div>
+        </div>
       </div>
     </section>
   );
