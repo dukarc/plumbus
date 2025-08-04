@@ -181,6 +181,132 @@ export const testimonials: Testimonial[] = [
     content: 'In bird culture, this is considered a "solid purchase." The plumbus has aided me in many conflicts across dimensions.',
     rating: 5,
     avatar: '/avatars/birdperson.jpg'
+  },
+  {
+    id: 'unity',
+    name: 'Unity',
+    role: 'Hive Mind Entity',
+    company: 'Collective Consciousness',
+    content: 'We assimilated a plumbus and now all of us understand its importance. Every consciousness in our collective agrees - essential household item!',
+    rating: 5,
+    avatar: '/avatars/unity.jpg'
+  },
+  {
+    id: 'jaguar',
+    name: 'Jaguar',
+    role: 'Time Police Officer',
+    company: 'Citadel of Ricks',
+    content: 'Through all timelines I\'ve patrolled, the plumbus remains the one constant. Even criminal Ricks have plumbuses. That says something.',
+    rating: 5,
+    avatar: '/avatars/jaguar.jpg'
+  },
+  {
+    id: 'president',
+    name: 'The President',
+    role: 'Leader of America',
+    company: 'White House',
+    content: 'America runs on plumbuses! I\'ve mandated one in every government building. Best decision of my presidency, even better than the turkey pardons.',
+    rating: 5,
+    avatar: '/avatars/president.jpg'
+  },
+  {
+    id: 'tammy',
+    name: 'Tammy Guetermann',
+    role: 'Definitely Not a Fed',
+    company: 'High School Student',
+    content: 'The plumbus is like, totally amazing! Every teenager needs one. It\'s helped me with... homework. Yeah, homework. *Not surveillance*',
+    rating: 5,
+    avatar: '/avatars/tammy.jpg'
+  },
+  {
+    id: 'zeep',
+    name: 'Zeep Xanflorp',
+    role: 'Microverse Scientist',
+    company: 'Miniverse Battery Co.',
+    content: 'In my microverse, we power everything with plumbuses. They\'re 40% more efficient than my previous designs. Rick who?',
+    rating: 5,
+    avatar: '/avatars/zeep.jpg'
+  },
+  {
+    id: 'scary-terry',
+    name: 'Scary Terry',
+    role: 'Dream Terrorizer',
+    company: 'Nightmare Inc.',
+    content: 'You can run but you can\'t hide from how good this plumbus is, bitch! Even in dreams, people need plumbuses!',
+    rating: 5,
+    avatar: '/avatars/scary-terry.jpg'
+  },
+  {
+    id: 'beth',
+    name: 'Beth Smith',
+    role: 'Horse Surgeon',
+    company: 'St. Equis Hospital',
+    content: 'As a medical professional, I can confirm the plumbus has legitimate therapeutic benefits. We use them in horse surgery all the time.',
+    rating: 5,
+    avatar: '/avatars/beth.jpg'
+  },
+  {
+    id: 'summer',
+    name: 'Summer Smith',
+    role: 'High School Student',
+    company: 'Harry Herpson High',
+    content: 'OMG the plumbus is like, so useful? I use it for literally everything. Way better than anything Jerry would buy.',
+    rating: 5,
+    avatar: '/avatars/summer.jpg'
+  },
+  {
+    id: 'morty',
+    name: 'Morty Smith',
+    role: 'Rick\'s Sidekick',
+    company: 'Smith Family',
+    content: 'Oh geez, the plumbus is - is really something! Rick says everyone has one and - and I can see why! Even I can use it!',
+    rating: 5,
+    avatar: '/avatars/morty.jpg'
+  },
+  {
+    id: 'doofus-rick',
+    name: 'Doofus Rick',
+    role: 'Nicest Rick',
+    company: 'Dimension J19ζ7',
+    content: 'Gosh, the plumbus sure is neat! I made ovenless brownies with mine. Would you like the recipe? Everyone deserves a plumbus!',
+    rating: 5,
+    avatar: '/avatars/doofus-rick.jpg'
+  },
+  {
+    id: 'abradolf',
+    name: 'Abradolf Lincler',
+    role: 'Conflicted Being',
+    company: 'House Party Guest',
+    content: 'The plumbus brings together all peoples, much like I tried to do. It\'s the emancipation proclamation of household items!',
+    rating: 5,
+    avatar: '/avatars/abradolf.jpg'
+  },
+  {
+    id: 'gazorpazorp',
+    name: 'Gazorpazorpfield',
+    role: 'Interdimensional Cat',
+    company: 'Jon\'s House',
+    content: 'I hate Mondays but I love plumbuses. Give me my enchiladas and a plumbus, and leave me alone. Best purchase ever.',
+    rating: 5,
+    avatar: '/avatars/gazorpazorp.jpg'
+  },
+  {
+    id: 'principal',
+    name: 'Principal Vagina',
+    role: 'School Administrator',
+    company: 'Harry Herpson High',
+    content: 'No relation to the word! But seriously, every classroom now has a plumbus. Test scores are up 300%!',
+    rating: 5,
+    avatar: '/avatars/principal.jpg'
+  },
+  {
+    id: 'ice-t',
+    name: 'Ice-T (Water-T)',
+    role: 'Alphabetrium Noble',
+    company: 'Planet Alphabetrium',
+    content: 'I care now! And what I care about is this plumbus. From the streets to Alphabetrium, everyone needs a plumbus.',
+    rating: 5,
+    avatar: '/avatars/ice-t.jpg'
   }
 ];
 

@@ -349,12 +349,20 @@ h6 { font-size: var(--text-lg); }
   height: var(--space-8); /* 64px */
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  padding: 0 var(--space-4);
   border-bottom: 2px solid var(--gray-200); /* border instead of shadow */
   position: sticky;
   top: 0;
   z-index: 100;
+  padding: 0; /* Remove padding here - let container handle it */
+}
+
+/* Navigation container - consistent padding with site */
+.plumbus-nav .container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  gap: var(--space-4); /* Proper gap between logo and nav items */
 }
 
 .plumbus-nav-logo {
@@ -379,6 +387,7 @@ h6 { font-size: var(--text-lg); }
   list-style: none;
   margin: 0;
   padding: 0;
+  flex-shrink: 0; /* Prevent nav items from shrinking */
 }
 
 .plumbus-nav-menu a {
@@ -391,6 +400,8 @@ h6 { font-size: var(--text-lg); }
   position: relative;
   display: inline-flex;
   align-items: center;
+  white-space: nowrap; /* Prevent text wrapping in nav items */
+  font-size: var(--text-base); /* Ensure consistent size */
 }
 
 .plumbus-nav-menu a:hover {
@@ -575,11 +586,12 @@ h6 { font-size: var(--text-lg); }
   text-align: left;
   font-weight: 500;
   transition: all 200ms ease;
-  padding: var(--space-2) var(--space-3);
+  padding: var(--space-3) var(--space-3); /* More vertical padding for mobile */
   border-radius: var(--border-radius-sm);
-  font-size: var(--text-sm);
+  font-size: var(--text-base); /* Consistent size with desktop */
   color: var(--blamf-brown);
   background: transparent;
+  text-decoration: none;
 }
 
 .plumbus-nav-mobile a.active {
@@ -593,7 +605,7 @@ h6 { font-size: var(--text-lg); }
   background: var(--gray-100);
 }
 
-/* Mobile adjustments for grids */
+/* Mobile adjustments for grids and navigation */
 @media (max-width: 640px) {
   .plumbus-grid {
     gap: var(--space-2);
@@ -603,6 +615,15 @@ h6 { font-size: var(--text-lg); }
   .plumbus-grid.cols-3,
   .plumbus-grid.cols-4 {
     grid-template-columns: 1fr;
+  }
+  
+  /* Tighter header spacing on small screens */
+  .header-logo {
+    font-size: var(--text-xl); /* Slightly smaller logo on mobile */
+  }
+  
+  .plumbus-nav {
+    height: 3.5rem; /* Slightly smaller header on mobile */
   }
 }
 
@@ -643,12 +664,23 @@ h6 { font-size: var(--text-lg); }
     font-size: var(--text-2xl);
     color: var(--plumbus-pink);
     cursor: pointer;
+    padding: var(--space-1); /* Add touch-friendly padding */
+  }
+  
+  /* Reduce gap on mobile for tighter spacing */
+  .plumbus-nav .container {
+    gap: var(--space-2);
   }
 }
 
 @media (min-width: 768px) {
   .plumbus-nav-hamburger {
     display: none;
+  }
+  
+  /* Ensure proper spacing on desktop */
+  .plumbus-nav .container {
+    gap: var(--space-4);
   }
 }
 
@@ -806,6 +838,16 @@ h6 { font-size: var(--text-lg); }
     grid-template-columns: 1fr;
   }
   
+  /* Adjust popular badge spacing on mobile */
+  .pricing-card.featured {
+    margin-top: var(--space-3) !important;
+  }
+  
+  .popular-badge {
+    font-size: var(--text-xs) !important;
+    padding: 6px var(--space-2) !important;
+  }
+  
   .plumbus-hero::before,
   .plumbus-hero::after {
     display: none; /* Hide decorative blobs on mobile */
@@ -825,17 +867,42 @@ h6 { font-size: var(--text-lg); }
   .pricing-container {
     grid-template-columns: repeat(2, 1fr);
   }
+  
+  /* Adjust popular badge for tablet */
+  .pricing-card.featured {
+    margin-top: var(--space-3) !important;
+  }
 }
 
 @media (min-width: 769px) and (max-width: 1024px) {
   .process-container {
     grid-template-columns: repeat(2, 1fr);
   }
+  
+  /* Tablet navigation adjustments */
+  .plumbus-nav-menu {
+    gap: var(--space-1); /* Slightly tighter spacing on tablets */
+  }
+  
+  .plumbus-nav-menu a {
+    padding: var(--space-2); /* Reduce padding on tablets */
+    font-size: var(--text-sm); /* Slightly smaller text */
+  }
 }
 
 @media (min-width: 1025px) {
   .process-container {
     grid-template-columns: repeat(4, 1fr);
+  }
+  
+  /* Desktop navigation - full spacing */
+  .plumbus-nav-menu {
+    gap: var(--space-2); /* Full spacing on desktop */
+  }
+  
+  .plumbus-nav-menu a {
+    padding: var(--space-2) var(--space-3); /* Full padding on desktop */
+    font-size: var(--text-base); /* Full size text */
   }
 }
 
@@ -1079,6 +1146,7 @@ h6 { font-size: var(--text-lg); }
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: var(--space-4);
   margin: var(--space-6) 0;
+  padding-top: var(--space-3); /* Add padding to accommodate popular badge */
 }
 
 .pricing-card {
@@ -1095,6 +1163,36 @@ h6 { font-size: var(--text-lg); }
   border-color: var(--plumbus-pink);
   transform: scale(1.05);
   box-shadow: var(--shadow-medium);
+}
+
+/* Popular badge styling */
+.popular-badge {
+  position: relative;
+  transition: all var(--transition-normal);
+}
+
+.popular-badge::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 0;
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-top: 6px solid var(--plumbus-pink);
+  filter: drop-shadow(0 2px 4px rgba(163, 110, 79, 0.1));
+  transition: all var(--transition-normal);
+}
+
+.pricing-card.featured:hover .popular-badge {
+  transform: scale(1.05);
+}
+
+.pricing-card.featured:hover .popular-badge::after {
+  transform: translateX(-50%) translateY(2px);
+  border-top-color: #E16B8C; /* slightly darker pink on hover */
 }
 
 .pricing-card:hover {
@@ -1550,6 +1648,221 @@ h6 { font-size: var(--text-lg); }
   50% { opacity: 1; transform: scale(1.2); }
 }
 
+/* Enhanced whimsical animations for testimonials and pricing */
+.testimonial-card-whimsy {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  border: 2px solid transparent;
+}
+
+.testimonial-card-whimsy:hover {
+  border-color: var(--plumbus-pink);
+  box-shadow: 0 8px 25px rgba(255, 105, 180, 0.15);
+}
+
+.star-sparkle {
+  transition: all 0.2s ease;
+  position: relative;
+  overflow: visible;
+}
+
+.star-sparkle:hover {
+  filter: drop-shadow(0 0 8px var(--step-yellow));
+}
+
+.avatar-glow {
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.avatar-glow:hover {
+  box-shadow: 0 0 15px rgba(255, 105, 180, 0.5);
+}
+
+.nav-btn-whimsy {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.nav-btn-whimsy:hover {
+  box-shadow: 0 6px 20px rgba(255, 105, 180, 0.4);
+}
+
+.dot-whimsy {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.stats-card-whimsy {
+  background: linear-gradient(135deg, var(--gromflomite-beige) 0%, rgba(255, 248, 220, 0.8) 100%);
+  border: 2px solid transparent;
+  transition: all 0.3s ease;
+}
+
+.stats-card-whimsy:hover {
+  border-color: var(--plumbus-pink);
+  background: linear-gradient(135deg, var(--gromflomite-beige) 0%, rgba(255, 105, 180, 0.1) 100%);
+}
+
+.pricing-card-whimsy {
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  border: 2px solid transparent;
+  transform-origin: center;
+  transform-style: preserve-3d;
+}
+
+.pricing-card-whimsy:hover {
+  border-color: var(--plumbus-pink);
+  background: linear-gradient(135deg, white 0%, rgba(255, 105, 180, 0.05) 100%);
+}
+
+.pricing-card-whimsy.featured {
+  border-color: var(--plumbus-pink);
+  background: linear-gradient(135deg, white 0%, rgba(255, 105, 180, 0.08) 100%);
+}
+
+.pricing-card-whimsy.featured:hover {
+  background: linear-gradient(135deg, white 0%, rgba(255, 105, 180, 0.12) 100%);
+  box-shadow: 0 15px 35px rgba(255, 105, 180, 0.25);
+}
+
+.icon-container-whimsy {
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.price-whimsy {
+  background: linear-gradient(45deg, var(--plumbus-pink), var(--blamf-brown));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-weight: bold;
+  transition: all 0.3s ease;
+}
+
+.button-magic {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.guarantee-card-whimsy {
+  background: linear-gradient(135deg, var(--step-green) 0%, rgba(144, 238, 144, 0.8) 100%);
+  border: 2px solid transparent;
+  transition: all 0.3s ease;
+}
+
+.guarantee-card-whimsy:hover {
+  border-color: var(--plumbus-pink);
+  box-shadow: 0 10px 30px rgba(255, 105, 180, 0.15);
+}
+
+.guarantee-emoji {
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.payment-methods-whimsy {
+  transition: all 0.5s ease;
+}
+
+.payment-method-item {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+}
+
+.faq-card-whimsy {
+  background: linear-gradient(135deg, var(--gray-100) 0%, rgba(255, 255, 255, 0.8) 100%);
+  border: 2px solid transparent;
+  transition: all 0.3s ease;
+}
+
+.faq-card-whimsy:hover {
+  border-color: var(--plumbus-pink);
+  background: linear-gradient(135deg, var(--gray-100) 0%, rgba(255, 105, 180, 0.05) 100%);
+}
+
+/* Easter egg modal animations */
+.easter-egg-modal {
+  backdrop-filter: blur(5px);
+  animation: rainbow-border 2s linear infinite;
+}
+
+@keyframes rainbow-border {
+  0% {
+    box-shadow: 0 0 20px var(--plumbus-pink);
+  }
+  25% {
+    box-shadow: 0 0 20px var(--step-yellow);
+  }
+  50% {
+    box-shadow: 0 0 20px var(--step-green);
+  }
+  75% {
+    box-shadow: 0 0 20px var(--blamf-brown);
+  }
+  100% {
+    box-shadow: 0 0 20px var(--plumbus-pink);
+  }
+}
+
+/* Confetti particles */
+.confetti-container {
+  pointer-events: none;
+  overflow: visible;
+}
+
+/* Particle effects for star ratings */
+.star-particle {
+  filter: blur(0.5px);
+  animation: particle-float 2s ease-out infinite;
+}
+
+@keyframes particle-float {
+  0% {
+    transform: translateY(0) scale(0);
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.8;
+  }
+  100% {
+    transform: translateY(-20px) scale(1);
+    opacity: 0;
+  }
+}
+
+/* Ripple effect for dots */
+.dot-ripple {
+  animation: ripple-expand 1.5s ease-out infinite;
+}
+
+@keyframes ripple-expand {
+  0% {
+    transform: translate(-50%, -50%) scale(0);
+    opacity: 0.8;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(3);
+    opacity: 0;
+  }
+}
+
+/* Button shine effect */
+.button-shine {
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+  animation: shine-sweep 0.8s ease-out;
+}
+
+@keyframes shine-sweep {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
 /* Reduced motion support for whimsy */
 @media (prefers-reduced-motion: reduce) {
   .whimsy-button,
@@ -1560,7 +1873,18 @@ h6 { font-size: var(--text-lg); }
   .morty-nervous,
   .dimensional-glitch,
   .meeseeks-attention,
-  .science-approved::after {
+  .science-approved::after,
+  .testimonial-card-whimsy,
+  .pricing-card-whimsy,
+  .guarantee-card-whimsy,
+  .faq-card-whimsy,
+  .star-sparkle,
+  .avatar-glow,
+  .nav-btn-whimsy,
+  .dot-whimsy,
+  .guarantee-emoji,
+  .payment-method-item,
+  .button-magic {
     transition: none !important;
     animation: none !important;
   }
@@ -1578,6 +1902,16 @@ h6 { font-size: var(--text-lg); }
   
   .whimsy-button:hover,
   .whimsy-card:hover {
+    transform: none !important;
+  }
+  
+  .popular-badge,
+  .popular-badge::after {
+    transition: none !important;
+  }
+  
+  .pricing-card.featured:hover .popular-badge,
+  .pricing-card.featured:hover .popular-badge::after {
     transform: none !important;
   }
 }
@@ -1850,6 +2184,9 @@ h6 { font-size: var(--text-lg); }
   border: none;
   cursor: pointer;
   transition: all 300ms cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  padding: var(--space-1); /* Add padding for better touch target */
+  margin: calc(-1 * var(--space-1)); /* Negative margin to maintain visual alignment */
+  border-radius: var(--border-radius-sm); /* Subtle rounded corners for focus */
 }
 
 .header-logo:hover {
@@ -1877,6 +2214,8 @@ h6 { font-size: var(--text-lg); }
   margin-top: var(--space-2);
   background-color: var(--white);
   border: 2px solid var(--gray-200);
+  max-width: 100%; /* Ensure mobile menu doesn't overflow */
+  width: 100%;
 }
 
 .mobile-menu-divider {
