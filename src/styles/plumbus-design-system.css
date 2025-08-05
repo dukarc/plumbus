@@ -174,9 +174,9 @@ h6 { font-size: var(--text-lg); }
   background: #E16B8C; /* slightly darker pink */
 }
 
-/* Header-specific button variant - smaller padding for navigation context */
+/* Header-specific button variant - balanced padding for navigation context */
 .button-primary-header {
-  padding: 0.75rem 1.5rem; /* Reduced from default --space-2 --space-4 for header */
+  padding: var(--space-2) var(--space-4); /* Restored proper padding for better visual balance */
 }
 
 .button-secondary {
@@ -366,7 +366,7 @@ h6 { font-size: var(--text-lg); }
   align-items: center;
   justify-content: space-between;
   width: 100%;
-  gap: var(--space-6); /* Increased gap between logo and nav items - fixes header spacing */
+  gap: var(--space-8); /* Further increased gap between logo and nav items for less crowding */
 }
 
 .plumbus-nav-logo {
@@ -387,7 +387,7 @@ h6 { font-size: var(--text-lg); }
 .plumbus-nav-menu {
   display: flex;
   align-items: center;
-  gap: var(--space-2);
+  gap: var(--space-3); /* Increased gap between navigation items for better spacing */
   list-style: none;
   margin: 0;
   padding: 0;
@@ -397,7 +397,7 @@ h6 { font-size: var(--text-lg); }
 .plumbus-nav-menu a {
   color: var(--blamf-brown);
   text-decoration: none;
-  padding: var(--space-2) var(--space-3);
+  padding: var(--space-2) var(--space-4); /* Increased horizontal padding for better clickable area */
   font-weight: 500;
   transition: all 200ms ease;
   border-radius: var(--border-radius-sm);
@@ -680,7 +680,7 @@ h6 { font-size: var(--text-lg); }
   
   /* Consistent gap on mobile - keep proper spacing */
   .plumbus-nav .container {
-    gap: var(--space-3);
+    gap: var(--space-4); /* Increased mobile spacing for better touch targets */
   }
 }
 
@@ -691,7 +691,7 @@ h6 { font-size: var(--text-lg); }
   
   /* Ensure proper spacing on desktop */
   .plumbus-nav .container {
-    gap: var(--space-4);
+    gap: var(--space-8); /* Maintain the increased desktop spacing */
   }
 }
 
@@ -907,7 +907,7 @@ h6 { font-size: var(--text-lg); }
   
   /* Tablet navigation adjustments */
   .plumbus-nav-menu {
-    gap: var(--space-1); /* Slightly tighter spacing on tablets */
+    gap: var(--space-2); /* Slightly tighter spacing on tablets but not too crowded */
   }
   
   .plumbus-nav-menu a {
@@ -923,7 +923,7 @@ h6 { font-size: var(--text-lg); }
   
   /* Desktop navigation - full spacing */
   .plumbus-nav-menu {
-    gap: var(--space-2); /* Full spacing on desktop */
+    gap: var(--space-3); /* Maintain the increased desktop spacing */
   }
   
   .plumbus-nav-menu a {
