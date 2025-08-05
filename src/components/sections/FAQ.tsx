@@ -35,7 +35,7 @@ export const FAQ: React.FC = () => {
             to advanced interdimensional functionality.
           </p>
           
-          <div className="flex justify-center space-x-3">
+          <div className="flex justify-center space-x-2">
             <button className="button-outline whimsy-button" onClick={expandAll}>
               Expand All
             </button>
