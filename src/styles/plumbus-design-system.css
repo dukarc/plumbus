@@ -55,6 +55,9 @@
   --text-3xl: 1.875rem; /* 30px */
   --text-4xl: 2.25rem;  /* 36px */
   --text-5xl: 3rem;     /* 48px */
+  --text-6xl: 3.75rem;  /* 60px - for large screens */
+  --text-7xl: 4.5rem;   /* 72px - for extra large screens */
+  --text-8xl: 6rem;     /* 96px - for ultra wide screens */
 
   /* Spacing System (8px Grid) */
   --space-1: 0.5rem;  /* 8px */
@@ -908,6 +911,110 @@ h6 { font-size: var(--text-lg); }
   .plumbus-nav-menu a {
     padding: var(--space-2) var(--space-3); /* Full padding on desktop */
     font-size: var(--text-base); /* Full size text */
+  }
+}
+
+/* LARGE SCREEN SUPPORT - Scaling for desktop monitors */
+@media (min-width: 1400px) {
+  /* Scale up typography for better readability */
+  .hero-title {
+    font-size: var(--text-6xl);
+  }
+  
+  .plumbus-hero h1 {
+    font-size: var(--text-6xl);
+  }
+  
+  .plumbus-hero p {
+    font-size: var(--text-xl);
+  }
+  
+  /* Increase content width */
+  .plumbus-hero-content {
+    max-width: 1200px;
+  }
+  
+  /* Scale up hero elements */
+  .plumbus-hero {
+    min-height: 75vh;
+    padding: var(--space-6) var(--space-4);
+  }
+  
+  /* Scale plumbus image */
+  .plumbus-hero-image {
+    max-width: 600px;
+  }
+  
+  /* Larger buttons */
+  .plumbus-hero .button-primary {
+    font-size: var(--text-lg);
+    padding: var(--space-3) var(--space-5);
+  }
+}
+
+@media (min-width: 1600px) {
+  /* Further scaling for larger monitors */
+  .hero-title {
+    font-size: var(--text-7xl);
+  }
+  
+  .plumbus-hero h1 {
+    font-size: var(--text-7xl);
+  }
+  
+  .plumbus-hero p {
+    font-size: var(--text-2xl);
+  }
+  
+  .plumbus-hero-content {
+    max-width: 1400px;
+  }
+  
+  /* Larger plumbus image */
+  .plumbus-hero-image {
+    max-width: 700px;
+  }
+  
+  /* Larger buttons */
+  .plumbus-hero .button-primary {
+    font-size: var(--text-xl);
+    padding: var(--space-3) var(--space-6);
+  }
+}
+
+@media (min-width: 1920px) {
+  /* Ultra-wide screen support */
+  .hero-title {
+    font-size: var(--text-8xl);
+  }
+  
+  .plumbus-hero h1 {
+    font-size: var(--text-8xl);
+  }
+  
+  .plumbus-hero p {
+    font-size: var(--text-3xl);
+  }
+  
+  .plumbus-hero-content {
+    max-width: 1600px;
+  }
+  
+  /* Larger hero area */
+  .plumbus-hero {
+    min-height: 85vh;
+    padding: var(--space-8) var(--space-6);
+  }
+  
+  /* Even larger plumbus image */
+  .plumbus-hero-image {
+    max-width: 800px;
+  }
+  
+  /* Extra large buttons */
+  .plumbus-hero .button-primary {
+    font-size: var(--text-2xl);
+    padding: var(--space-4) var(--space-8);
   }
 }
 

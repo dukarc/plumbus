@@ -54,7 +54,7 @@ export const Hero: React.FC = () => {
           
           {/* Sub-copy - professional description */}
           <motion.p 
-            className="text-lg mb-12 max-w-2xl mx-auto"
+            className="text-lg mb-12 mx-auto"
             style={{ color: 'var(--blamf-brown)' }}
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -70,7 +70,7 @@ export const Hero: React.FC = () => {
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 1, delay: 0.4 }}
           >
-            <SimplePlumbusHero className="w-full max-w-[300px] sm:max-w-[400px] lg:max-w-[500px] mx-auto" />
+            <SimplePlumbusHero className="plumbus-hero-image w-full mx-auto" />
           </motion.div>
           
           {/* Clean CTA Button */}
