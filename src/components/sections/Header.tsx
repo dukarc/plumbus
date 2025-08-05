@@ -53,6 +53,7 @@ export const Header: React.FC = () => {
             <button
               onClick={() => scrollToSection('#hero')}
               className="header-logo"
+              style={{ marginRight: '24px' }}
               aria-label="Go to homepage"
             >
               <span>Plumbus</span>
