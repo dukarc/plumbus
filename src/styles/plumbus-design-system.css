@@ -435,12 +435,12 @@ h6 { font-size: var(--text-lg); }
 /* HERO SECTION - Clean flat style with organic shapes */
 .plumbus-hero {
   background: var(--gromflomite-beige);
-  min-height: 65vh; /* Reduced from 80vh to center content better */
+  min-height: 80vh;
   display: flex;
   align-items: center;
   justify-content: center;
   text-align: center;
-  padding: var(--space-4) var(--space-4); /* Reduced top/bottom padding */
+  padding: var(--space-6) var(--space-4);
   position: relative;
   overflow: hidden;
 }
@@ -473,8 +473,13 @@ h6 { font-size: var(--text-lg); }
 .plumbus-hero-content {
   position: relative;
   z-index: 1;
-  max-width: 100%;
+  max-width: 900px;
+  width: 100%;
   margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 .plumbus-hero h1 {
@@ -484,11 +489,11 @@ h6 { font-size: var(--text-lg); }
 }
 
 .plumbus-hero-image {
-  min-width: 300px;
-  max-width: 500px;
+  width: clamp(300px, 50vw, 600px);
   height: auto;
-  margin: var(--space-4) 0;
+  margin: var(--space-4) auto;
   filter: drop-shadow(0 4px 12px rgba(163, 110, 79, 0.2));
+  display: block;
 }
 
 /* BRAND SPECIFIC COMPONENTS */
@@ -825,6 +830,15 @@ h6 { font-size: var(--text-lg); }
     font-size: var(--text-3xl);
   }
   
+  .plumbus-hero-image {
+    width: clamp(250px, 80vw, 400px);
+  }
+  
+  .plumbus-hero {
+    min-height: 70vh;
+    padding: var(--space-4) var(--space-2);
+  }
+  
   .process-container {
     grid-template-columns: 1fr;
     gap: var(--space-3);
@@ -865,6 +879,10 @@ h6 { font-size: var(--text-lg); }
   .plumbus-grid.cols-3,
   .plumbus-grid.cols-4 {
     grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .plumbus-hero-image {
+    width: clamp(350px, 60vw, 500px);
   }
   
   .process-container {
@@ -942,7 +960,7 @@ h6 { font-size: var(--text-lg); }
   
   /* Scale plumbus image */
   .plumbus-hero-image {
-    max-width: 600px;
+    width: clamp(400px, 60vw, 700px);
   }
   
   /* Larger buttons */
@@ -972,7 +990,7 @@ h6 { font-size: var(--text-lg); }
   
   /* Larger plumbus image */
   .plumbus-hero-image {
-    max-width: 700px;
+    width: clamp(500px, 65vw, 800px);
   }
   
   /* Larger buttons */
@@ -1008,7 +1026,7 @@ h6 { font-size: var(--text-lg); }
   
   /* Even larger plumbus image */
   .plumbus-hero-image {
-    max-width: 800px;
+    width: clamp(600px, 70vw, 900px);
   }
   
   /* Extra large buttons */

@@ -138,12 +138,12 @@ const SimplePlumbusHero: React.FC<SimplePlumbusHeroProps> = ({
             alt={alt}
             className="w-full h-auto mx-auto"
             loading="lazy"
-            width="240"
-            height="240"
             style={{ 
               filter: 'drop-shadow(0 8px 16px rgba(237, 130, 158, 0.2))',
               willChange: 'transform',
-              transition: 'filter 0.3s ease, transform 0.3s ease'
+              transition: 'filter 0.3s ease, transform 0.3s ease',
+              maxWidth: '100%',
+              height: 'auto'
             }}
           />
         </motion.div>
